@@ -12,7 +12,7 @@
            1. CORE CONFIGURATION & VARIABLES
            ========================================= */
         :root {
-            /* Dark Theme Backgrounds */
+            /* Dark Theme Backgrounds (Default) */
             --bg-color: #050505;
             --card-bg: rgba(20, 20, 20, 0.6);
             
@@ -36,9 +36,33 @@
             --glass-blur: blur(20px);
         }
 
-        /* CUSTOM SCROLLBAR */
+        /* =========================================
+           LIGHT MODE OVERRIDES
+           ========================================= */
+        body.light-mode {
+            /* Light Backgrounds */
+            --bg-color: #f0f2f5; 
+            --card-bg: rgba(255, 255, 255, 0.85);
+            
+            /* Text Colors */
+            --text-main: #1a1a1a;
+            --text-muted: #555555;
+            
+            /* Accents (Slightly Darker for visibility on white) */
+            --neon-cyan: #008c9e; 
+            --neon-purple: #8000b0;
+            --neon-green: #009e60;
+            --neon-pink: #cc0044;
+            --neon-yellow: #d4a000;
+
+            /* Glass settings */
+            --glass-border: rgba(0, 0, 0, 0.1);
+            --glass-blur: blur(15px);
+        }
+
+        /* Custom Scrollbar */
         ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #0a0a0a; }
+        ::-webkit-scrollbar-track { background: var(--bg-color); }
         ::-webkit-scrollbar-thumb { background: var(--neon-cyan); border-radius: 4px; }
         ::-webkit-scrollbar-thumb:hover { background: var(--neon-purple); }
 
@@ -77,7 +101,7 @@
             overflow-x: hidden; /* STRICTLY NO HORIZONTAL SCROLL */
             width: 100%;
             line-height: 1.6;
-            transition: background-color 0.1s ease;
+            transition: background-color 0.4s ease, color 0.4s ease;
         }
 
         /* Canvas Background */
@@ -85,6 +109,8 @@
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             z-index: -1; opacity: 0.3;
         }
+        /* Make canvas darker in light mode so particles pop */
+        body.light-mode #canvas-bg { opacity: 0.6; }
 
         /* =========================================
            2. SCI-FI HUD CURSOR (DESKTOP ONLY)
@@ -112,6 +138,9 @@
             animation: radarSpin 4s linear infinite;
         }
 
+        /* Light Mode Cursor */
+        body.light-mode .cursor-outline { border-color: var(--neon-cyan); border-style: solid; }
+
         body.upside-down-mode .cursor-dot { background: #fff; box-shadow: 0 0 15px #fff; }
         body.upside-down-mode .cursor-outline {
             border-color: #ff0000; border-style: solid; width: 50px; height: 50px;
@@ -132,7 +161,7 @@
         body.clicking .cursor-outline { transform: translate(-50%, -50%) scale(0.8); background: rgba(0, 243, 255, 0.2); }
 
         /* =========================================
-           3. PRELOADERS & TRANSITIONS (FIXED Z-INDEX)
+           3. PRELOADERS & TRANSITIONS
            ========================================= */
         #preloader {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
@@ -167,7 +196,7 @@
         #transition-upside {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: #000; 
-            z-index: 99999; /* Higher than cursor, lower than initial preloader */
+            z-index: 99999; 
             flex-direction: column;
             justify-content: center; align-items: center;
             background-image: radial-gradient(circle, #300 0%, #000 70%);
@@ -185,7 +214,7 @@
         #transition-normal {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: #000; 
-            z-index: 99999; /* Higher than cursor, lower than initial preloader */
+            z-index: 99999; 
             flex-direction: column;
             justify-content: center; align-items: center;
         }
@@ -216,24 +245,48 @@
             display: flex; justify-content: space-between; align-items: center;
             background: rgba(5, 5, 5, 0.85); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
             z-index: 1000; border-bottom: 1px solid rgba(255,255,255,0.05);
+            transition: background 0.4s;
         }
+        /* Light mode nav */
+        body.light-mode nav {
+            background: rgba(255, 255, 255, 0.9);
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+        }
+
         .logo { font-size: 1.5rem; font-weight: 700; color: #fff; letter-spacing: 1px; }
+        body.light-mode .logo { color: #000; }
         .logo span { color: var(--neon-cyan); text-shadow: 0 0 10px var(--neon-cyan); }
         
-        .nav-links { display: flex; gap: 30px; }
+        .nav-links { display: flex; gap: 30px; align-items: center; }
         .nav-links a { 
             font-size: 0.85rem; text-transform: uppercase; color: #aaa; letter-spacing: 1px; position: relative;
             transition: 0.3s; text-decoration: none;
         }
+        body.light-mode .nav-links a { color: #555; font-weight: 600; }
+
         .nav-links a:hover { color: #fff; text-shadow: 0 0 8px var(--neon-cyan); }
+        body.light-mode .nav-links a:hover { color: #000; text-shadow: none; }
+
         .nav-links a::after {
             content: ''; position: absolute; bottom: -5px; left: 0; width: 0; height: 1px;
             background: var(--neon-cyan); transition: 0.3s;
         }
         .nav-links a:hover::after { width: 100%; }
 
+        /* Light/Dark Toggle Btn */
+        .theme-btn {
+            background: transparent; border: 1px solid var(--neon-cyan); color: var(--neon-cyan);
+            width: 35px; height: 35px; border-radius: 50%; display: flex; justify-content: center; align-items: center;
+            cursor: pointer; transition: 0.3s; margin-left: 15px;
+        }
+        .theme-btn:hover { background: var(--neon-cyan); color: #000; box-shadow: 0 0 10px var(--neon-cyan); }
+        
+        body.light-mode .theme-btn { border-color: #333; color: #333; }
+        body.light-mode .theme-btn:hover { background: #333; color: #fff; box-shadow: 0 0 10px rgba(0,0,0,0.2); }
+
         /* Mobile Menu Button */
         .menu-btn { display: none; color: #fff; font-size: 1.5rem; cursor: pointer; }
+        body.light-mode .menu-btn { color: #000; }
 
         /* =========================================
            5. HERO & TYPOGRAPHY
@@ -250,6 +303,8 @@
             font-weight: 800; text-transform: uppercase; 
             color: #fff; letter-spacing: -2px; position: relative;
         }
+        body.light-mode .glitch { color: #222; }
+
         .glitch::before, .glitch::after {
             content: attr(data-text); position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0.8;
         }
@@ -277,6 +332,8 @@
             background: rgba(255,255,255,0.03); 
             padding: 8px 20px; border-radius: 4px; border: 1px solid rgba(255,255,255,0.05); display: inline-block;
         }
+        body.light-mode .subtitle { background: rgba(0,0,0,0.05); border: 1px solid rgba(0,0,0,0.1); color: #333; }
+
         .typing-cursor { border-right: 2px solid var(--neon-cyan); animation: blink 0.8s infinite; }
         @keyframes blink { 50% { border-color: transparent; } }
 
@@ -306,6 +363,8 @@
             font-size: clamp(2rem, 6vw, 3rem); color: #fff; text-transform: uppercase; letter-spacing: 2px; 
             position: relative; display: inline-block;
         }
+        body.light-mode .section-header h2 { color: #111; }
+
         .section-header h2 span { 
             color: transparent; -webkit-text-stroke: 1px var(--neon-purple); text-shadow: 0 0 10px rgba(189,0,255,0.3); 
         }
@@ -319,6 +378,12 @@
             border: 1px solid var(--glass-border); padding: 30px; border-radius: 8px; 
             position: relative; overflow: hidden; height: 100%; transform-style: preserve-3d; transition: transform 0.1s;
         }
+        /* Light mode box shadow for depth */
+        body.light-mode .glass-box {
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
         .glass-box::before {
             content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 2px;
             transform: scaleX(0); transform-origin: left; transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1);
@@ -333,6 +398,11 @@
 
         .glass-box > * { transform: translateZ(20px); pointer-events: none; }
         .glass-box a, .glass-box button, .glass-box .skill-tags, .glass-box .tag { pointer-events: auto; transform: translateZ(30px); }
+
+        /* Specific text color fixes for Light Mode inside glass box */
+        body.light-mode .glass-box p { color: #444 !important; }
+        body.light-mode .glass-box h3, body.light-mode .glass-box h4 { color: #111 !important; }
+        body.light-mode .glass-box span { color: #666; }
 
         body.upside-down-mode .glass-box {
             background: #d8cba8; color: #1a1a1a; border: 1px solid #5a4a42; box-shadow: 5px 5px 15px #000;
@@ -357,7 +427,9 @@
         .about-grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: 60px; align-items: center; }
         .stats-container { display: flex; gap: 20px; margin-top: 30px; flex-wrap: wrap; }
         .stat-box { text-align: center; padding: 15px 25px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05); }
+        body.light-mode .stat-box { background: rgba(0,0,0,0.05); border: 1px solid rgba(0,0,0,0.1); }
         .stat-box h3 { font-size: 2rem; color: #fff; margin-bottom: 5px; }
+        body.light-mode .stat-box h3 { color: #222; }
         .stat-box span { font-size: 0.7rem; color: var(--text-muted); letter-spacing: 1px; }
 
         /* --- UPDATED: Free Form / Rectangular Image --- */
@@ -385,16 +457,21 @@
         /* SKILLS */
         .skills-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 30px; }
         .skill-title { font-size: 1.3rem; margin-bottom: 20px; color: #fff; display: flex; align-items: center; gap: 12px; }
+        body.light-mode .skill-title { color: #222; }
         .skill-tags { display: flex; flex-wrap: wrap; gap: 10px; pointer-events: auto !important; }
         .tag { 
             font-size: 0.85rem; padding: 8px 16px; background: #1a1a1a; border-radius: 4px; color: #bbb;
             border: 1px solid #333; transition: all 0.4s; pointer-events: auto !important; cursor: pointer; position: relative; z-index: 1;
         }
+        body.light-mode .tag { background: #e9ecef; color: #444; border: 1px solid #ced4da; }
+
         .skill-tags:hover .tag { opacity: 0.3; filter: blur(1px); transform: scale(0.95); }
         .skill-tags .tag:hover {
             opacity: 1; filter: blur(0); transform: scale(1.15) translateY(-5px); background: var(--neon-cyan);
             color: #000; border-color: var(--neon-cyan); box-shadow: 0 0 20px var(--neon-cyan); z-index: 10;
         }
+        body.light-mode .skill-tags .tag:hover { color: #fff; }
+
         body.upside-down-mode .tag { background: #000; color: #0f0; border: 1px solid #0f0; font-family: 'VT323', monospace; text-transform: uppercase; }
         body.upside-down-mode .tag:hover { background: #0f0; color: #000; box-shadow: 0 0 15px #0f0; }
 
@@ -423,6 +500,11 @@
             cursor: pointer !important; 
             box-shadow: 0 0 0 transparent;
         }
+        body.light-mode .project-card {
+            background: #fff;
+            border: 1px solid #e0e0e0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
 
         /* Hover State - Lift and Glow */
         .project-card:hover {
@@ -445,6 +527,9 @@
             position: relative;
             z-index: 2;
             background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.8) 100%);
+        }
+        body.light-mode .project-inner {
+            background: linear-gradient(180deg, rgba(255,255,255,0) 50%, rgba(255,255,255,0.9) 100%);
         }
 
         /* Image Styling */
@@ -507,6 +592,7 @@
             position: relative;
             display: inline-block;
         }
+        body.light-mode .project-title { color: #222; }
 
         .project-tech {
             font-family: var(--font-code);
@@ -530,10 +616,12 @@
             overflow: hidden;
             transition: color 0.3s;
         }
+        body.light-mode .project-desc { color: #555; }
 
         .project-card:hover .project-desc {
             color: #e0e0e0;
         }
+        body.light-mode .project-card:hover .project-desc { color: #222; }
 
         /* Action Button */
         .project-action {
@@ -564,6 +652,7 @@
             align-items: center;
             gap: 8px;
         }
+        body.light-mode .action-btn { color: #fff; }
 
         body.upside-down-mode .action-btn {
             background: #ff0000;
@@ -596,10 +685,13 @@
             border: 2px solid var(--neon-purple); border-radius: 50%; display: flex; align-items: center;
             justify-content: center; color: var(--neon-purple); z-index: 2; box-shadow: 0 0 10px rgba(189,0,255,0.5); transition: 0.3s;
         }
+        body.light-mode .timeline-dot { background: #fff; }
+
         .timeline-item:hover .timeline-dot { 
             background: var(--neon-purple); color: #fff; box-shadow: 0 0 25px var(--neon-purple); transform: scale(1.2); 
         }
         .timeline-content h3 { color: #fff; margin-bottom: 5px; }
+        body.light-mode .timeline-content h3 { color: #222; }
         .timeline-content h4 { color: #888; font-style: italic; font-size: 0.9rem; margin-bottom: 10px; }
         .timeline-date { color: var(--neon-cyan); font-weight: bold; font-size: 0.8rem; letter-spacing: 1px; display: block; margin-bottom: 5px; }
 
@@ -612,9 +704,13 @@
             background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 5px; color: #ccc;
             text-decoration: none; transition: 0.3s;
         }
+        body.light-mode .contact-box { background: rgba(0,0,0,0.05); border-color: #ddd; color: #444; }
+
         .contact-box:hover {
             border-color: var(--neon-cyan); color: #fff; background: rgba(0, 243, 255, 0.05);
         }
+        body.light-mode .contact-box:hover { color: #000; background: rgba(0, 140, 158, 0.1); }
+
         .contact-box i { color: var(--neon-cyan); font-size: 1.2rem; }
         body.upside-down-mode .contact-box { background: #111; border: 2px solid #333; border-radius: 10px; color: #aaa; box-shadow: inset 0 0 10px #000; }
 
@@ -625,6 +721,8 @@
             background: rgba(0,0,0,0.4); backdrop-filter: blur(5px); position: relative; overflow: hidden; z-index: 1;
             transition: all 0.4s; text-decoration: none;
         }
+        body.light-mode .social-btn { color: #333; border-color: #ddd; background: rgba(255,255,255,0.8); }
+
         .social-btn::before {
             content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             background: var(--neon-cyan); border-radius: 50%; z-index: -1; transform: scale(0); transition: transform 0.4s;
@@ -632,12 +730,14 @@
         .social-btn:hover { 
             color: #050505; border-color: var(--neon-cyan); transform: translateY(-8px) scale(1.1); box-shadow: 0 0 25px var(--neon-cyan); 
         }
+        body.light-mode .social-btn:hover { color: #fff; }
         .social-btn:hover::before { transform: scale(1); }
 
         footer { 
             text-align: center; padding: 40px 20px; border-top: 1px solid rgba(255,255,255,0.05); 
             color: #666; font-size: 0.9rem; background: #020202; margin-top: 50px;
         }
+        body.light-mode footer { background: #e9ecef; border-top: 1px solid #ddd; }
 
         /* =========================================
            9. IMPROVED PROJECT MODAL & SLIDESHOW
@@ -648,17 +748,22 @@
             /* FIX: Allow cursor interactions */
             cursor: auto; 
         }
+        body.light-mode #project-modal { background-color: rgba(255,255,255,0.95); }
+
         .modal-content {
             background-color: #0a0a0a; border: 1px solid var(--neon-cyan); margin: 2% auto; padding: 0;
             width: 90%; max-width: 1000px; border-radius: 8px; position: relative;
             box-shadow: 0 0 50px rgba(0, 243, 255, 0.15); overflow: hidden;
             display: flex; flex-direction: column;
         }
+        body.light-mode .modal-content { background-color: #fff; box-shadow: 0 10px 40px rgba(0,0,0,0.2); }
         
         .modal-header {
             padding: 15px 25px; background: rgba(0, 243, 255, 0.05); border-bottom: 1px solid #333;
             display: flex; justify-content: space-between; align-items: center;
         }
+        body.light-mode .modal-header { background: #f8f9fa; border-bottom: 1px solid #ddd; }
+
         .modal-header h2 { font-size: 1.5rem; color: var(--neon-cyan); text-transform: uppercase; letter-spacing: 2px; }
         
         .close-modal {
@@ -718,11 +823,16 @@
             display: grid; grid-template-columns: 2fr 1fr; gap: 0;
             height: 100%; background: #0a0a0a;
         }
+        body.light-mode .modal-body-grid { background: #fff; }
+
         .modal-info { padding: 30px; border-right: 1px solid #222; overflow-y: auto; max-height: 250px; }
+        body.light-mode .modal-info { border-right: 1px solid #ddd; }
         .modal-links-panel { padding: 30px; display: flex; flex-direction: column; gap: 15px; background: #050505; }
+        body.light-mode .modal-links-panel { background: #f8f9fa; }
         
         .modal-tech { color: var(--neon-purple); font-family: var(--font-code); font-size: 0.9rem; margin-bottom: 15px; display: block; }
         .modal-desc { color: #ddd; font-size: 1rem; line-height: 1.6; }
+        body.light-mode .modal-desc { color: #444; }
         
         .modal-btn {
             display: block; width: 100%; padding: 12px; text-align: center; 
@@ -730,6 +840,7 @@
             text-transform: uppercase; font-size: 0.85rem; transition: 0.3s; text-decoration: none;
             font-family: var(--font-code); margin-bottom: 10px;
         }
+        body.light-mode .modal-btn { border-color: #ccc; color: #555; }
         .modal-btn:hover { border-color: var(--neon-green); color: var(--neon-green); background: rgba(0,255,157,0.05); }
         .modal-btn i { margin-right: 8px; }
 
@@ -788,10 +899,13 @@
             box-shadow: 0 0 15px var(--neon-cyan); transition: all 0.3s ease;
             display: flex; justify-content: center; align-items: center;
         }
+        body.light-mode #chat-trigger { background: #fff; color: var(--neon-cyan); box-shadow: 0 0 20px rgba(0,0,0,0.2); }
+
         #chat-trigger:hover {
             transform: scale(1.1) rotate(10deg); background: var(--neon-cyan);
             color: #000; box-shadow: 0 0 30px var(--neon-cyan);
         }
+        body.light-mode #chat-trigger:hover { color: #fff; }
 
         #chat-widget {
             position: fixed; bottom: 100px; right: 30px; width: 350px; height: 450px;
@@ -802,18 +916,25 @@
             transform: translateY(20px); opacity: 0; pointer-events: none;
             transition: all 0.3s ease; overflow: hidden;
         }
+        body.light-mode #chat-widget { background: rgba(255, 255, 255, 0.95); box-shadow: 0 5px 30px rgba(0,0,0,0.2); }
+
         #chat-widget.active { transform: translateY(0); opacity: 1; pointer-events: all; }
         .chat-header {
             background: rgba(0, 243, 255, 0.1); padding: 15px; border-bottom: 1px solid rgba(0, 243, 255, 0.2);
             display: flex; justify-content: space-between; align-items: center; color: var(--neon-cyan); font-family: var(--font-code); font-weight: bold;
         }
         #close-chat { background: none; border: none; color: #fff; cursor: pointer; font-size: 1.1rem; }
+        body.light-mode #close-chat { color: #333; }
+
         .chat-messages { flex: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
         .chat-messages::-webkit-scrollbar { width: 5px; }
         .chat-messages::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
         .message { padding: 10px 15px; border-radius: 10px; font-size: 0.9rem; max-width: 80%; line-height: 1.4; word-wrap: break-word; }
         .bot-message { background: rgba(255, 255, 255, 0.05); border-left: 3px solid var(--neon-cyan); color: #ddd; align-self: flex-start; }
+        body.light-mode .bot-message { background: #e9ecef; color: #333; }
+        
         .user-message { background: rgba(189, 0, 255, 0.2); border-right: 3px solid var(--neon-purple); color: #fff; align-self: flex-end; text-align: right; }
+        body.light-mode .user-message { background: rgba(0, 140, 158, 0.2); border-right-color: var(--neon-cyan); color: #222; }
         
         /* New Quick Options */
         .quick-options { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 5px; }
@@ -822,15 +943,22 @@
             color: var(--neon-cyan); padding: 5px 10px; border-radius: 15px;
             font-size: 0.75rem; cursor: pointer; transition: 0.3s;
         }
+        body.light-mode .option-btn { border-color: #ccc; }
         .option-btn:hover { background: var(--neon-cyan); color: #000; box-shadow: 0 0 10px var(--neon-cyan); }
+        body.light-mode .option-btn:hover { color: #fff; }
 
         .chat-input-area { padding: 15px; border-top: 1px solid rgba(255, 255, 255, 0.1); display: flex; gap: 10px; }
+        body.light-mode .chat-input-area { border-top: 1px solid #ddd; }
+
         #chat-input {
             flex: 1; background: rgba(0, 0, 0, 0.5); border: 1px solid #333; padding: 10px; border-radius: 5px; color: #fff; outline: none; font-family: var(--font-body);
         }
+        body.light-mode #chat-input { background: #fff; border: 1px solid #ccc; color: #333; }
+
         #send-btn {
             background: var(--neon-cyan); color: #000; border: none; padding: 0 15px; border-radius: 5px; cursor: pointer; transition: 0.3s;
         }
+        body.light-mode #send-btn { color: #fff; }
 
         /* UPSIDE DOWN MODE EFFECTS */
         #upside-down-toggle {
@@ -922,6 +1050,8 @@
                 justify-content: center; transition: 0.4s ease;
                 border-left: 1px solid var(--neon-cyan);
             }
+            body.light-mode .nav-links { background: rgba(255,255,255,0.98); border-left: 1px solid #ddd; }
+
             .nav-links.active { right: 0; }
             .nav-links a { font-size: 1.2rem; }
 
@@ -992,6 +1122,9 @@
             <a href="#certifications" onclick="toggleMenu()">Certifications</a>
             <a href="#volunteering" onclick="toggleMenu()">Volunteering</a>
             <a href="#contact" onclick="toggleMenu()">Contact</a>
+            <button class="theme-btn" id="theme-toggle-btn" onclick="toggleLightMode()" title="Toggle Light/Dark Mode">
+                <i class="fas fa-sun"></i>
+            </button>
         </div>
     </nav>
 
@@ -1142,7 +1275,7 @@
                         <div class="project-tech"><span>TensorFlow</span> <span>Transfer Learning</span></div>
                         <p class="project-desc">AI-powered crop disease diagnosis system for paddy rice and tea leaves. Deployed via Docker.</p>
                     </div>
-                     <div class="project-action">
+                      <div class="project-action">
                         <span class="action-btn">View Details <i class="fas fa-arrow-right"></i></span>
                     </div>
                 </div>
@@ -1158,7 +1291,7 @@
                         <div class="project-tech"><span>PHP (Laravel)</span> <span>React</span> <span>MySQL</span></div>
                         <p class="project-desc">Scalable web application enabling customers to book vehicles with validations for age and mileage.</p>
                     </div>
-                     <div class="project-action">
+                      <div class="project-action">
                         <span class="action-btn">View Details <i class="fas fa-arrow-right"></i></span>
                     </div>
                 </div>
@@ -1167,14 +1300,14 @@
             <div class="project-card" onclick="openProject('wastewiz')">
                 <div class="project-inner">
                     <div class="project-cover">
-                         <img src="waste1.png" alt="Waste Wiz">
+                          <img src="waste1.png" alt="Waste Wiz">
                     </div>
                     <div class="project-content">
                         <h3 class="project-title">Waste-Wiz Robot</h3>
                         <div class="project-tech"><span>Robotics</span> <span>IoT</span> <span>Embedded C</span></div>
                         <p class="project-desc">Indoor waste management robot with a dual-lid system for sorting paper and plastic using sensors.</p>
                     </div>
-                     <div class="project-action">
+                      <div class="project-action">
                         <span class="action-btn">View Details <i class="fas fa-arrow-right"></i></span>
                     </div>
                 </div>
@@ -1182,7 +1315,7 @@
 
             <div class="project-card" onclick="openProject('hotel')">
                 <div class="project-inner">
-                     <div class="project-cover">
+                      <div class="project-cover">
                         <img src="hotel.jpeg" alt="Hotel Mgmt">
                     </div>
                     <div class="project-content">
@@ -1190,7 +1323,7 @@
                         <div class="project-tech"><span>C#</span> <span>.NET</span> <span>SQLite</span></div>
                         <p class="project-desc">Desktop application for hotel operations including room booking and check-in/out automation.</p>
                     </div>
-                     <div class="project-action">
+                      <div class="project-action">
                         <span class="action-btn">View Details <i class="fas fa-arrow-right"></i></span>
                     </div>
                 </div>
@@ -1198,7 +1331,7 @@
 
             <div class="project-card" onclick="openProject('grocery')">
                 <div class="project-inner">
-                     <div class="project-cover">
+                      <div class="project-cover">
                         <img src="gro1.jpeg" alt="Grocery POS">
                     </div>
                     <div class="project-content">
@@ -1206,7 +1339,7 @@
                         <div class="project-tech"><span>HTML</span> <span>CSS</span> <span>JS</span> <span>SQL</span></div>
                         <p class="project-desc">Full-stack web system with Admin/Cashier dashboards and POS module for inventory.</p>
                     </div>
-                     <div class="project-action">
+                      <div class="project-action">
                         <span class="action-btn">View Details <i class="fas fa-arrow-right"></i></span>
                     </div>
                 </div>
@@ -1214,7 +1347,7 @@
 
              <div class="project-card" onclick="openProject('game')">
                 <div class="project-inner">
-                     <div class="project-cover">
+                      <div class="project-cover">
                         <img src="game1.jpeg" alt="Guessing Game">
                     </div>
                     <div class="project-content">
@@ -1222,7 +1355,7 @@
                         <div class="project-tech"><span>Java</span> <span>javax.swing</span></div>
                         <p class="project-desc">Interactive game with multiple modes (Normal, Hard, Endless) and power-ups.</p>
                     </div>
-                     <div class="project-action">
+                      <div class="project-action">
                         <span class="action-btn">View Details <i class="fas fa-arrow-right"></i></span>
                     </div>
                 </div>
@@ -1230,7 +1363,7 @@
 
             <div class="project-card" onclick="openProject('todo')">
                 <div class="project-inner">
-                     <div class="project-cover">
+                      <div class="project-cover">
                         <img src="todo1.jpeg" alt="Todo App">
                     </div>
                     <div class="project-content">
@@ -1238,7 +1371,7 @@
                         <div class="project-tech"><span>React.js</span> <span>Bootstrap</span></div>
                         <p class="project-desc">Responsive task manager with status-based filtering and local storage integration.</p>
                     </div>
-                     <div class="project-action">
+                      <div class="project-action">
                         <span class="action-btn">View Details <i class="fas fa-arrow-right"></i></span>
                     </div>
                 </div>
@@ -1517,7 +1650,7 @@
             });
         }
 
-        // 7. PARTICLE SYSTEM
+        // 7. PARTICLE SYSTEM (UPDATED FOR LIGHT MODE)
         const canvas = document.getElementById("canvas-bg");
         const ctx = canvas.getContext("2d");
         let particlesArray;
@@ -1536,10 +1669,17 @@
                 this.x = Math.random() * canvas.width;
                 this.y = Math.random() * canvas.height;
                 this.size = Math.random() * 2 + 1;
+                
+                // Color Logic based on Mode
                 if (isUpsideDown) {
                     this.speedX = (Math.random() * 0.5) - 0.25; this.speedY = Math.random() * 0.5 + 0.2;
                     this.color = `rgba(200, 200, 200, ${Math.random() * 0.5})`;
+                } else if (document.body.classList.contains('light-mode')) {
+                    // Dark particles for Light Mode
+                    this.speedX = (Math.random() * 0.4) - 0.2; this.speedY = (Math.random() * 0.4) - 0.2;
+                    this.color = `rgba(0, 140, 158, ${Math.random() * 0.6})`; // Teal/Greyish
                 } else {
+                    // Default Neon Cyan
                     this.speedX = (Math.random() * 0.4) - 0.2; this.speedY = (Math.random() * 0.4) - 0.2;
                     this.color = '#00f3ff';
                 }
@@ -1577,11 +1717,19 @@
         }
 
         function connectParticles() {
+            // Adjust line color based on mode
+            let isLight = document.body.classList.contains('light-mode');
+            
             for (let a = 0; a < particlesArray.length; a++) {
                 for (let b = a; b < particlesArray.length; b++) {
                     let distance = ((particlesArray[a].x - particlesArray[b].x) ** 2) + ((particlesArray[a].y - particlesArray[b].y) ** 2);
                     if (distance < (canvas.width/7) * (canvas.height/7)) {
-                        ctx.strokeStyle = 'rgba(0, 243, 255,' + (1 - distance/20000) * 0.15 + ')';
+                        let opacity = (1 - distance/20000) * 0.15;
+                        if(isLight) {
+                             ctx.strokeStyle = 'rgba(0, 140, 158,' + opacity + ')';
+                        } else {
+                             ctx.strokeStyle = 'rgba(0, 243, 255,' + opacity + ')';
+                        }
                         ctx.lineWidth = 1; ctx.beginPath();
                         ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
                         ctx.lineTo(particlesArray[b].x, particlesArray[b].y); ctx.stroke();
@@ -1604,6 +1752,9 @@
                     // Actual switch logic inside loader coverage
                     isUpsideDown = true;
                     document.body.classList.add('upside-down-mode');
+                    // Disable light mode if active
+                    document.body.classList.remove('light-mode'); 
+                    
                     btn.textContent = "Escape";
                     initParticles(); // Re-init particles for correct color
                     
@@ -1613,7 +1764,7 @@
                 }, 2000); // How long the transition lasts
                 
             } else {
-                // Switching BACK TO Normal
+                // Switching BACK TO Normal (or defaults to dark)
                 const loader = document.getElementById('transition-normal');
                 loader.style.display = 'flex'; // Show reboot loader
                 
@@ -1629,6 +1780,31 @@
                     }, 1000);
                 }, 1500);
             }
+        }
+
+        // NEW: LIGHT MODE TOGGLE FUNCTION
+        function toggleLightMode() {
+            const btn = document.getElementById('theme-toggle-btn');
+            const icon = btn.querySelector('i');
+            
+            // If Upside Down is active, don't switch styling, or reset Upside Down first.
+            if(isUpsideDown) {
+                alert("You must escape the Upside Down first!");
+                return;
+            }
+
+            document.body.classList.toggle('light-mode');
+            
+            if(document.body.classList.contains('light-mode')) {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+            } else {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+            }
+            
+            // Re-initialize particles to change their color
+            initParticles();
         }
 
         // 9. PROJECT MODAL LOGIC (UPDATED)
@@ -1651,8 +1827,8 @@
                     "leaf2.jpeg"
                 ],
                 links: [
-                     { name: "GitHub Code", url: "https://github.com/CodeJediX/LeafLens_Project", icon: "fab fa-github" },
-                     { name: "Watch Demo", url: "https://youtu.be/FJXr0ydCo-0", icon: "fab fa-youtube" }
+                      { name: "GitHub Code", url: "https://github.com/CodeJediX/LeafLens_Project", icon: "fab fa-github" },
+                      { name: "Watch Demo", url: "https://youtu.be/FJXr0ydCo-0", icon: "fab fa-youtube" }
                 ]
             },
             "carrental": {
@@ -1665,7 +1841,7 @@
                     "car3.jpeg",
                 ],
                 links: [
-                     { name: "GitHub Code", url: "https://github.com/CodeJediX/Car_Rent_System.git", icon: "fab fa-github" }
+                      { name: "GitHub Code", url: "https://github.com/CodeJediX/Car_Rent_System.git", icon: "fab fa-github" }
                 ]
             },
             "wastewiz": {
@@ -1677,7 +1853,7 @@
                     "waste2.jpg"
                 ],
                  links: [
-                     { name: "Hardware Specs", url: "#", icon: "fas fa-microchip" }
+                      { name: "Hardware Specs", url: "#", icon: "fas fa-microchip" }
                 ]
             },
             "hotel": {
@@ -1690,7 +1866,7 @@
                     "hotel3.jpeg"
                 ],
                  links: [
-                     { name: "GitHub Code", url: "https://github.com/CodeJediX/HotelManagement_System", icon: "fab fa-github" }
+                      { name: "GitHub Code", url: "https://github.com/CodeJediX/HotelManagement_System", icon: "fab fa-github" }
                 ]
             },
             "grocery": {
@@ -1705,7 +1881,7 @@
                     "gro5.jpeg",
                 ],
                  links: [
-                     { name: "GitHub Code", url: "https://github.com/CodeJediX/Grocery-Management-Web-System", icon: "fab fa-github" }
+                      { name: "GitHub Code", url: "https://github.com/CodeJediX/Grocery-Management-Web-System", icon: "fab fa-github" }
                 ]
             },
             "game": {
@@ -1717,7 +1893,7 @@
                     "game2.jpeg"
                 ],
                  links: [
-                     { name: "GitHub Code", url: "https://lnkd.in/epGueCGb", icon: "fab fa-github" }
+                      { name: "GitHub Code", url: "https://lnkd.in/epGueCGb", icon: "fab fa-github" }
                 ]
             },
             "todo": {
@@ -1728,7 +1904,7 @@
                     "todo1.jpeg","todo2.jpeg","todo3.jpeg","todo4.jpeg",
                 ],
                  links: [
-                     { name: "GitHub Code", url: "https://github.com/CodeJediX/To-Do-List", icon: "fab fa-github" }
+                      { name: "GitHub Code", url: "https://github.com/CodeJediX/To-Do-List", icon: "fab fa-github" }
                 ]
             }
         };
