@@ -1,0 +1,146 @@
+{
+  "viewports": [
+    {
+      "width": 320,
+      "overflow": false,
+      "images": "passed"
+    },
+    {
+      "width": 390,
+      "overflow": false,
+      "images": "passed"
+    },
+    {
+      "width": 768,
+      "overflow": false,
+      "images": "passed"
+    },
+    {
+      "width": 1024,
+      "overflow": false,
+      "images": "passed"
+    },
+    {
+      "width": 1440,
+      "overflow": false,
+      "images": "passed"
+    },
+    {
+      "width": 1920,
+      "overflow": false,
+      "images": "passed"
+    }
+  ],
+  "pages": [
+    {
+      "id": "signspeak",
+      "width": 390,
+      "refresh": "passed"
+    },
+    {
+      "id": "signspeak",
+      "width": 1440,
+      "refresh": "passed"
+    },
+    {
+      "id": "leaflens",
+      "width": 390,
+      "refresh": "passed"
+    },
+    {
+      "id": "leaflens",
+      "width": 1440,
+      "refresh": "passed"
+    },
+    {
+      "id": "magen",
+      "width": 390,
+      "refresh": "passed"
+    },
+    {
+      "id": "magen",
+      "width": 1440,
+      "refresh": "passed"
+    },
+    {
+      "id": "createx",
+      "width": 390,
+      "refresh": "passed"
+    },
+    {
+      "id": "createx",
+      "width": 1440,
+      "refresh": "passed"
+    },
+    {
+      "id": "signspeak-junior",
+      "width": 390,
+      "refresh": "passed"
+    },
+    {
+      "id": "signspeak-junior",
+      "width": 1440,
+      "refresh": "passed"
+    },
+    {
+      "id": "hotel-management",
+      "width": 390,
+      "refresh": "passed"
+    },
+    {
+      "id": "hotel-management",
+      "width": 1440,
+      "refresh": "passed"
+    }
+  ],
+  "interactions": [
+    "Project filters: all four categories and counts passed",
+    "Circuit layers: keyboard Enter and Space toggle state",
+    "Mobile menu: open, Escape, focus return, anchor and close passed",
+    "Reduced motion: illustration remains still",
+    "JavaScript disabled: navigation, six projects and detail destination work"
+  ],
+  "accessibility": [
+    {
+      "path": "/",
+      "width": 1440,
+      "violations": []
+    },
+    {
+      "path": "/",
+      "width": 390,
+      "violations": []
+    },
+    {
+      "path": "signspeak",
+      "width": 1440,
+      "violations": []
+    },
+    {
+      "path": "leaflens",
+      "width": 1440,
+      "violations": []
+    },
+    {
+      "path": "magen",
+      "width": 1440,
+      "violations": []
+    },
+    {
+      "path": "createx",
+      "width": 1440,
+      "violations": []
+    },
+    {
+      "path": "signspeak-junior",
+      "width": 1440,
+      "violations": []
+    },
+    {
+      "path": "hotel-management",
+      "width": 1440,
+      "violations": []
+    }
+  ],
+  "consoleErrors": []
+}

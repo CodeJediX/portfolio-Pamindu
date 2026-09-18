@@ -1,0 +1,14 @@
+{
+  "name": "pamindu-portfolio",
+  "version": "2.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Pamindu Karunadasa's engineering portfolio. Dependency-free static site.",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "test": "node --test tests/site.test.mjs",
+    "dev": "node scripts/serve.mjs",
+    "check": "npm run build && npm test"
+  },
+  "engines": { "node": ">=22" }
+}

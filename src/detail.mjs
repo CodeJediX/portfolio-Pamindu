@@ -1,0 +1,15 @@
+import {projects} from './projects.mjs';
+import {page,header,footer,external,arrow,escape as e} from './components.mjs';
+export function detail(p,index) {
+ const next=projects[(index+1)%projects.length];
+ const body=`${header('../../',false)}<main id="main" class="detail-main">
+ <section class="detail-hero wrap"><a class="text-link back-link" href="../../#work"><span aria-hidden="true">←</span> All selected work</a><p class="eyebrow">${String(index+1).padStart(2,'0')} / ${e(p.label)}</p><h1>${e(p.name)}<span class="accent">.</span></h1><p class="detail-summary">${e(p.summary)}</p><div class="detail-actions">${external(p.repo,'Explore source','button primary')}${p.demo?external(p.demo,p.demoLabel||'Visit live project','button outline'):''}</div><dl class="project-facts"><div><dt>Status</dt><dd>${e(p.status)}</dd></div><div><dt>Context</dt><dd>${e(p.context)}</dd></div><div><dt>Technology</dt><dd>${e(p.stack.join(' · '))}</dd></div></dl></section>
+ <figure class="detail-cover wrap ${p.color} ${p.id}"><img src="../../assets/images/${p.image}" alt="${e(p.alt)}" width="1200" height="800" fetchpriority="high"><figcaption class="mono">${p.id==='createx'?'PROJECT ARTWORK':'PROJECT INTERFACE'} / ${e(p.name.toUpperCase())}</figcaption></figure>
+ <div class="case-layout wrap"><aside class="case-navigation"><span class="eyebrow">PROJECT NOTES</span><a href="#overview">Overview</a><a href="#architecture">System flow</a><a href="#engineering">Engineering</a><a href="#scope">Scope & status</a></aside><div class="case-content">
+ <section id="overview"><p class="eyebrow">01 / OVERVIEW</p><h2>The problem</h2><p>${e(p.problem)}</p><h2>The approach</h2><p>${e(p.solution)}</p><div class="role-note"><h3>My contribution</h3><p>${e(p.role)}</p></div></section>
+ <section id="architecture"><p class="eyebrow">02 / SYSTEM FLOW</p><h2>How it connects</h2><ol class="architecture">${p.architecture.map((step,i)=>`<li><span class="mono">0${i+1}</span><span>${e(step)}</span></li>`).join('')}</ol><p class="small-note">A simplified overview of the implementation.</p></section>
+ <section id="engineering"><p class="eyebrow">03 / ENGINEERING</p><h2>Inside the implementation</h2><ul class="feature-list">${p.features.map(f=>`<li>${e(f)}</li>`).join('')}</ul><h3>The engineering consideration</h3><p>${e(p.challenge)}</p>${p.gallery.map(g=>`<figure class="case-image"><img src="../../assets/images/${g.src}" alt="${e(g.alt)}" width="1200" height="800" loading="lazy" decoding="async"><figcaption>${e(g.alt)}</figcaption></figure>`).join('')}</section>
+ <section id="scope"><p class="eyebrow">04 / SCOPE & STATUS</p><h2>What this work demonstrates</h2><p>${e(p.limits)}</p><h3>Explore the evidence</h3><div class="source-links">${p.sources.map(([label,url])=>external(url,label)).join('')}</div></section>
+ </div></div><section class="next-project wrap"><span class="eyebrow">CONTINUE EXPLORING</span><a href="../${next.id}/"><span>${e(next.name)}</span>${arrow}</a></section></main>${footer('../../')}`;
+ return page({title:`${p.name} — Pamindu Karunadasa`,description:p.summary,body,base:'../../',path:`projects/${p.id}/`});
+}
