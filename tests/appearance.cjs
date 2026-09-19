@@ -20,7 +20,7 @@ const fs = require('node:fs');
   await page.waitForFunction(() => document.documentElement.dataset.theme === 'light');
   assert.equal(await page.locator('html').getAttribute('data-theme'),'light');
   await page.locator('.theme-toggle').click();
-  await page.reload({waitUntil:'networkidle'});
+  await page.reload({waitUntil:'domcontentloaded'});
   assert.equal(await page.locator('html').getAttribute('data-theme'),'dark');
   assert.equal(await page.locator('.preloader').isVisible(),true);
   await page.waitForFunction(() => getComputedStyle(document.querySelector('.preloader')).visibility === 'hidden');
