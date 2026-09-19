@@ -1,6 +1,49 @@
 (() => {
   const motion = matchMedia('(prefers-reduced-motion: reduce)');
   const fine = matchMedia('(pointer: fine)');
+  const toolNotes = {
+    Python:'Automation, data processing, and AI pipelines.',
+    JavaScript:'Interactive interfaces and browser logic.',
+    TypeScript:'Typed JavaScript for structured web applications.',
+    'C#':'Desktop interfaces and application logic with .NET.',
+    Java:'Object-oriented application development.',
+    TensorFlow:'Training and running machine-learning models.',
+    Keras:'Building neural networks with a high-level API.',
+    MediaPipe:'Real-time hand, face, and pose landmarks.',
+    OpenCV:'Image processing and computer-vision workflows.',
+    Gemini:'Generative AI assistance in connected applications.',
+    React:'Reusable components for interactive interfaces.',
+    'Next.js':'Routing and application structure for React projects.',
+    Flask:'Python web services and lightweight application backends.',
+    Streamlit:'Interactive Python applications for data and AI.',
+    Supabase:'Database, authentication, and backend services.',
+    SQLite:'Lightweight local storage for application data.',
+    Git:'Version control and collaborative development.',
+    Docker:'Consistent application environments and packaging.',
+    Arduino:'Connecting sensors, control logic, and physical outputs.',
+    Canva:'Visual layouts for events and communication.',
+    Photoshop:'Image editing and visual design.'
+  };
+  document.querySelectorAll('.skills-deck .deck-card').forEach((card,index) => {
+    const panel=document.createElement('p');panel.className='skill-readout';
+    panel.id=`skill-readout-${index}`;panel.setAttribute('role','status');
+    panel.textContent='Select a tool to explore its role.';
+    card.querySelector('.card-tags').after(panel);
+    card.querySelectorAll('[data-skill]').forEach(tag => {
+      const button=document.createElement('button');button.type='button';
+      button.className='skill-chip';button.textContent=tag.textContent;
+      button.setAttribute('aria-pressed','false');button.setAttribute('aria-controls',panel.id);
+      button.addEventListener('click',() => {
+        card.querySelectorAll('.skill-chip').forEach(item=>item.setAttribute('aria-pressed',String(item===button)));
+        panel.textContent=`${button.textContent} — ${toolNotes[button.textContent]}`;
+        if(!motion.matches){
+          button.animate([{transform:'translateY(-3px) scale(.96)'},{transform:'translateY(-3px) scale(1.05)'},{transform:'translateY(-3px) scale(1)'}],{duration:280});
+          panel.animate([{opacity:.4,transform:'translateY(4px)'},{opacity:1,transform:'translateY(0)'}],{duration:220});
+        }
+      });
+      tag.replaceWith(button);
+    });
+  });
   document.querySelectorAll('[data-deck]').forEach(deck => {
     const track=deck.querySelector('.deck-track'), cards=[...track.children];
     const controls=deck.querySelector('.deck-controls');

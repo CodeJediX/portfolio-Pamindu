@@ -130,3 +130,15 @@
  :root:not([data-theme]) .spatial-deck { --surface:#223228; --surface-ink:#e4e9df; --surface-muted:#b8c8b6; }
  :root:not([data-theme]) .credential-deck .deck-card { --surface:#31382a; }
 }
+/* Tactile tool switches with a short circuit-scan on hover and selection. */
+.skill-chip { position:relative; overflow:hidden; min-height:44px; padding:10px 14px; border:1px solid color-mix(in srgb,var(--surface-ink) 40%,transparent); border-radius:5px; background:var(--surface); color:var(--surface-ink); font:11px var(--mono); box-shadow:0 3px 0 color-mix(in srgb,var(--surface-ink) 25%,transparent); cursor:pointer; transition:transform .2s,background .2s,color .2s,box-shadow .2s; }
+.skill-chip::after { content:''; position:absolute; inset:0; background:linear-gradient(115deg,transparent 30%,#ffffff40 50%,transparent 70%); transform:translateX(-110%); pointer-events:none; }
+.skill-chip:hover,.skill-chip[aria-pressed=true] { transform:translateY(-3px); box-shadow:0 6px 0 color-mix(in srgb,var(--surface-ink) 20%,transparent); }
+.skill-chip[aria-pressed=true] { background:var(--surface-ink); color:var(--surface); }
+.skill-chip:active { transform:translateY(1px); box-shadow:0 1px 0 var(--surface-muted); }
+.skills-deck .card-tags { margin-bottom:12px; }
+.deck-card > .skill-readout { margin:0 0 20px; min-height:60px; font-size:12px; padding:12px 0 0 13px; border-left:2px solid var(--surface-muted); }
+.skills-deck[data-enhanced] .deck-track { height:580px; }
+@media(prefers-reduced-motion:no-preference) { .skill-chip:hover::after,.skill-chip:focus-visible::after { animation:tool-scan .55s ease-out; } @keyframes tool-scan { to { transform:translateX(110%); } } }
+@media(max-width:760px) { .skills-deck[data-enhanced] .deck-track { height:640px; } .skill-chip { padding:9px 11px; font-size:10px; } }
+@media(prefers-reduced-motion:reduce) { .skill-chip { transition:none; } .skill-chip:hover,.skill-chip[aria-pressed=true] { transform:none; } }
