@@ -65,7 +65,11 @@ const fs = require('node:fs');
   assert.equal(await np.locator('html').evaluate(el=>getComputedStyle(el).colorScheme),'dark');
   assert.equal(await np.locator('.preloader').isVisible(),false);
   const failed = await browser.newContext(); const fp = await failed.newPage();
-  await fp.route('**/assets/site.js',route=>route.abort()); await fp.goto(base);
+  await fp.route('**/assets/appearance.css',async route => {
+    await new Promise(resolve => setTimeout(resolve,3500)); await route.continue();
+  });
+  await fp.route('**/assets/site.js',route=>route.abort()); await fp.goto(base,{waitUntil:'domcontentloaded'});
+  assert.equal(await fp.locator('.preloader').isVisible(),true);
   await fp.waitForTimeout(2200);
   assert.equal(await fp.locator('.preloader').isVisible(),false);
   report.checks.push('Dark pages and five widths, reduced motion, no-JS dark fallback, main-script failure timeout');

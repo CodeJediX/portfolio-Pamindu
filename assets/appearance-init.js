@@ -9,11 +9,11 @@
   if (meta) meta.content = theme === 'dark' ? '#111813' : '#f5f4ef';
   const dismiss = () => document.documentElement.removeAttribute('data-loading');
   if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    document.documentElement.dataset.loading = '';
     // Start the visible interval after markup is ready, including on repeat visits.
-    document.addEventListener('DOMContentLoaded', () => setTimeout(dismiss, 1100), { once: true });
-    // Independent hard cap if another script delays DOMContentLoaded.
-    setTimeout(dismiss, 3000);
+    document.addEventListener('DOMContentLoaded', () => {
+      document.documentElement.dataset.loading = '';
+      setTimeout(dismiss, 1100);
+    }, { once: true });
     document.addEventListener('keydown', dismiss, { once: true });
     addEventListener('pageshow', (event) => { if (event.persisted) dismiss(); });
   }
