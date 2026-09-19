@@ -1,3 +1,4 @@
+import { additionalProjects } from './profile-updates.mjs';
 export const profile = {
   name: 'Pamindu Karunadasa',
   email: 'pamindu39@gmail.com',
@@ -119,3 +120,6 @@ export const projects = [
     sources: [['C# source and database integration', 'https://github.com/CodeJediX/HotelManagementSystem']],
   },
 ];
+
+// Place recently documented work near the start, keeping the existing case studies.
+projects.splice(1, 0, ...additionalProjects);

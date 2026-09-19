@@ -33,8 +33,8 @@ test('All project pages have meaningful static content, metadata and one H1',asy
  }
 });
 test('Production payload is bounded and curated content has evidence',async()=>{
- assert.equal(projects.length,6);assert.equal(new Set(projects.map(p=>p.id)).size,6);
- for(const p of projects){assert.ok(p.sources.length);assert.ok(p.problem&&p.solution&&p.role&&p.limits);assert.match(p.repo,/^https:\/\/github.com\/CodeJediX\//);}
+ assert.equal(projects.length,8);assert.equal(new Set(projects.map(p=>p.id)).size,projects.length);
+ for(const p of projects){assert.ok(p.sources.length);assert.ok(p.problem&&p.solution&&p.role&&p.limits);if(p.repo)assert.match(p.repo,/^https:\/\/(github.com|drive.google.com)\//);}
  assert.ok((await stat(join(root,'assets/site.js'))).size<8000,'Keep enhancement JavaScript small');
  assert.ok((await stat(join(root,'index.html'))).size<50000,'Avoid excess HTML');
  const sitemap=await readFile(join(root,'sitemap.xml'),'utf8');assert.ok(sitemap.includes(profile.site));

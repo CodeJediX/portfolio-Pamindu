@@ -1,3 +1,4 @@
+import { credentialSection } from './profile-updates.mjs';
 import {profile, projects} from './projects.mjs';
 import {page, header, footer, circuit, escape as e, external, arrow} from './components.mjs';
 
@@ -30,7 +31,7 @@ export function home() {
 
     <section id="work" class="section wrap" aria-labelledby="work-heading">
       <div class="section-heading"><div><p class="eyebrow">01 / SELECTED WORK</p><h2 id="work-heading">Ideas, put to work<span class="accent">.</span></h2></div><p class="section-intro">A closer look at the systems I build,<br>the problems they address, and the thinking behind them.</p></div>
-      <div class="work-controls" hidden><div class="filters" role="group" aria-label="Filter projects"><button aria-pressed="true" data-filter="all">All work <span>06</span></button><button aria-pressed="false" data-filter="ai">Applied AI</button><button aria-pressed="false" data-filter="software">Software & systems</button><button aria-pressed="false" data-filter="web">Web & design</button></div><span class="filter-count mono" role="status" aria-live="polite">6 projects</span></div>
+      <div class="work-controls" hidden><div class="filters" role="group" aria-label="Filter projects"><button aria-pressed="true" data-filter="all">All work <span>${String(projects.length).padStart(2,'0')}</span></button><button aria-pressed="false" data-filter="ai">Applied AI</button><button aria-pressed="false" data-filter="software">Software & systems</button><button aria-pressed="false" data-filter="web">Web & design</button></div><span class="filter-count mono" role="status" aria-live="polite">${projects.length} projects</span></div>
       <div class="project-grid">${projects.map(projectCard).join('')}</div>
       <div class="work-end"><span class="mono">A CURATED SELECTION, WITH SOURCE CODE.</span>${external(profile.github+'?tab=repositories','Explore GitHub')}</div>
     </section>
@@ -54,12 +55,16 @@ export function home() {
       </div>
     </section>
 
-    <section id="experience" class="experience-section" aria-labelledby="experience-heading"><div class="wrap experience-grid"><div class="experience-title"><p class="eyebrow">04 / EXPERIENCE & RECOGNITION</p><h2 id="experience-heading">Learning by doing.<br>Growing with others.</h2><p>Engineering projects, creative work, and the communities that connect them.</p>${external(profile.linkedin,'View professional profile')}</div>
+    ${credentialSection(external,e)}
+
+    <section id="experience" class="experience-section" aria-labelledby="experience-heading"><div class="wrap experience-grid"><div class="experience-title"><p class="eyebrow">04 / EXPERIENCE & RECOGNITION</p><h2 id="experience-heading">Learning by doing.<br>Growing with others.</h2><p>Engineering projects, creative work, and the communities that connect them.</p>${external(profile.linkedin,'View professional profile')}<div class="leadership-note"><h3>Technology, with community.</h3><p>Chairperson for Athwela and co-chair for Artha 2.0, supporting educational access through student-led community projects.</p></div></div>
       <div class="timeline">
+        <article><span class="mono">2026 / LEADERSHIP</span><h3>BCS Chair · Career Fair 2026</h3><p>Helped organize the KDU career fair with the Faculty of Computing–EICU and fellow student chapters.</p></article>
         <article><span class="mono">2026 / COMPETITION</span><h3>Data Odyssey — Final round</h3><p>SignSpeak with team Quantum-X: sign recognition and an interactive learning experience.</p></article>
         <article><span class="mono">2025 / RECOGNITION</span><h3>TensorForge — 2nd runner-up</h3><p>AI Buildathon, IEEE Computer Society of KDU.</p></article>
+        <article><span class="mono">2025 / COMPETITIVE PROGRAMMING</span><h3>IEEEXtreme 19.0</h3><p>Programming competition participant with team TheKernelCrew. Certificate of participation issued by IEEE.</p></article>
         <article><span class="mono">2025 / DESIGN</span><h3>PixelWave — Top 20 finalist</h3><p>Inter-university digital art competition, IEEE Computer Society of KDU.</p></article>
-        <article><span class="mono">COMMUNITY / DESIGN & LEADERSHIP</span><h3>ERIC, IEEE & BCS at KDU</h3><p>Visual communication for the ERIC Club, the INSPIRE magazine, and SPARK workshop. Event and project leadership across student communities.</p></article>
+        <article><span class="mono">COMMUNITY / DESIGN & LEADERSHIP</span><h3>ERIC Editor · Robotics Week 2026</h3><p>Editorial and design leadership for the KDU Electronic Robotics and Innovation Club, including Robotics Week, INSPIRE, and SPARK.</p></article>
         <article><span class="mono">INDUSTRY / EARLY EXPERIENCE</span><h3>IT internship · Sampath Bank</h3><p>Early industry exposure alongside my path into computer engineering.</p></article>
       </div>
     </div></section>

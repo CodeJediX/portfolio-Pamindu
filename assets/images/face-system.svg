@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800">
+<rect width="1200" height="800" fill="#17272b"/>
+<g stroke="#2c4246" stroke-width="1"><path d="M0 160h1200M0 320h1200M0 480h1200M0 640h1200M200 0v800M400 0v800M600 0v800M800 0v800M1000 0v800"/></g>
+<g font-family="monospace" fill="#b8d0c9"><text x="64" y="65" font-size="16" letter-spacing="3">EDGE INTELLIGENCE / SYSTEM STUDY</text><text x="64" y="741" font-size="13" letter-spacing="2">CONCEPT DIAGRAM · NOT AN APPLICATION SCREENSHOT</text></g>
+<g fill="none" stroke="#9bbbac" stroke-width="2"><path d="M237 204v-35h48M237 552v35h48M590 169h48v35M590 587h48v-35"/><path d="M335 273Q343 205 435 207Q536 210 544 282L530 425Q505 509 437 536Q363 505 342 426Z"/><path d="M351 295l84-41 98 42-48 70-48 30-47-30ZM351 295l39 71-41 57 88 67 91-67-43-57M390 366l-10 67 57 26 56-27-8-66M437 254v142l-17 31h36M402 465h71"/></g>
+<g fill="#efa17e"><circle cx="351" cy="295" r="5"/><circle cx="435" cy="254" r="5"/><circle cx="533" cy="296" r="5"/><circle cx="390" cy="366" r="5"/><circle cx="485" cy="366" r="5"/><circle cx="437" cy="396" r="5"/><circle cx="349" cy="423" r="5"/><circle cx="528" cy="423" r="5"/><circle cx="437" cy="490" r="5"/></g>
+<path d="M570 376h140" stroke="#87a99a" stroke-width="2" stroke-dasharray="6 8"/>
+<g font-family="monospace" font-size="18"><g fill="#223b3d" stroke="#597a70"><rect x="730" y="214" width="365" height="80" rx="4"/><rect x="730" y="336" width="365" height="80" rx="4"/><rect x="730" y="458" width="365" height="80" rx="4"/></g><g fill="#d7e8dc"><text x="756" y="262">01 / FACE MATCH</text><text x="756" y="384">02 / BLINK CHECK</text><text x="756" y="506">03 / ACCESS DECISION</text></g></g>
+<g stroke="#9bbbac" stroke-width="2"><path d="M912 294v42m0 80v42"/></g>
+<text x="64" y="125" font-family="sans-serif" font-size="35" fill="#e1eade">Recognition meets verification.</text>
+</svg>

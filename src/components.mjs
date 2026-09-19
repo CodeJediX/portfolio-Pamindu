@@ -8,7 +8,7 @@ export function header(base = './', home = true) {
   return `<a class="skip-link" href="#main">Skip to content</a>
   <header class="site-header wrap">
     <a class="brand" href="${base}"><span class="brand-mark" aria-hidden="true">p<span>k</span><i></i></span><span class="brand-name">PAMINDU<br>KARUNADASA</span><span class="sr-only"> — home</span></a>
-    <button class="menu-toggle" aria-controls="navigation" aria-expanded="false" hidden>Menu <span aria-hidden="true">＋</span></button>
+    <div class="header-controls"><button class="theme-toggle" aria-label="Dark mode" aria-pressed="false" hidden><svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18"><path d="M20 14.4A8.5 8.5 0 0 1 9.6 4a8.5 8.5 0 1 0 10.4 10.4Z" fill="none" stroke="currentColor" stroke-width="1.5"/></svg><span class="theme-label">Dark</span></button><button class="menu-toggle" aria-controls="navigation" aria-expanded="false" hidden>Menu <span aria-hidden="true">＋</span></button></div>
     <nav id="navigation" aria-label="Main navigation"><a href="${home?'':base}#work">Selected work</a><a href="${home?'':base}#about">About</a><a href="${home?'':base}#experience">Experience</a><a class="nav-contact" href="${home?'':base}#contact">Let’s talk ${arrow}</a></nav>
   </header>`;
 }
@@ -28,13 +28,14 @@ export function page({title, description, body, base='./', path='', image='asset
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>${escape(title)}</title><meta name="description" content="${escape(description)}">
 <link rel="canonical" href="${canonical}"><meta name="theme-color" content="#f5f4ef">
+<script src="${base}assets/appearance-init.js"></script>
 <meta property="og:type" content="website"><meta property="og:title" content="${escape(title)}"><meta property="og:description" content="${escape(description)}"><meta property="og:url" content="${canonical}"><meta property="og:image" content="${profile.site}${image}"><meta property="og:image:alt" content="Pamindu Karunadasa — Computer Engineering, Applied AI, Software and Design">
 <meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="${escape(title)}"><meta name="twitter:description" content="${escape(description)}"><meta name="twitter:image" content="${profile.site}${image}">
 <link rel="icon" href="${base}assets/favicon.svg" type="image/svg+xml">
 <link rel="preload" href="${base}assets/fonts/manrope.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="${base}assets/site.css"><script src="${base}assets/site.js" defer></script>
+<link rel="stylesheet" href="${base}assets/site.css"><link rel="stylesheet" href="${base}assets/appearance.css"><script src="${base}assets/site.js" defer></script>
 <script type="application/ld+json">${JSON.stringify(structured).replace(/</g,'\\u003c')}</script>
-</head><body id="top">${body}</body></html>`;
+</head><body id="top"><div class="preloader" aria-hidden="true"><div class="preloader-inner"><span class="preloader-monogram">pk<span>.</span></span><span class="mono">PAMINDU KARUNADASA</span><span class="preloader-rule"></span><span class="preloader-caption mono">ENGINEERING · DESIGN · CURIOSITY</span></div></div>${body}</body></html>`;
 }
 
 // A deliberately abstract, original circuit illustration: no model download or WebGL runtime.

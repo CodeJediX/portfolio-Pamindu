@@ -1,5 +1,31 @@
 // Progressive enhancements: all content and destinations work without JavaScript.
 (() => {
+  const themeButton = document.querySelector('.theme-toggle');
+  const systemTheme = matchMedia('(prefers-color-scheme: dark)');
+  let hasExplicitTheme = false;
+  try { hasExplicitTheme = ['light', 'dark'].includes(localStorage.getItem('portfolio-theme')); } catch {}
+  const applyTheme = (theme) => {
+    document.documentElement.dataset.theme = theme;
+    document.querySelector('meta[name="theme-color"]').content = theme === 'dark' ? '#111813' : '#f5f4ef';
+    if (themeButton) {
+      themeButton.setAttribute('aria-pressed', String(theme === 'dark'));
+      themeButton.querySelector('.theme-label').textContent = 'Dark';
+    }
+  };
+  if (themeButton) {
+    themeButton.hidden = false;
+    applyTheme(document.documentElement.dataset.theme || (systemTheme.matches ? 'dark' : 'light'));
+    themeButton.addEventListener('click', () => {
+      const theme = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+      hasExplicitTheme = true;
+      try { localStorage.setItem('portfolio-theme', theme); } catch {}
+      applyTheme(theme);
+    });
+  }
+  systemTheme.addEventListener('change', (event) => {
+    if (!hasExplicitTheme) applyTheme(event.matches ? 'dark' : 'light');
+  });
+
   const toggle = document.querySelector('.menu-toggle');
   const navigation = document.querySelector('#navigation');
   const mobile = matchMedia('(max-width: 760px)');
