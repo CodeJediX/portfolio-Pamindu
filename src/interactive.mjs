@@ -18,11 +18,14 @@ export function skillsDeck() {
 
 export function learningSection() {
   const awards=[
+    {name:'AI Challenge Sri Lanka 2026 — Grand Finale Finalist',issuer:'AI-Driven Sri Lanka',date:'Aug 2026',kind:'COMPETITION RECOGNITION',url:'https://www.linkedin.com/in/pamindu-karunadasa/overlay/Certifications/894864052/treasury/'},
+    {name:'Data Odyssey 2026 — Finalist',issuer:'General Sir John Kotelawala Defence University',date:'Aug 2026',kind:'COMPETITION RECOGNITION',url:'https://www.linkedin.com/in/pamindu-karunadasa/overlay/Certifications/894740758/treasury/'},
+    {name:'CHYPER 4.0 2026 — Finalist',issuer:'WIE Affinity Group of IEEE Student Branch of KDU',date:'Sep 2026',kind:'COMPETITION RECOGNITION',url:'https://www.linkedin.com/in/pamindu-karunadasa/overlay/Certifications/894481700/treasury/'},
     {name:'2nd Runner Up — TensorForge AI Buildathon',issuer:'IEEE Computer Society of KDU',date:'Oct 2025',kind:'COMPETITION RECOGNITION'},
     {name:'IEEEXtreme 19.0 — Participation',issuer:'IEEE',date:'Oct 2025',kind:'PARTICIPATION CERTIFICATE'},
     {name:'Top 20 Finalist — PixelWave 2025',issuer:'IEEE Computer Society of KDU',date:'Sep 2025',kind:'DESIGN RECOGNITION'},
   ];
-  const cards=[...awards,...certifications].map((c,i)=>({category:c.kind||'COURSE CERTIFICATE',title:c.name,text:c.issuer,tags:c.date?[c.date]:[],symbol:i<3?'✳':'◈',link:external(profile.linkedin,'View on LinkedIn')}));
+  const cards=[...awards,...certifications].map(c=>({category:c.kind||'COURSE CERTIFICATE',title:c.name,text:c.issuer,tags:c.date?[c.date]:[],symbol:c.kind?'✳':'◈',link:external(c.url||profile.linkedin+'/details/certifications/','View on LinkedIn')}));
   return `<section id="experience" class="section learning-section" aria-labelledby="experience-heading"><div class="wrap"><div class="section-heading"><div><p class="eyebrow">04 / LICENSES, CERTIFICATIONS & RECOGNITION</p><h2 id="experience-heading">Learning by doing.<br>Growing with others.</h2></div><p class="section-intro">A growing collection of learning,<br>participation, and creative milestones.</p></div><div id="certifications">${deck('credentials','certification cards',cards,'credential')}</div><div class="learning-notes"><p><span class="mono">APPLIED EXPERIENCE</span>Data Odyssey finalist with Quantum-X · IT internship at Sampath Bank</p>${external(profile.linkedin,'Explore my professional profile')}</div></div></section>`;
 }
 

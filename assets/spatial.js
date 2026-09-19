@@ -47,6 +47,8 @@
   document.querySelectorAll('[data-deck]').forEach(deck => {
     const track=deck.querySelector('.deck-track'), cards=[...track.children];
     const controls=deck.querySelector('.deck-controls');
+    const progress=document.createElement('div');progress.className='deck-progress';progress.setAttribute('aria-hidden','true');
+    progress.append(document.createElement('span'));controls.before(progress);
     let active=0, startX=null;
     const render=() => {
       cards.forEach((card,i) => {
@@ -58,6 +60,7 @@
         card.setAttribute('aria-hidden',String(offset!==0));
       });
       controls.querySelector('.deck-status').textContent=`${String(active+1).padStart(2,'0')} / ${String(cards.length).padStart(2,'0')}`;
+      progress.firstElementChild.style.transform=`scaleX(${(active+1)/cards.length})`;
     };
     const move=delta=>{active=(active+delta+cards.length)%cards.length;render();};
     deck.dataset.enhanced=''; controls.hidden=false; render();

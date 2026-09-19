@@ -142,3 +142,11 @@
 @media(prefers-reduced-motion:no-preference) { .skill-chip:hover::after,.skill-chip:focus-visible::after { animation:tool-scan .55s ease-out; } @keyframes tool-scan { to { transform:translateX(110%); } } }
 @media(max-width:760px) { .skills-deck[data-enhanced] .deck-track { height:640px; } .skill-chip { padding:9px 11px; font-size:10px; } }
 @media(prefers-reduced-motion:reduce) { .skill-chip { transition:none; } .skill-chip:hover,.skill-chip[aria-pressed=true] { transform:none; } }
+/* Certificate display: a framed emblem and restrained metallic-paper detail. */
+.credential-deck .deck-card { background-image:radial-gradient(ellipse at 90% 0%,color-mix(in srgb,var(--surface-ink) 9%,transparent),transparent 60%); }
+.credential-deck .deck-card::after { content:''; pointer-events:none; position:absolute; inset:9px; border:1px solid color-mix(in srgb,var(--surface-ink) 12%,transparent); }
+.credential-deck .card-symbol { display:grid; place-items:center; border:1px solid color-mix(in srgb,var(--surface-ink) 35%,transparent); border-radius:50%; width:66px; height:66px; font-size:38px; margin:24px 0 22px; box-shadow:4px 4px 0 color-mix(in srgb,var(--surface-ink) 9%,transparent); }
+.credential-deck .deck-card[data-position=active] { border-top:3px solid var(--accent); }
+.deck-progress { max-width:240px; height:2px; background:var(--line); margin:0 auto 20px; overflow:hidden; }
+.deck-progress > span { display:block; width:100%; height:100%; background:var(--accent); transform-origin:left; transition:transform .45s cubic-bezier(.2,.7,.2,1); }
+@media(prefers-reduced-motion:reduce) { .deck-progress > span { transition:none; } }
