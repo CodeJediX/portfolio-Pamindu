@@ -1,4 +1,4 @@
-import { credentialSection } from './profile-updates.mjs';
+import { skillsDeck, learningSection, roadmap } from './interactive.mjs';
 import {profile, projects} from './projects.mjs';
 import {page, header, footer, circuit, escape as e, external, arrow} from './components.mjs';
 
@@ -47,37 +47,10 @@ export function home() {
     </div></section>
 
     <section id="skills" class="section wrap" aria-labelledby="skills-heading"><div class="section-heading"><div><p class="eyebrow">03 / TOOLS & APPROACH</p><h2 id="skills-heading">The right tool.<br>For a real problem.</h2></div><p class="section-intro">Technologies used across my projects.<br>A practical toolkit, shaped by the work.</p></div>
-      <div class="skills-table">
-        <div><h3><span class="mono">01</span> Languages</h3><p>Python · JavaScript · TypeScript · C# · Java</p><a href="projects/hotel-management/">Desktop & application work ${arrow}</a></div>
-        <div><h3><span class="mono">02</span> AI & vision</h3><p>TensorFlow · Keras · MediaPipe · OpenCV · Gemini</p><a href="projects/signspeak/">Recognition & interaction ${arrow}</a></div>
-        <div><h3><span class="mono">03</span> Web & data</h3><p>React · Next.js · Flask · Streamlit · Supabase · SQLite</p><a href="projects/createx/">Web platform work ${arrow}</a></div>
-        <div><h3><span class="mono">04</span> Build & design</h3><p>Git · Docker · Arduino · Canva · Photoshop</p><a href="#volunteering">Design & community work ${arrow}</a></div>
-      </div>
+      ${skillsDeck()}
     </section>
-
-    ${credentialSection(external,e)}
-
-    <section id="experience" class="experience-section" aria-labelledby="experience-heading"><div class="wrap experience-grid"><div class="experience-title"><p class="eyebrow">04 / EXPERIENCE & RECOGNITION</p><h2 id="experience-heading">Learning by doing.<br>Growing with others.</h2><p>Engineering projects, creative work, and the communities that connect them.</p>${external(profile.linkedin,'View professional profile')}</div>
-      <div class="timeline">
-        <article><span class="mono">2026 / LEADERSHIP</span><h3>BCS Chair · Career Fair 2026</h3><p>Helped organize the KDU career fair with the Faculty of Computing–EICU and fellow student chapters.</p></article>
-        <article><span class="mono">2026 / COMPETITION</span><h3>Data Odyssey — Final round</h3><p>SignSpeak with team Quantum-X: sign recognition and an interactive learning experience.</p></article>
-        <article><span class="mono">2025 / RECOGNITION</span><h3>TensorForge — 2nd runner-up</h3><p>AI Buildathon, IEEE Computer Society of KDU.</p></article>
-        <article><span class="mono">2025 / COMPETITIVE PROGRAMMING</span><h3>IEEEXtreme 19.0</h3><p>Programming competition participant with team TheKernelCrew. Certificate of participation issued by IEEE.</p></article>
-        <article><span class="mono">2025 / DESIGN</span><h3>PixelWave — Top 20 finalist</h3><p>Inter-university digital art competition, IEEE Computer Society of KDU.</p></article>
-        <article><span class="mono">COMMUNITY / DESIGN & LEADERSHIP</span><h3>ERIC Editor · Robotics Week 2026</h3><p>Editorial and design leadership for the KDU Electronic Robotics and Innovation Club, including Robotics Week, INSPIRE, and SPARK.</p></article>
-        <article><span class="mono">INDUSTRY / EARLY EXPERIENCE</span><h3>IT internship · Sampath Bank</h3><p>Early industry exposure alongside my path into computer engineering.</p></article>
-      </div>
-    </div></section>
-
-    <section id="volunteering" class="section wrap" aria-labelledby="volunteering-heading"><div class="section-heading"><div><p class="eyebrow">05 / VOLUNTEERING & COMMUNITY</p><h2 id="volunteering-heading">Showing up.<br>Making a difference.</h2></div><p class="section-intro">Working with others to create opportunities,<br>share knowledge, and support learning.</p></div>
-      <div class="volunteer-layout"><div class="volunteer-intro"><span class="volunteer-mark" aria-hidden="true">↗</span><h3>People at the heart<br>of the work.</h3><p>Alongside engineering, I contribute to student communities through educational outreach, event coordination, and creative leadership.</p>${external(profile.linkedin,'View volunteering on LinkedIn')}<p class="mono volunteer-hint">SELECT A ROLE TO EXPLORE ↓</p></div>
-      <div class="volunteer-roles">
-        <details open><summary><span class="mono volunteer-number">01</span><span><span class="eyebrow">EDUCATIONAL OUTREACH</span><strong>Athwela</strong><span class="volunteer-role">Chairperson</span></span><span class="volunteer-plus" aria-hidden="true">＋</span></summary><div class="volunteer-body"><p>Leading a student-led community project supporting educational access. A chance to bring people together around learning and service.</p></div></details>
-        <details><summary><span class="mono volunteer-number">02</span><span><span class="eyebrow">COMMUNITY SERVICE · IEEE COMPUTER SOCIETY</span><strong>Artha 2.0</strong><span class="volunteer-role">Co-chair</span></span><span class="volunteer-plus" aria-hidden="true">＋</span></summary><div class="volunteer-body"><p>Working with fellow volunteers on educational support, sharing responsibility for a community initiative built around access to learning.</p></div></details>
-        <details><summary><span class="mono volunteer-number">03</span><span><span class="eyebrow">STUDENT LEADERSHIP · KDU</span><strong>BCS Student Chapter</strong><span class="volunteer-role">Chair · Career Fair 2026</span></span><span class="volunteer-plus" aria-hidden="true">＋</span></summary><div class="volunteer-body"><p>Helping organize Career Fair 2026 alongside the Faculty of Computing–EICU and fellow student chapters, connecting students with professional opportunities.</p></div></details>
-        <details><summary><span class="mono volunteer-number">04</span><span><span class="eyebrow">CREATIVE SERVICE · KDU ERIC</span><strong>Electronic Robotics & Innovation Club</strong><span class="volunteer-role">Editor · Design leadership</span></span><span class="volunteer-plus" aria-hidden="true">＋</span></summary><div class="volunteer-body"><p>Contributing editorial and design work to the club’s activities, including Robotics Week 2026, INSPIRE, and SPARK. Using visual communication to help the student engineering community share its ideas.</p></div></details>
-      </div></div>
-    </section>
+    ${learningSection()}
+    ${roadmap()}
 
     <section id="contact" class="contact-section" aria-labelledby="contact-heading"><div class="wrap"><p class="eyebrow">06 / LET’S CONNECT</p><div class="contact-main"><h2 id="contact-heading">Have something<br>in mind<span>?</span></h2><div><p>For internship opportunities, research conversations, or a project worth building together.</p><a class="button contact-button" href="mailto:${profile.email}">Say hello ${arrow}</a></div></div><div class="contact-bottom"><a class="email-link" href="mailto:${profile.email}">${profile.email}</a><div>${external(profile.linkedin,'LinkedIn')}${external(profile.github,'GitHub')}${external(profile.linktree,'Linktree')}</div></div></div></section>
   </main>${footer()}`;

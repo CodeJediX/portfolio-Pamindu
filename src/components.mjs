@@ -14,7 +14,7 @@ export function header(base = './', home = true) {
 }
 
 export function footer(base = './') {
-  return `<footer class="site-footer wrap"><p>© ${new Date().getUTCFullYear()} Pamindu Karunadasa</p><p class="footer-note">Thoughtfully designed. Built to be useful.</p><a href="${base}#top">Back to top <span aria-hidden="true">↑</span></a></footer>`;
+  return `<footer class="site-footer connected-footer"><div class="wrap"><div class="footer-heading"><a class="footer-signature" href="${base}">Pamindu<span class="accent">.</span></a><p>Engineering ideas.<br>Connecting possibilities.</p><a class="footer-top" href="${base}#top" aria-label="Back to top">↑</a></div><div class="footer-columns"><div><p class="eyebrow">EXPLORE</p><a href="${base}#work">Selected projects</a><a href="${base}#about">About me</a><a href="${base}#skills">Skills & tools</a><a href="${base}#certifications">Certifications</a><a href="${base}#volunteering">Volunteering</a></div><div><p class="eyebrow">AROUND THE WEB</p>${external(profile.github,'GitHub')}${external(profile.linkedin,'LinkedIn')}${external(profile.linktree,'All my links · Linktree')}</div><div><p class="eyebrow">LET’S BUILD SOMETHING</p><a class="footer-email" href="mailto:${profile.email}">${profile.email} ↗</a><p>Based in Sri Lanka.<br>Open to thoughtful conversations.</p></div></div><div class="footer-bottom mono"><span>© ${new Date().getUTCFullYear()} Pamindu Karunadasa</span><span>HARDWARE × INTELLIGENCE × INTERFACE</span></div></div></footer>`;
 }
 
 export function page({title, description, body, base='./', path='', image='assets/social-preview.png'}) {
@@ -33,7 +33,7 @@ export function page({title, description, body, base='./', path='', image='asset
 <meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="${escape(title)}"><meta name="twitter:description" content="${escape(description)}"><meta name="twitter:image" content="${profile.site}${image}">
 <link rel="icon" href="${base}assets/favicon.svg" type="image/svg+xml">
 <link rel="preload" href="${base}assets/fonts/manrope.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="${base}assets/site.css"><link rel="stylesheet" href="${base}assets/appearance.css"><script src="${base}assets/site.js" defer></script>
+<link rel="stylesheet" href="${base}assets/site.css"><link rel="stylesheet" href="${base}assets/appearance.css"><script src="${base}assets/site.js" defer></script><link rel="stylesheet" href="${base}assets/spatial.css"><script src="${base}assets/spatial.js" defer></script>
 <script type="application/ld+json">${JSON.stringify(structured).replace(/</g,'\\u003c')}</script>
 </head><body id="top"><div class="preloader" aria-hidden="true"><div class="preloader-inner"><span class="preloader-monogram">pk<span>.</span></span><span class="mono">PAMINDU KARUNADASA</span><span class="preloader-rule"></span><span class="preloader-caption mono">ENGINEERING · DESIGN · CURIOSITY</span></div></div>${body}</body></html>`;
 }
@@ -43,7 +43,7 @@ export function circuit() {
   const pins = Array.from({length:10},(_,i)=>`<path d="M${188+i*16} ${246-i*8}l-13-7 M${376+i*8} ${244+i*4}l14-7 M${386-i*16} ${342+i*8}l13 7 M${188-i*8} ${266+i*4}l-14 7"/>`).join('');
   return `<div class="circuit" data-exploded="true">
     <div class="figure-top mono"><span>FIG. 01 — A CONNECTED SYSTEM</span><span aria-hidden="true">＋</span></div>
-    <svg class="circuit-drawing" viewBox="0 0 560 510" fill="none" role="img" aria-labelledby="circuit-title circuit-desc">
+    <div class="core-stage"><svg class="circuit-drawing" viewBox="0 0 560 510" fill="none" role="img" aria-labelledby="circuit-title circuit-desc">
       <title id="circuit-title">From physical inputs to intelligent interfaces</title><desc id="circuit-desc">An exploded isometric circuit diagram with three connected layers: hardware, intelligence, and interface.</desc>
       <defs><pattern id="dot-grid" x="0" y="0" width="22" height="22" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r=".8" fill="#b7b9ae"/></pattern></defs>
       <rect width="560" height="510" fill="url(#dot-grid)"/>
@@ -61,7 +61,7 @@ export function circuit() {
       <g fill="#b34224"><circle cx="153" cy="174" r="3"/><circle cx="407" cy="174" r="3"/></g></g>
       <g class="diagram-labels" stroke="#70766b"><path d="M403 139h57M445 298h33M117 425H58"/></g>
       <g class="diagram-labels" fill="#52604f" font-family="monospace" font-size="10"><text x="401" y="130">INTERFACE</text><text x="404" y="315">INTELLIGENCE</text><text x="38" y="444">HARDWARE</text></g>
-    </svg>
-    <div class="figure-bottom"><span class="mono">HARDWARE × INTELLIGENCE × INTERFACE</span><button class="layer-toggle" aria-pressed="true" hidden>Assemble layers <span aria-hidden="true">↙</span></button></div>
+    </svg><button class="core-trigger" aria-label="Break apart the circuit to explore skills, certifications and volunteering" aria-expanded="false" aria-controls="core-tiles" hidden><span class="core-hint mono">PRESS TO EXPLORE ↗</span></button><div class="core-fragments" aria-hidden="true"></div><div id="core-tiles" class="core-tiles" hidden><a href="#skills"><span class="mono">01 / TOOLKIT</span><strong>Code & build</strong><span>Python · JavaScript ↗</span></a><a href="projects/signspeak/"><span class="mono">02 / INTELLIGENCE</span><strong>AI & vision</strong><span>SignSpeak ↗</span></a><a href="#certifications"><span class="mono">03 / LEARNING</span><strong>Credentials</strong><span>Explore certificates ↗</span></a><a href="#volunteering"><span class="mono">04 / COMMUNITY</span><strong>Leadership</strong><span>ERIC · IEEE CS · BCS ↗</span></a><a href="#work"><span class="mono">05 / SYSTEMS</span><strong>Selected work</strong><span>Explore 8 projects ↗</span></a><a href="#contact"><span class="mono">06 / CONNECT</span><strong>Let’s talk</strong><span>Build something useful ↗</span></a></div></div>
+    <div class="figure-bottom"><span class="mono">HARDWARE × INTELLIGENCE × INTERFACE</span><button class="layer-toggle" aria-pressed="false" aria-expanded="false" aria-controls="core-tiles" hidden>Explore the system <span aria-hidden="true">↙</span></button></div>
   </div>`;
 }

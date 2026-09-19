@@ -62,3 +62,5 @@ The script uses locally installed Chrome (`channel: chrome`). It checks 320, 390
 Only project-supported technologies and attributable achievements are included. Project pages distinguish prototypes, repository implementation, and verified outcomes. The CV link in the old site requires authentication and is intentionally omitted. Contact uses the publicly provided email address and real profile links, with no simulated form submission.
 
 Original portfolio content and assets remain available in Git history at `18a7f7a`. See [the audit](docs/AUDIT.md), [research and curation](docs/RESEARCH.md), and [verification](docs/TESTING.md).
+
+Additional visual-interaction regression: `node tests/spatial.cjs` (set `QA_NODE_MODULES` to the optional QA dependency directory). The source modules in `src/interactive.mjs` and `assets/spatial.*` own the skill/certification decks, volunteering roadmap and explorable hero.

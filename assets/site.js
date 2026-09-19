@@ -88,29 +88,4 @@
     });
   }
 
-  const circuit = document.querySelector('.circuit');
-  if (circuit) {
-    const button = circuit.querySelector('.layer-toggle');
-    const drawing = circuit.querySelector('svg');
-    const motion = matchMedia('(prefers-reduced-motion: reduce)');
-    const pointer = matchMedia('(pointer: fine)');
-    button.hidden = false;
-    button.addEventListener('click', () => {
-      const exploded = circuit.dataset.exploded !== 'true';
-      circuit.dataset.exploded = String(exploded);
-      button.setAttribute('aria-pressed', String(exploded));
-      button.firstChild.textContent = exploded ? 'Assemble layers ' : 'Explore layers ';
-    });
-    const reset = () => { drawing.style.removeProperty('--rx'); drawing.style.removeProperty('--ry'); };
-    // Event-driven transform only: no idle rendering loop, camera access, or mobile tilt.
-    circuit.addEventListener('pointermove', (event) => {
-      if (motion.matches || !pointer.matches) return;
-      const bounds = circuit.getBoundingClientRect();
-      drawing.style.setProperty('--rx', `${-(event.clientY - bounds.top - bounds.height / 2) / bounds.height * 5}deg`);
-      drawing.style.setProperty('--ry', `${(event.clientX - bounds.left - bounds.width / 2) / bounds.width * 5}deg`);
-    });
-    circuit.addEventListener('pointerleave', reset);
-    motion.addEventListener('change', reset);
-    pointer.addEventListener('change', reset);
-  }
 })();
