@@ -1,5 +1,23 @@
 // Progressive enhancements: all content and destinations work without JavaScript.
 (() => {
+  // Brief entrance accents; content stays visible if enhancements are unavailable.
+  const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        observer.unobserve(entry.target);
+        if (!reducedMotion.matches) entry.target.animate(
+          [{ transform: 'translateY(14px)' }, { transform: 'translateY(0)' }],
+          { duration: 480, easing: 'cubic-bezier(.2,.7,.2,1)' }
+        );
+      });
+    }, { threshold: .12 });
+    document.querySelectorAll('.section-heading, .volunteer-intro, .volunteer-roles').forEach(el => observer.observe(el));
+    reducedMotion.addEventListener('change', () => {
+      if (reducedMotion.matches) document.getAnimations().forEach(animation => animation.cancel());
+    });
+  }
   const themeButton = document.querySelector('.theme-toggle');
   const systemTheme = matchMedia('(prefers-color-scheme: dark)');
   let hasExplicitTheme = false;

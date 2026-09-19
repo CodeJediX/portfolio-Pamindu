@@ -8,13 +8,12 @@
   const meta = document.querySelector('meta[name="theme-color"]');
   if (meta) meta.content = theme === 'dark' ? '#111813' : '#f5f4ef';
   const dismiss = () => document.documentElement.removeAttribute('data-loading');
-  let seen = false;
-  try { seen = sessionStorage.getItem('portfolio-welcome') === 'seen'; } catch {}
-  if (!seen && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
     document.documentElement.dataset.loading = '';
-    try { sessionStorage.setItem('portfolio-welcome', 'seen'); } catch {}
-    // Hard cap also works if the main enhancement script fails to load.
-    setTimeout(dismiss, 700);
+    // Start the visible interval after markup is ready, including on repeat visits.
+    document.addEventListener('DOMContentLoaded', () => setTimeout(dismiss, 1100), { once: true });
+    // Independent hard cap if another script delays DOMContentLoaded.
+    setTimeout(dismiss, 3000);
     document.addEventListener('keydown', dismiss, { once: true });
     addEventListener('pageshow', (event) => { if (event.persisted) dismiss(); });
   }

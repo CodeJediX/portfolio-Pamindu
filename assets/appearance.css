@@ -18,12 +18,12 @@
   background: var(--paper); color: var(--ink); pointer-events: none;
   opacity: 0; visibility: hidden; transition: opacity .18s, visibility .18s;
 }
-html[data-loading] .preloader { opacity: 1; visibility: visible; animation: loader-failsafe 0s 1s forwards; }
+html[data-loading] .preloader { opacity: 1; visibility: visible; animation: loader-failsafe 0s 2s forwards; }
 .preloader-inner { display: flex; align-items: center; flex-direction: column; gap: 19px; }
 .preloader-monogram { font-size: 92px; line-height: 1; letter-spacing: -.12em; padding-right: 12px; }
 .preloader-monogram > span { color: var(--accent); }
 .preloader-rule { width: 180px; height: 1px; background: var(--line); position: relative; overflow: hidden; }
-.preloader-rule::after { content: ''; position: absolute; inset: 0; background: var(--accent); transform-origin: left; animation: welcome-line .65s ease-out both; }
+.preloader-rule::after { content: ''; position: absolute; inset: 0; background: var(--accent); transform-origin: left; animation: welcome-line 1.1s ease-out both; }
 .preloader-caption { color: var(--muted); font-size: 8px; letter-spacing: .11em; }
 @keyframes welcome-line { from { transform: scaleX(0); } to { transform: scaleX(1); } }
 @keyframes loader-failsafe { to { opacity: 0; visibility: hidden; } }
@@ -144,3 +144,43 @@ html[data-loading] .preloader { opacity: 1; visibility: visible; animation: load
 
 
 }
+/* Community roles use native disclosure controls for keyboard and no-JS access. */
+.volunteer-layout { display:grid; grid-template-columns:.8fr 1.5fr; gap:80px; }
+.volunteer-intro { padding-top:20px; }
+.volunteer-mark { display:block; color:var(--accent); font-size:72px; line-height:1; margin-bottom:24px; }
+.volunteer-intro h3 { font-size:30px; line-height:1.2; letter-spacing:-.04em; }
+.volunteer-intro > p { color:var(--muted); font-size:13px; margin:20px 0; max-width:330px; }
+.volunteer-intro .volunteer-hint { margin-top:35px; font-size:9px; }
+.volunteer-roles { border-top:1px solid var(--line); }
+.volunteer-roles details { border-bottom:1px solid var(--line); }
+.volunteer-roles summary { display:grid; grid-template-columns:28px 1fr 28px; gap:18px; padding:26px 12px; cursor:pointer; list-style:none; transition:background .2s; }
+.volunteer-roles summary::-webkit-details-marker { display:none; }
+.volunteer-roles summary:hover { background:color-mix(in srgb,var(--ink) 4%,transparent); }
+.volunteer-number { color:var(--accent); font-size:10px; padding-top:3px; }
+.volunteer-roles .eyebrow { display:block; font-size:9px; margin-bottom:10px; }
+.volunteer-roles strong { display:block; font-size:25px; font-weight:500; letter-spacing:-.035em; line-height:1.25; }
+.volunteer-role { display:block; color:var(--muted); font-size:12px; margin-top:9px; }
+.volunteer-plus { color:var(--accent); font-size:23px; transition:transform .25s; }
+.volunteer-roles details[open] .volunteer-plus { transform:rotate(45deg); }
+.volunteer-body { padding:0 58px 26px; }
+.volunteer-body p { color:var(--muted); font-size:13px; line-height:1.9; }
+@media (prefers-reduced-motion:no-preference) {
+ .volunteer-roles details[open] .volunteer-body { animation:community-open .28s ease-out; }
+ .project-visual .image-frame { transition:transform .35s ease; }
+ .project-visual:hover .image-frame { transform:translateY(-5px); }
+ .button { transition:transform .2s,background .2s,box-shadow .2s; }
+ .button:active { transform:translateY(2px); }
+ @keyframes community-open { from { opacity:0; transform:translateY(-6px); } to { opacity:1; transform:translateY(0); } }
+}
+@media (max-width:760px) {
+ .volunteer-layout { grid-template-columns:1fr; gap:35px; }
+ .volunteer-mark { font-size:52px; margin-bottom:16px; }
+ .volunteer-intro .volunteer-hint { margin-top:24px; }
+ .volunteer-roles summary { padding:24px 0; gap:12px; grid-template-columns:22px 1fr 24px; }
+ .volunteer-roles strong { font-size:23px; }
+ .volunteer-body { padding:0 34px 24px; }
+}
+.volunteer-roles summary > span { min-width:0; overflow-wrap:anywhere; }
+.volunteer-layout > * { min-width:0; } .volunteer-roles summary { grid-template-columns:28px minmax(0,1fr) 28px; } @media(max-width:760px) { .volunteer-roles summary { grid-template-columns:22px minmax(0,1fr) 24px; } }
+.volunteer-plus { align-self:start; height:28px; line-height:28px; text-align:center; }
+.skip-link { color:var(--paper); }
