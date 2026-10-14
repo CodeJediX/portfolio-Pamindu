@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0a0f1c" />
+  <meta name="description" content="An interactive digital logic playground: explore 7 logic gates, flip inputs, see live circuits, learn real-life examples, and test your knowledge." />
+  <title>Logic Lab — Make Logic Click</title>
+  <style>
+    :root {
+      --bg:#0a0f1c; --panel:#111a2b; --panel-2:#162138; --panel-3:#0c1426;
+      --line:#27364e; --text:#eef3ff; --muted:#9daac2; --dim:#6d7e9a;
+      --lime:#c2fb71; --cyan:#6fdcff; --lav:#b4a8ff; --peach:#ffb99f;
+      --ink:#15231e; --radius:22px;
+      color-scheme:dark;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;min-width:310px;background:var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.5;overflow-x:hidden}
+    button,a{font:inherit} button{cursor:pointer} a{color:inherit;text-decoration:none}
+    button:focus-visible,a:focus-visible{outline:3px solid var(--cyan);outline-offset:4px}
+    ::selection{background:#bff87d;color:#14221a}
+    .backdrop{position:absolute;inset:0 0 auto;pointer-events:none;height:800px;z-index:-1;background:radial-gradient(ellipse at 73% 24%,#26305588 0%,transparent 46%),radial-gradient(ellipse at 1% 3%,#204f4b4d 0%,transparent 36%)}
+    .container{max-width:1390px;margin:0 auto;padding:0 34px}
+    .site-header{position:relative;z-index:5;border-bottom:1px solid #263047aa;background:#0a0f1cbd;backdrop-filter:blur(18px)}
+    .nav-inner{height:76px;display:flex;align-items:center;gap:28px}
+    .brand{display:inline-flex;align-items:center;gap:11px;font-size:20px;font-weight:850;letter-spacing:-.75px;white-space:nowrap}
+    .brand-mark{display:grid;place-items:center;width:39px;height:39px;background:var(--lime);color:#102019;border-radius:12px;box-shadow:0 0 24px #bffa7240}
+    .brand-mark svg{width:26px;height:26px}
+    .brand .accent{color:var(--lime)}
+    .nav-links{display:flex;align-items:center;gap:25px;margin:0 auto}
+    .nav-links a{font-size:13px;font-weight:700;color:var(--muted);transition:color .2s}
+    .nav-links a:hover{color:white}
+    .nav-tag{display:flex;gap:8px;align-items:center;border:1px solid #334355;border-radius:999px;padding:8px 13px;color:#d4e5ef;font-weight:750;font-size:11px;letter-spacing:1px;white-space:nowrap}
+    .pulse{width:7px;height:7px;border-radius:50%;background:var(--lime);box-shadow:0 0 12px var(--lime)}
+    .hero{display:grid;grid-template-columns:1.12fr .88fr;align-items:center;gap:30px;min-height:460px;padding-top:44px;padding-bottom:45px}
+    .eyebrow{font-size:11px;letter-spacing:2px;font-weight:850;text-transform:uppercase;color:var(--lime);display:flex;align-items:center;gap:10px}
+    .eyebrow .dash{width:25px;height:1px;background:var(--lime)}
+    h1,h2,h3,p{margin-top:0}
+    .hero h1{font-size:clamp(56px,6.1vw,91px);font-weight:870;letter-spacing:-5.4px;line-height:.99;margin:22px 0 25px;max-width:730px}
+    .hero h1 .second{display:block;color:var(--lime)}
+    .hero-desc{font-size:16px;line-height:1.8;color:#b3c0d6;max-width:575px}
+    .hero-buttons{display:flex;flex-wrap:wrap;gap:12px;margin-top:29px}
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:12px;padding:13px 19px;border-radius:12px;border:1px solid #39475e;font-size:13px;font-weight:850;transition:transform .18s,background .18s,box-shadow .18s}
+    .btn:hover{transform:translateY(-2px)}
+    .btn-primary{background:var(--lime);color:#15231b;border-color:var(--lime);box-shadow:0 8px 26px #baf77728}
+    .btn-ghost{background:#141f30;color:#e3ebfc}
+    .hero-art{height:343px;position:relative;display:grid;place-items:center;isolation:isolate}
+    .orbit{position:absolute;border:1px dashed #65768b55;border-radius:50%;width:338px;height:338px;transform:rotate(-24deg)}
+    .orbit.two{width:240px;height:240px;border-color:#71819933;transform:rotate(30deg)}
+    .orbit::after{content:"";position:absolute;left:24%;top:5%;width:9px;height:9px;border-radius:50%;background:var(--cyan);box-shadow:0 0 15px var(--cyan)}
+    .hero-glow{position:absolute;width:270px;height:270px;border-radius:50%;background:#73aaf22b;filter:blur(55px);z-index:-1}
+    .center-chip{height:142px;width:165px;background:linear-gradient(155deg,#25344e,#101c31);border:1px solid #637494;border-radius:28px;position:relative;display:grid;place-items:center;box-shadow:0 21px 54px #0008, inset 0 1px #ffffff27;transform:rotate(-9deg)}
+    .center-chip::before,.center-chip::after{content:"";position:absolute;inset:17px -9px;border-top:3px dotted var(--lime);border-bottom:3px dotted var(--lime);z-index:-1}
+    .center-chip .glyph{font-size:79px;color:var(--lime);font-weight:600;line-height:1;filter:drop-shadow(0 0 16px #beff6c66)}
+    .center-chip small{font-size:10px;letter-spacing:3px;color:#c0cee2;position:absolute;bottom:15px;font-weight:800}
+    .float{position:absolute;border-radius:12px;background:#1b2a42;border:1px solid #465773;box-shadow:0 15px 30px #0008;padding:10px 14px;font-size:13px;font-weight:850;white-space:nowrap;animation:float 5s ease-in-out infinite}
+    .float-a{left:2%;top:20%;transform:rotate(-7deg);color:var(--cyan)}
+    .float-b{left:5%;bottom:16%;transform:rotate(6deg);color:var(--lav);animation-delay:-1s}
+    .float-out{right:0;top:21%;background:var(--lime);border-color:var(--lime);color:#14231b;transform:rotate(7deg);animation-delay:-2s}
+    .float-formula{right:0;bottom:13%;color:#dce7fc;transform:rotate(-5deg);animation-delay:-3s}
+    @keyframes float{0%,100%{translate:0 0}50%{translate:0 -10px}}
+    .section-head{display:flex;align-items:end;justify-content:space-between;gap:16px;margin-bottom:23px}
+    .section-index{color:var(--lime);letter-spacing:2px;font-weight:800;font-size:10px;margin-bottom:8px;text-transform:uppercase}
+    .section-head h2{font-size:clamp(26px,3.5vw,38px);line-height:1.12;letter-spacing:-1.5px;margin:0}
+    .kbd-note{font-size:12px;color:var(--muted)}
+    kbd{font-size:11px;padding:2px 7px;background:#222e40;border:1px solid #45526a;border-bottom-width:3px;border-radius:6px;color:#e7edf8;font-weight:750}
+    .workspace{display:grid;grid-template-columns:208px minmax(0,1fr) 305px;gap:17px;align-items:start}
+    .gate-menu,.experiment,.story-panel{border-radius:var(--radius);border:1px solid var(--line);min-width:0}
+    .gate-menu{padding:15px;background:#10182a}
+    .micro-heading{display:flex;align-items:center;justify-content:space-between;color:#9aaac2;letter-spacing:1.2px;text-transform:uppercase;font-size:10px;font-weight:900;margin:3px 5px 13px}
+    .count{border:1px solid #3a4a62;padding:2px 7px;border-radius:6px;letter-spacing:0;color:#e1edfa}
+    .gate-list{display:grid;gap:7px}
+    .gate-option{width:100%;background:transparent;color:#d0dcf1;border:1px solid transparent;display:flex;align-items:center;gap:11px;text-align:left;border-radius:12px;padding:10px 11px;min-height:59px;transition:background .18s,border .18s,transform .18s}
+    .gate-option:hover{background:#1d2940}
+    .gate-option.active{background:#26354a;border-color:#91bf6b80;box-shadow:inset 3px 0 var(--lime)}
+    .gate-option .gate-glyph{height:35px;width:35px;flex:0 0 35px;display:grid;place-items:center;font-size:23px;line-height:1;border-radius:9px;color:#b3c6ea;background:#1b2940;font-weight:700}
+    .gate-option.active .gate-glyph{background:var(--lime);color:#1a2e21}
+    .gate-option strong{display:block;font-size:13px;font-weight:850}
+    .gate-option small{display:block;font-size:10px;color:#91a0b8;margin-top:2px;white-space:nowrap}
+    .menu-footer{margin:16px 4px 2px;border-top:1px solid var(--line);padding-top:14px;display:flex;align-items:center;gap:8px;color:#a3b6c7;font-size:11px;line-height:1.4}
+    .menu-footer .bulb{font-size:17px}
+    .experiment{background:#111a2b;overflow:hidden}
+    .panel-top{padding:18px 21px 14px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+    .panel-top h3{font-size:20px;letter-spacing:-.5px;margin:1px 0 0}
+    .subtle{color:#9aabc7;font-size:11px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase}
+    .live-pill{display:flex;gap:7px;align-items:center;background:#1f3641;border:1px solid #416956;color:var(--lime);font-size:10px;font-weight:900;letter-spacing:.9px;border-radius:999px;padding:7px 10px}
+    .schematic{position:relative;margin:0 16px;background:radial-gradient(ellipse at 50% 40%,#24334d,#10192c 62%,#0c1425);border:1px solid #34445f;border-radius:17px;overflow:hidden}
+    .schematic:after{content:"";position:absolute;inset:0;background-image:radial-gradient(#ffffff22 .7px,transparent .7px);background-size:19px 19px;pointer-events:none;opacity:.36}
+    .schematic-top{position:absolute;left:17px;top:13px;z-index:1;display:flex;align-items:center;gap:7px;font-size:9px;letter-spacing:1.5px;font-weight:900;color:#b2c2d8}
+    .schematic-top .live-dot{width:5px;height:5px;background:var(--lime);border-radius:50%}
+    #circuit{width:100%;height:auto;display:block;min-height:230px}
+    .circuit-wire{stroke:#667994;stroke-width:5;stroke-linecap:round;fill:none;transition:stroke .25s,filter .25s}
+    .circuit-wire.active{stroke:var(--lime);filter:drop-shadow(0 0 5px #c2fb7177)}
+    .gate-shape{fill:#202f46;stroke:#92a9c5;stroke-width:6;stroke-linejoin:round;transition:stroke .25s,fill .25s}
+    .gate-shape.powered{fill:#2e463a;stroke:var(--lime)}
+    .invert-bubble{fill:#1e2d44;stroke:#9fb1ce;stroke-width:6}
+    .invert-bubble.powered{stroke:var(--lime)}
+    .xor-curve{fill:none;stroke:#92a9c5;stroke-width:6;stroke-linecap:round}
+    .port-dot{fill:#6f819d;transition:fill .2s}
+    .port-dot.active{fill:var(--lime)}
+    .svg-data-label{font-weight:900;font-size:18px;fill:#d5dff0;letter-spacing:.4px}
+    .svg-value{font-weight:900;font-size:22px;fill:#c3d1e6}
+    .svg-value.active{fill:var(--lime)}
+    .svg-small{font-size:11px;letter-spacing:2px;fill:#8ea1bc;font-weight:850}
+    .svg-gate-name{font-size:29px;font-weight:900;fill:#d3dfee;text-anchor:middle;letter-spacing:-.3px}
+    .led-glow{fill:#334658;transition:fill .25s,filter .25s}
+    .led-glow.active{fill:var(--lime);filter:drop-shadow(0 0 16px #c2fb71)}
+    .output-readout{display:flex;align-items:center;justify-content:space-between;gap:13px;padding:12px 19px 2px}
+    .output-label{font-size:10px;font-weight:900;letter-spacing:1.5px;color:#8ca2bc}
+    .formula-line{font-size:21px;font-weight:800;letter-spacing:.1px;color:#e2ebf9;margin-top:3px;white-space:normal;overflow-wrap:anywhere}
+    .output-number{font-size:36px;font-weight:900;color:#ffad9b;line-height:1;transition:color .2s}
+    .output-number.on{color:var(--lime)}
+    .output-number small{font-size:11px;vertical-align:middle;letter-spacing:.5px;color:#a7b9d1;font-weight:900;margin-left:6px}
+    .controls{margin:17px 16px 12px;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .control-card{background:#1a2840;border:1px solid #35455f;border-radius:13px;padding:11px 14px;display:flex;align-items:center;justify-content:space-between;gap:9px;min-height:76px;color:var(--text);text-align:left;transition:background .2s,border-color .2s}
+    .control-card:hover{background:#23344e;border-color:#66839c}
+    .control-card[aria-pressed="true"]{border-color:#a2d271}
+    .control-card:disabled{opacity:.45;cursor:not-allowed}
+    .control-label{display:block;font-size:11px;font-weight:900;color:#c9d8ee}
+    .control-context{display:block;font-size:11px;color:#99abc5;margin-top:4px;line-height:1.3}
+    .switch{flex-shrink:0;width:51px;height:29px;border-radius:99px;background:#46516a;position:relative;transition:background .2s}
+    .switch::after{content:"";width:21px;height:21px;background:white;border-radius:50%;position:absolute;top:4px;left:4px;transition:transform .2s;box-shadow:0 2px 5px #0004}
+    .control-card[aria-pressed="true"] .switch{background:var(--lime)}
+    .control-card[aria-pressed="true"] .switch::after{transform:translateX(22px);background:#12231b}
+    .lab-actions{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:0 20px 18px}
+    .hint-text{color:#8d9db4;font-size:11px}
+    .cycle-button{font-size:11px;font-weight:800;border:1px solid #435672;background:#202f46;color:#e1edff;padding:8px 11px;border-radius:9px;white-space:nowrap}
+    .cycle-button:hover{background:#2d4260}
+    .truth-box{border-top:1px solid #30405a;padding:15px 18px 17px;background:#111c2e}
+    .truth-heading{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px}
+    .truth-heading strong{font-size:13px}
+    .truth-heading span{font-size:10px;color:#9bb0c8}
+    table{border-collapse:separate;border-spacing:0;width:100%;text-align:center}
+    .truth-table thead th{font-size:10px;letter-spacing:1.3px;color:#98aac1;font-weight:900;padding:8px;border-bottom:1px solid #38485e}
+    .truth-table tbody td{padding:8px;font-size:13px;color:#e4edfb;font-weight:800;border-bottom:1px solid #29384c}
+    .truth-table tbody tr:last-child td{border-bottom:none}
+    .truth-table tbody tr.current{background:#304333}
+    .truth-table tbody tr.current td{color:#e4ffb2}
+    .truth-table tbody tr.current td:first-child{border-radius:7px 0 0 7px}
+    .truth-table tbody tr.current td:last-child{border-radius:0 7px 7px 0}
+    .truth-table .out-high{color:var(--lime)}
+    .truth-table .out-low{color:#f4b7a7}
+    .story-panel{padding:22px 20px 18px;background:linear-gradient(155deg,#f0f7d7,#def2e5 64%,#e2f4fc);color:#21332c;position:relative;overflow:hidden}
+    .story-panel::before{content:"";position:absolute;right:-76px;top:-68px;border:1px solid #4e8a7459;width:210px;height:210px;border-radius:50%}
+    .story-kicker{color:#4a715d;font-weight:900;letter-spacing:1.7px;text-transform:uppercase;font-size:10px;margin:0}
+    .story-icon{font-size:45px;margin:17px 0 10px;display:block;line-height:1.25;filter:drop-shadow(0 6px 4px #00000012)}
+    .story-title{font-size:27px;line-height:1.12;letter-spacing:-1.2px;margin-bottom:12px;font-weight:850}
+    .story-desc{font-size:13px;line-height:1.65;color:#4d6558;min-height:85px;margin-bottom:19px}
+    .story-conditions{display:grid;gap:9px;padding:13px 0 17px;border-top:1px solid #a2c3af;border-bottom:1px solid #a2c3af}
+    .condition{display:flex;align-items:center;gap:9px;font-size:12px;font-weight:750}
+    .condition-mark{width:28px;height:28px;display:grid;place-items:center;background:#cbd6d3;color:#35483f;border-radius:8px;font-weight:900;font-size:11px;flex-shrink:0}
+    .condition-mark.on{background:#183f30;color:var(--lime)}
+    .story-result{background:#cde2d6;border:1px solid #aacabb;border-radius:13px;padding:14px;margin-top:15px}
+    .story-result.positive{background:#c6eac8;border-color:#9dcda2}
+    .result-top{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:10px;font-weight:900;letter-spacing:1px;color:#5b7367;text-transform:uppercase}
+    .result-status{font-size:16px;line-height:1.3;font-weight:900;margin-top:9px;letter-spacing:-.3px}
+    .result-caption{font-size:11px;line-height:1.55;color:#4e6659;margin-top:4px}
+    .memory{margin-top:16px;padding:11px;background:#ffffff65;border:1px solid #ffffff8c;border-radius:11px}
+    .memory strong{display:block;font-size:10px;letter-spacing:1px;color:#456857;text-transform:uppercase;margin-bottom:4px}
+    .memory p{font-size:13px;font-weight:800;margin:0;color:#1b4731}
+    .challenge-section{padding-top:99px}
+    .challenge-grid{display:grid;grid-template-columns:.82fr 1.18fr;gap:35px;align-items:center;background:linear-gradient(125deg,#19243a,#14283a 72%,#1b2f37);border:1px solid #31415a;border-radius:29px;padding:42px;overflow:hidden;position:relative}
+    .challenge-grid:before{content:"?";font-size:360px;color:#ffffff05;font-weight:900;position:absolute;left:23%;bottom:-183px;line-height:1;pointer-events:none}
+    .challenge-copy{position:relative}
+    .challenge-copy h2{font-size:clamp(31px,4vw,54px);letter-spacing:-2px;line-height:1.05;margin:17px 0}
+    .challenge-copy h2 em{font-style:normal;color:var(--lime)}
+    .challenge-copy p:not(.section-index){color:#adbcd1;font-size:14px;line-height:1.85;max-width:390px}
+    .challenge-benefits{display:grid;gap:10px;margin-top:28px}
+    .benefit{display:flex;gap:11px;align-items:center;color:#e1ecf9;font-size:12px;font-weight:750}
+    .benefit i{font-style:normal;border:1px solid #66867c;background:#234539;color:var(--lime);display:grid;place-items:center;border-radius:7px;width:24px;height:24px}
+    .quiz-card{position:relative;border:1px solid #465871;background:#101a2b;border-radius:19px;padding:25px;box-shadow:0 18px 30px #0003}
+    .quiz-head{display:flex;justify-content:space-between;align-items:center;gap:10px}
+    .quiz-head .eyebrow{margin:0;color:#c7b9ff;letter-spacing:1.5px}
+    .score{border:1px solid #46526d;background:#233047;color:#c9d7ea;padding:7px 10px;border-radius:9px;font-size:11px;font-weight:900;white-space:nowrap}
+    .quiz-question{font-size:23px;line-height:1.25;font-weight:900;letter-spacing:-.7px;margin:24px 0 7px}
+    .quiz-subtitle{color:#9fafc8;font-size:12px;margin-bottom:19px}
+    .quiz-values{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0}
+    .quiz-val{background:#23334b;border:1px solid #485f76;border-radius:11px;padding:13px 18px;min-width:89px;font-size:13px;font-weight:850;text-align:center}
+    .quiz-val b{font-size:19px;color:var(--lime);margin-left:5px}
+    .quiz-prompt{font-size:13px;color:#dbe6f5;font-weight:800;margin:18px 0 11px}
+    .quiz-answers{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .answer-btn{border:1px solid #465877;background:#1d2e46;color:white;padding:15px 12px;border-radius:12px;font-size:24px;font-weight:900;transition:background .2s,transform .2s,border .2s}
+    .answer-btn:hover:not(:disabled){transform:translateY(-3px);border-color:var(--lime);background:#2a3e50}
+    .answer-btn:disabled{cursor:default;opacity:.65}
+    .answer-btn.correct{background:#294a32;border-color:var(--lime);color:var(--lime);opacity:1}
+    .answer-btn.wrong{background:#623c3b;border-color:#ffb2a5;color:#ffcebf;opacity:1}
+    .quiz-feedback{min-height:59px;margin-top:12px;border-radius:10px;font-size:12px;line-height:1.6;color:#b3c2d7;padding:10px 12px;background:#18253a}
+    .quiz-feedback strong{color:#ebf2ff}
+    .quiz-bottom{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:13px}
+    .streak{font-size:12px;color:#acbed5;font-weight:800}
+    .next-btn{font-weight:850;font-size:12px;padding:10px 14px;background:var(--lime);border:1px solid var(--lime);color:#19301e;border-radius:9px}
+    .next-btn:disabled{opacity:.4;cursor:not-allowed}
+    .reference-section{padding:88px 0 95px}
+    .reference-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+    .ref-card{border:1px solid #2c3c53;background:linear-gradient(150deg,#18263a,#10192a);padding:21px;border-radius:17px;min-height:177px;transition:transform .2s,border-color .2s;display:flex;flex-direction:column}
+    .ref-card:hover{transform:translateY(-4px);border-color:#849d80}
+    .ref-top{display:flex;justify-content:space-between;align-items:center;gap:7px;margin-bottom:15px}
+    .ref-top h3{margin:0;font-size:17px;letter-spacing:-.4px}
+    .ref-symbol{background:#263b42;color:var(--lime);height:32px;width:32px;display:grid;place-items:center;border-radius:9px;font-size:21px;font-weight:850}
+    .ref-formula{font-weight:900;color:#c0fc83;font-size:17px;margin-bottom:8px;overflow-wrap:anywhere}
+    .ref-rule{color:#abbbd0;font-size:12px;line-height:1.55;margin:0}
+    .ref-try{margin-top:auto;padding-top:16px;color:#d4e6fb;font-size:11px;font-weight:900;display:inline-flex;align-items:center;gap:7px;background:none;border:none;text-align:left;align-self:flex-start}
+    .ref-try:hover{color:var(--lime)}
+    footer{border-top:1px solid #2d3950;padding:27px 0 35px;display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;font-size:12px;color:#879ab7}
+    footer strong{color:#dbe5f8}
+    .hide{display:none!important}
+    @media(max-width:1200px){.workspace{grid-template-columns:190px minmax(0,1fr)}.story-panel{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;column-gap:22px;align-items:start}.story-kicker,.story-icon,.story-title,.story-desc{grid-column:1}.story-conditions,.story-result,.memory{grid-column:2}.story-conditions{grid-row:1 / span 3;margin-top:4px}.story-result{grid-row:4;margin-top:10px}.memory{grid-row:5}.story-desc{min-height:0}.story-icon{margin-top:12px}}
+    @media(max-width:800px){.container{padding:0 20px}.nav-inner{height:70px}.nav-links{display:none}.nav-tag{margin-left:auto}.hero{grid-template-columns:1fr;padding-top:55px;padding-bottom:65px;min-height:auto}.hero h1{font-size:clamp(55px,10vw,83px);letter-spacing:-3.8px}.hero-art{height:290px;max-width:440px;width:100%;margin:0 auto}.workspace{grid-template-columns:1fr}.gate-list{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(146px,1fr);overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:thin;padding-bottom:5px}.gate-option{scroll-snap-align:start}.gate-menu{padding:13px}.menu-footer{display:none}.story-panel{grid-column:auto}.challenge-grid{grid-template-columns:1fr;padding:28px;gap:19px}.reference-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.challenge-section{padding-top:72px}}
+    @media(max-width:590px){.container{padding:0 15px}.nav-tag{font-size:9px;padding:7px 8px;letter-spacing:.2px}.brand{font-size:18px}.hero{padding-top:41px;gap:7px;padding-bottom:50px}.hero h1{font-size:clamp(53px,11vw,72px);letter-spacing:-3.6px}.hero-desc{font-size:14px}.hero-art{height:267px;transform:scale(.86);margin-top:0;margin-bottom:-25px}.section-head{align-items:start}.kbd-note{display:none}.panel-top{padding:17px}.schematic{margin:0 10px}.controls{margin:14px 10px 12px;gap:8px}.control-card{padding:10px 9px;min-height:79px}.switch{width:43px;height:26px}.switch::after{width:18px;height:18px}.control-card[aria-pressed="true"] .switch::after{transform:translateX(17px)}.control-context{font-size:10px}.lab-actions{margin:0 13px 16px}.hint-text{font-size:10px}.cycle-button{font-size:10px}.output-readout{padding-left:13px;padding-right:13px}.formula-line{font-size:18px}.output-number{font-size:29px}.story-panel{display:block;padding:20px}.story-desc{min-height:0}.story-conditions{margin-top:0}.challenge-grid{padding:18px;border-radius:20px}.quiz-card{padding:18px}.quiz-question{font-size:21px}.reference-section{padding-top:70px}.reference-grid{gap:9px}.ref-card{padding:14px;min-height:183px}.ref-formula{font-size:14px}.ref-rule{font-size:11px}.ref-top h3{font-size:15px}.ref-symbol{width:28px;height:28px;font-size:17px}footer{font-size:11px}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+  </style>
+</head>
+<body>
+  <div class="backdrop" aria-hidden="true"></div>
+  <header class="site-header">
+    <div class="container nav-inner">
+      <a class="brand" href="#top" aria-label="Logic Lab home">
+        <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 26 26" fill="none"><path d="M4 6h7v7h7M4 20h7v-7" stroke="#15271a" stroke-width="2.8" stroke-linecap="round"/><circle cx="20" cy="13" r="3" fill="#15271a"/></svg></span>
+        Logic<span class="accent">Lab.</span>
+      </a>
+      <nav class="nav-links" aria-label="Main navigation"><a href="#lab">Explore gates</a><a href="#challenge">Quick challenge</a><a href="#reference">Cheat sheet</a></nav>
+      <div class="nav-tag"><span class="pulse" aria-hidden="true"></span> 7 GATES · 1 PLAYGROUND</div>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="container hero" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="eyebrow"><span class="dash"></span> LEARN DIGITAL LOGIC BY DOING</p>
+        <h1 id="hero-title">Make logic <span class="second">click.</span></h1>
+        <p class="hero-desc">Switch inputs. Watch circuits react. Discover the real-world stories behind <strong style="color:#e6effb">AND, OR, NOT, NAND, NOR, XOR and XNOR</strong> — without the boring bits.</p>
+        <div class="hero-buttons"><a class="btn btn-primary" href="#lab">Explore the playground <span aria-hidden="true">↗</span></a><a class="btn btn-ghost" href="#challenge">Test my knowledge <span aria-hidden="true">→</span></a></div>
+      </div>
+      <div class="hero-art" aria-hidden="true">
+        <div class="hero-glow"></div><div class="orbit"></div><div class="orbit two"></div>
+        <div class="float float-a">INPUT A&nbsp; <span>1</span></div><div class="float float-b">INPUT B&nbsp; <span>0</span></div>
+        <div class="center-chip"><span class="glyph">⊕</span><small>XOR GATE</small></div>
+        <div class="float float-out">OUTPUT&nbsp; 1 ●</div><div class="float float-formula">1 ⊕ 0 = 1 ✦</div>
+      </div>
+    </section>
+
+    <section class="container" id="lab" aria-labelledby="lab-title">
+      <div class="section-head"><div><p class="section-index">01 / The interactive simulator</p><h2 id="lab-title">Your circuit playground.</h2></div><div class="kbd-note">Quick keys: <kbd>A</kbd> input A &nbsp;<kbd>B</kbd> input B</div></div>
+      <div class="workspace">
+        <aside class="gate-menu" aria-label="Select a logic gate">
+          <div class="micro-heading">Choose a gate <span class="count">07</span></div>
+          <div class="gate-list" id="gateList"></div>
+          <div class="menu-footer"><span class="bulb" aria-hidden="true">💡</span><span>Click any gate to see how it works.</span></div>
+        </aside>
+
+        <div class="experiment" aria-label="Interactive logic gate simulator">
+          <div class="panel-top"><div><div class="subtle">Currently exploring</div><h3 id="currentGateName">AND Gate</h3></div><div class="live-pill"><span class="pulse"></span> LIVE CIRCUIT</div></div>
+          <div class="schematic">
+            <div class="schematic-top"><span class="live-dot"></span> INTERACTIVE SCHEMATIC</div>
+            <svg id="circuit" viewBox="0 0 820 315" role="img" aria-label="Live logic gate circuit with two inputs and one output">
+              <text x="45" y="70" class="svg-small">INPUTS</text><text x="668" y="70" class="svg-small">OUTPUT</text>
+              <g id="channelA"><line id="wireA" class="circuit-wire" x1="122" y1="117" x2="340" y2="117"/><circle id="portA" class="port-dot" cx="122" cy="117" r="9"/><text x="40" y="124" class="svg-data-label">A</text><text id="svgValueA" x="74" y="124" class="svg-value">0</text></g>
+              <g id="channelB"><line id="wireB" class="circuit-wire" x1="122" y1="215" x2="340" y2="215"/><circle id="portB" class="port-dot" cx="122" cy="215" r="9"/><text x="40" y="222" class="svg-data-label">B</text><text id="svgValueB" x="74" y="222" class="svg-value">0</text></g>
+              <path id="gateShape" class="gate-shape" d="M320 88 L414 88 C500 88 554 127 554 166 C554 205 500 244 414 244 L320 244 Z" />
+              <path id="xorCurve" class="xor-curve hide" d="M289 88 Q356 166 289 244" />
+              <circle id="invertBubble" class="invert-bubble hide" cx="566" cy="166" r="12" />
+              <text id="svgGateName" x="430" y="177" class="svg-gate-name">AND</text>
+              <line id="wireOutput" class="circuit-wire" x1="554" y1="166" x2="701" y2="166" />
+              <circle cx="712" cy="166" r="27" fill="none" stroke="#506785" stroke-width="3" />
+              <circle id="led" cx="712" cy="166" r="18" class="led-glow" />
+              <text x="711" y="228" text-anchor="middle" class="svg-small">Y</text>
+              <text x="411" y="290" text-anchor="middle" class="svg-small">SIGNAL FLOW  →</text>
+            </svg>
+          </div>
+          <div class="output-readout"><div><div class="output-label">BOOLEAN EXPRESSION</div><div class="formula-line" id="gateFormula">Y = A · B</div></div><div style="text-align:right"><div class="output-label">LIVE OUTPUT</div><div class="output-number" id="outputNumber" aria-live="polite">0 <small>OFF</small></div></div></div>
+          <div class="controls">
+            <button class="control-card" id="inputA" type="button" aria-pressed="false" aria-label="Toggle input A"><span><span class="control-label">INPUT A · <span id="controlAValue">OFF (0)</span></span><span class="control-context" id="controlAHint">First condition</span></span><span class="switch" aria-hidden="true"></span></button>
+            <button class="control-card" id="inputB" type="button" aria-pressed="false" aria-label="Toggle input B"><span><span class="control-label">INPUT B · <span id="controlBValue">OFF (0)</span></span><span class="control-context" id="controlBHint">Second condition</span></span><span class="switch" aria-hidden="true"></span></button>
+          </div>
+          <div class="lab-actions"><span class="hint-text">✦ Click a switch to flip 0 ↔ 1</span><button type="button" class="cycle-button" id="cycleBtn">↻ Next combination</button></div>
+          <div class="truth-box"><div class="truth-heading"><strong>Truth table</strong><span>Highlighted row = your live inputs</span></div><table class="truth-table" aria-label="Live truth table"><thead id="truthHead"></thead><tbody id="truthBody"></tbody></table></div>
+        </div>
+
+        <aside class="story-panel" aria-label="Everyday life example">
+          <p class="story-kicker">✦ Logic in real life</p><span class="story-icon" id="storyIcon" aria-hidden="true">🔐</span><h3 class="story-title" id="storyTitle">Unlock the treasure</h3>
+          <p class="story-desc" id="storyDesc">You need a key AND a secret code to open the treasure chest.</p>
+          <div class="story-conditions" id="storyConditions"></div>
+          <div class="story-result" id="storyResult" aria-live="polite"><div class="result-top"><span>What happens?</span><span id="storyResultIcon" aria-hidden="true">●</span></div><div class="result-status" id="storyStatus">Chest stays locked</div><div class="result-caption" id="storyCaption">Both conditions must be true.</div></div>
+          <div class="memory"><strong>🧠 Memory trick · සිංහලෙන්</strong><p id="memoryTip">දෙකම ඕනේ!</p></div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="container challenge-section" id="challenge" aria-labelledby="challenge-title">
+      <div class="challenge-grid">
+        <div class="challenge-copy"><p class="section-index">02 / Time to level up</p><h2 id="challenge-title">Think you've <em>got it?</em></h2><p>Try the quick-fire challenge. See a random logic gate and its input values, then predict whether the output is 0 or 1. Every answer teaches you something.</p>
+          <div class="challenge-benefits"><div class="benefit"><i>✓</i> All 7 logic gates included</div><div class="benefit"><i>✓</i> Instant answers and explanations</div><div class="benefit"><i>✓</i> Track your score and streak</div></div>
+        </div>
+        <div class="quiz-card" id="quizCard"><div class="quiz-head"><p class="eyebrow">⚡ QUICK-FIRE QUIZ</p><span class="score" id="scoreDisplay">0 / 0 CORRECT</span></div><h3 class="quiz-question" id="quizQuestion">What is the output of AND?</h3><p class="quiz-subtitle">Read the inputs. Choose the correct output.</p>
+          <div class="quiz-values" id="quizValues"></div><div class="quiz-prompt">Your answer (Y) is...</div>
+          <div class="quiz-answers"><button type="button" class="answer-btn" data-answer="0" aria-label="Answer zero">0</button><button type="button" class="answer-btn" data-answer="1" aria-label="Answer one">1</button></div>
+          <div class="quiz-feedback" id="quizFeedback" role="status">Choose 0 or 1 to reveal the answer.</div>
+          <div class="quiz-bottom"><span class="streak" id="streakDisplay">🔥 Streak: 0</span><button type="button" class="next-btn" id="nextQuestion" disabled>Next question →</button></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="container reference-section" id="reference" aria-labelledby="reference-title"><div class="section-head"><div><p class="section-index">03 / Save this in your brain</p><h2 id="reference-title">The ultimate cheat sheet.</h2></div><div class="kbd-note">Click a card to try the gate above ↑</div></div><div class="reference-grid" id="referenceGrid"></div></section>
+  </main>
+  <div class="container"><footer><span><strong>LogicLab.</strong> Built to make digital logic easier to learn.</span><span>7 gates · Real-life examples · Made for curious minds ✦</span></footer></div>
+
+  <script>
+    'use strict';
+    const GATES = [
+      {id:'AND',symbol:'∧',tagline:'Both must be true',formula:'A · B',rule:'1 only when A = 1 and B = 1.',tip:'දෙකම ඕනේ!',icon:'🗝️',title:'Unlock the treasure',description:'The treasure chest opens only when you have BOTH the key and the secret code.',a:'Have the key',b:'Know the secret code',yes:'Treasure chest opens!',no:'Chest stays locked',detailYes:'You have the key AND the code.',detailNo:'You need both the key and the code.',evaluate:(a,b)=>a&&b},
+      {id:'OR',symbol:'∨',tagline:'At least one',formula:'A + B',rule:'1 when A = 1 or B = 1 (including both).',tip:'එකක් හරි ඇති!',icon:'🚌',title:'Get to school',description:'You can get to school if a bus OR a train is available. Both being available is fine too!',a:'Bus is available',b:'Train is available',yes:'You can get to school!',no:'No ride is available',detailYes:'At least one way to travel is available.',detailNo:'Neither the bus nor train is available.',evaluate:(a,b)=>a||b},
+      {id:'NOT',symbol:'¬',tagline:'Flips the input',formula:'¬A',rule:'1 when A = 0. It reverses its only input.',tip:'0 නම් 1 · 1 නම් 0!',icon:'💡',title:'The automatic night light',description:'The night lamp switches ON when daylight is NOT detected. One input, one opposite output.',a:'Daylight detected',b:null,yes:'Night lamp turns ON!',no:'Night lamp stays OFF',detailYes:'It is dark, so the automatic lamp is on.',detailNo:'Daylight is present, so the lamp is off.',evaluate:a=>!a},
+      {id:'NAND',symbol:'⊼',tagline:'NOT AND',formula:'¬(A · B)',rule:'0 only when A = 1 and B = 1.',tip:'දෙකම 1 නම් විතරයි 0!',icon:'📵',title:'Screen-time rule',description:'The rule is satisfied unless you are playing a game AND streaming a video at the same time.',a:'Playing a game',b:'Streaming a video',yes:'Screen-time rule is OK!',no:'Screen-time rule broken!',detailYes:'You are not doing both activities at once.',detailNo:'Both activities are on at the same time.',evaluate:(a,b)=>!(a&&b)},
+      {id:'NOR',symbol:'⊽',tagline:'NOT OR',formula:'¬(A + B)',rule:'1 only when A = 0 and B = 0.',tip:'දෙකම 0 නම් විතරයි 1!',icon:'📚',title:'Peaceful study room',description:'The quiet-study sign lights up only when BOTH the TV and music are OFF.',a:'TV is on',b:'Music is on',yes:'Quiet-study mode is ON!',no:'The room is not quiet',detailYes:'TV and music are both off.',detailNo:'At least one noisy activity is on.',evaluate:(a,b)=>!(a||b)},
+      {id:'XOR',symbol:'⊕',tagline:'Exactly one',formula:'A ⊕ B',rule:'1 when the inputs are different (01 or 10).',tip:'දෙකම වෙනස් නම් 1!',icon:'🍦',title:'Choose one snack',description:'Your snack voucher works only when you choose EXACTLY ONE: ice cream or chocolate. Not neither, not both.',a:'Choose ice cream',b:'Choose chocolate',yes:'Voucher accepted!',no:'Voucher not accepted',detailYes:'You picked exactly one snack.',detailNo:'You must choose one snack, not zero or two.',evaluate:(a,b)=>a!==b},
+      {id:'XNOR',symbol:'⊙',tagline:'Same inputs',formula:'¬(A ⊕ B)',rule:'1 when the inputs match (00 or 11).',tip:'දෙකම එක වගේ නම් 1!',icon:'🤝',title:'The friendship match',description:'The matching badge lights up when you and your friend make the SAME choice — both yes or both no.',a:'You say YES',b:'Your friend says YES',yes:'You both match!',no:'Your choices differ',detailYes:'The two choices are exactly the same.',detailNo:'One person said yes and the other said no.',evaluate:(a,b)=>a===b}
+    ];
+    const $ = id => document.getElementById(id);
+    let selected = GATES[0], A = false, B = false;
+    const getOutput = (gate,a,b) => Number(gate.evaluate(Boolean(a),Boolean(b)));
+    const gateMarkup = (g) => `<span class="gate-glyph" aria-hidden="true">${g.symbol}</span><span><strong>${g.id}</strong><small>${g.tagline}</small></span>`;
+    $('gateList').innerHTML = GATES.map(g=>`<button type="button" class="gate-option" data-gate="${g.id}" aria-pressed="false">${gateMarkup(g)}</button>`).join('');
+    $('referenceGrid').innerHTML = GATES.map(g=>`<article class="ref-card"><div class="ref-top"><h3>${g.id} Gate</h3><span class="ref-symbol" aria-hidden="true">${g.symbol}</span></div><div class="ref-formula">Y = ${g.formula}</div><p class="ref-rule">${g.rule}</p><button class="ref-try" data-try="${g.id}" type="button" aria-label="Try the ${g.id} gate in the simulator">TRY THIS GATE <span aria-hidden="true">↗</span></button></article>`).join('');
+    document.querySelectorAll('[data-gate]').forEach(button => button.addEventListener('click', () => selectGate(button.dataset.gate)));
+    document.querySelectorAll('[data-try]').forEach(button => button.addEventListener('click', () => {selectGate(button.dataset.try);$('lab').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});}));
+
+    function selectGate(id){
+      selected = GATES.find(g => g.id === id) || GATES[0];
+      A = false; B = false;
+      document.querySelectorAll('[data-gate]').forEach(btn=>{const active=btn.dataset.gate===selected.id;btn.classList.toggle('active',active);btn.setAttribute('aria-pressed',String(active));});
+      $('currentGateName').textContent = selected.id+' Gate';
+      $('gateFormula').textContent = 'Y = '+selected.formula;
+      $('storyIcon').textContent = selected.icon;
+      $('storyTitle').textContent = selected.title;
+      $('storyDesc').textContent = selected.description;
+      $('memoryTip').textContent = selected.tip;
+      $('controlAHint').textContent = selected.a;
+      $('controlBHint').textContent = selected.b||'';
+      const isNot=selected.id==='NOT';
+      $('inputB').classList.toggle('hide',isNot);
+      $('channelB').classList.toggle('hide',isNot);
+      $('inputA').style.gridColumn = isNot?'1 / -1':'';
+      $('circuit').setAttribute('aria-label',selected.id+' gate circuit with '+(isNot?'one input':'two inputs')+' and one output');
+      buildShape();buildTruthTable();update();
+    }
+    function buildShape(){
+      const id=selected.id, isNot=id==='NOT', isOr=['OR','NOR','XOR','XNOR'].includes(id), invert=['NAND','NOR','XNOR','NOT'].includes(id), xor=['XOR','XNOR'].includes(id);
+      const shape=isNot?'M330 88 L547 166 L330 244 Z':isOr?'M313 88 Q380 166 313 244 Q458 246 550 166 Q458 86 313 88 Z':'M320 88 L414 88 C500 88 554 127 554 166 C554 205 500 244 414 244 L320 244 Z';
+      $('gateShape').setAttribute('d',shape);
+      $('xorCurve').classList.toggle('hide',!xor);
+      $('invertBubble').classList.toggle('hide',!invert);
+      $('wireOutput').setAttribute('x1',invert?(isNot?'575':'578'):(isOr?'550':'554'));
+      $('wireA').setAttribute('y1',isNot?'166':'117');$('wireA').setAttribute('y2',isNot?'166':'117');
+      $('portA').setAttribute('cy',isNot?'166':'117');
+      $('svgValueA').setAttribute('y',isNot?'173':'124');
+      $('channelA').querySelector('.svg-data-label').setAttribute('y',isNot?'173':'124');
+      $('svgGateName').textContent=id;
+      $('svgGateName').setAttribute('x',isNot?'416':'428');
+      $('svgGateName').setAttribute('font-size',id==='XNOR'?'25':'29');
+    }
+    function buildTruthTable(){
+      const isNot=selected.id==='NOT';
+      $('truthHead').innerHTML='<tr><th scope="col">A</th>'+(isNot?'':'<th scope="col">B</th>')+'<th scope="col">Y = '+selected.id+'</th></tr>';
+      const rows=isNot?[[0,0],[1,0]]:[[0,0],[0,1],[1,0],[1,1]];
+      $('truthBody').innerHTML=rows.map(([a,b])=>{const output=getOutput(selected,a,b);return `<tr data-a="${a}" data-b="${b}"><td>${a}</td>${isNot?'':`<td>${b}</td>`}<td class="${output?'out-high':'out-low'}">${output}</td></tr>`}).join('');
+    }
+    function update(){
+      const output=getOutput(selected,A,B),isNot=selected.id==='NOT';
+      $('inputA').setAttribute('aria-pressed',String(A));$('inputB').setAttribute('aria-pressed',String(B));
+      $('inputA').setAttribute('aria-label','Toggle input A, currently '+(A?'1':'0')+'. '+selected.a);
+      $('inputB').setAttribute('aria-label','Toggle input B, currently '+(B?'1':'0')+'. '+(selected.b||''));
+      $('controlAValue').textContent=A?'ON (1)':'OFF (0)';$('controlBValue').textContent=B?'ON (1)':'OFF (0)';
+      $('svgValueA').textContent=Number(A);$('svgValueB').textContent=Number(B);
+      ['wireA','portA','svgValueA'].forEach(id=>$(id).classList.toggle('active',A));
+      ['wireB','portB','svgValueB'].forEach(id=>$(id).classList.toggle('active',B));
+      ['wireOutput','led'].forEach(id=>$(id).classList.toggle('active',!!output));
+      ['gateShape','invertBubble'].forEach(id=>$(id).classList.toggle('powered',!!output));
+      $('outputNumber').innerHTML=output+' <small>'+(output?'ON':'OFF')+'</small>';
+      $('outputNumber').classList.toggle('on',!!output);
+      const conditions=[[selected.a,A],...(isNot?[]:[[selected.b,B]])];
+      $('storyConditions').innerHTML=conditions.map(([label,val],i)=>`<div class="condition"><span class="condition-mark ${val?'on':''}">${val?'1':'0'}</span><span>${label}: <strong>${val?'YES':'NO'}</strong></span></div>`).join('');
+      $('storyResult').classList.toggle('positive',!!output);
+      $('storyResultIcon').textContent=output?'✓':'—';
+      $('storyStatus').textContent=output?selected.yes:selected.no;
+      $('storyCaption').textContent=output?selected.detailYes:selected.detailNo;
+      const rows=$('truthBody').querySelectorAll('tr');
+      rows.forEach(row=>row.classList.toggle('current',Number(row.dataset.a)===Number(A)&&(isNot||Number(row.dataset.b)===Number(B))));
+    }
+    $('inputA').addEventListener('click',()=>{A=!A;update();});
+    $('inputB').addEventListener('click',()=>{if(selected.id!=='NOT'){B=!B;update();}});
+    $('cycleBtn').addEventListener('click',()=>{
+      const state=Number(A)*2+Number(B);
+      if(selected.id==='NOT'){A=!A;}else{const next=(state+1)%4;A=Boolean(next&2);B=Boolean(next&1);}
+      update();
+    });
+    window.addEventListener('keydown',(event)=>{
+      if(event.altKey||event.ctrlKey||event.metaKey||event.repeat||['INPUT','TEXTAREA','SELECT'].includes(document.activeElement?.tagName))return;
+      if(event.key.toLowerCase()==='a'){A=!A;update();}
+      if(event.key.toLowerCase()==='b'&&selected.id!=='NOT'){B=!B;update();}
+    });
+
+    let quizGate,quizA,quizB,answered=false,attempts=0,correct=0,streak=0,lastQuestion='';
+    const random = n => Math.floor(Math.random()*n);
+    function newQuestion(){
+      let key, tries=0;
+      do {quizGate=GATES[random(GATES.length)];quizA=random(2);quizB=quizGate.id==='NOT'?0:random(2);key=quizGate.id+'-'+quizA+'-'+quizB;tries++;} while(key===lastQuestion&&tries<16);
+      lastQuestion=key;answered=false;
+      $('quizQuestion').textContent='What is the output of '+quizGate.id+'?';
+      $('quizValues').innerHTML=`<div class="quiz-val">A = <b>${quizA}</b></div>`+(quizGate.id==='NOT'?'':`<div class="quiz-val">B = <b>${quizB}</b></div>`);
+      document.querySelectorAll('.answer-btn').forEach(btn=>{btn.disabled=false;btn.classList.remove('correct','wrong');btn.setAttribute('aria-pressed','false');});
+      $('quizFeedback').textContent='Choose 0 or 1 to reveal the answer.';
+      $('nextQuestion').disabled=true;
+    }
+    function answerQuiz(value){
+      if(answered)return;
+      answered=true;attempts++;
+      const output=getOutput(quizGate,quizA,quizB);
+      const isCorrect=Number(value)===output;
+      if(isCorrect){correct++;streak++;}else{streak=0;}
+      document.querySelectorAll('.answer-btn').forEach(btn=>{
+        btn.disabled=true;
+        const btnValue=Number(btn.dataset.answer);
+        if(btnValue===output)btn.classList.add('correct');
+        else if(btnValue===Number(value))btn.classList.add('wrong');
+        if(btnValue===Number(value))btn.setAttribute('aria-pressed','true');
+      });
+      $('quizFeedback').innerHTML=`<strong>${isCorrect?'✓ Correct! Great thinking.':'✕ Not quite. The answer is '+output+'.'}</strong> ${quizGate.id} outputs ${output} here. ${quizGate.rule}`;
+      $('scoreDisplay').textContent=correct+' / '+attempts+' CORRECT';
+      $('streakDisplay').textContent='🔥 Streak: '+streak;
+      $('nextQuestion').disabled=false;
+    }
+    document.querySelectorAll('.answer-btn').forEach(btn=>btn.addEventListener('click',()=>answerQuiz(btn.dataset.answer)));
+    $('nextQuestion').addEventListener('click',newQuestion);
+    selectGate('AND');newQuestion();
+  </script>
+</body>
+</html>
