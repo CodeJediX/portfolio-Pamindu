@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="si">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -209,6 +209,24 @@
     @media(max-width:800px){.container{padding:0 20px}.nav-inner{height:70px}.nav-links{display:none}.nav-tag{margin-left:auto}.hero{grid-template-columns:1fr;padding-top:55px;padding-bottom:65px;min-height:auto}.hero h1{font-size:clamp(55px,10vw,83px);letter-spacing:-3.8px}.hero-art{height:290px;max-width:440px;width:100%;margin:0 auto}.workspace{grid-template-columns:1fr}.gate-list{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(146px,1fr);overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:thin;padding-bottom:5px}.gate-option{scroll-snap-align:start}.gate-menu{padding:13px}.menu-footer{display:none}.story-panel{grid-column:auto}.challenge-grid{grid-template-columns:1fr;padding:28px;gap:19px}.reference-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.challenge-section{padding-top:72px}}
     @media(max-width:590px){.container{padding:0 15px}.nav-tag{font-size:9px;padding:7px 8px;letter-spacing:.2px}.brand{font-size:18px}.hero{padding-top:41px;gap:7px;padding-bottom:50px}.hero h1{font-size:clamp(53px,11vw,72px);letter-spacing:-3.6px}.hero-desc{font-size:14px}.hero-art{height:267px;transform:scale(.86);margin-top:0;margin-bottom:-25px}.section-head{align-items:start}.kbd-note{display:none}.panel-top{padding:17px}.schematic{margin:0 10px}.controls{margin:14px 10px 12px;gap:8px}.control-card{padding:10px 9px;min-height:79px}.switch{width:43px;height:26px}.switch::after{width:18px;height:18px}.control-card[aria-pressed="true"] .switch::after{transform:translateX(17px)}.control-context{font-size:10px}.lab-actions{margin:0 13px 16px}.hint-text{font-size:10px}.cycle-button{font-size:10px}.output-readout{padding-left:13px;padding-right:13px}.formula-line{font-size:18px}.output-number{font-size:29px}.story-panel{display:block;padding:20px}.story-desc{min-height:0}.story-conditions{margin-top:0}.challenge-grid{padding:18px;border-radius:20px}.quiz-card{padding:18px}.quiz-question{font-size:21px}.reference-section{padding-top:70px}.reference-grid{gap:9px}.ref-card{padding:14px;min-height:183px}.ref-formula{font-size:14px}.ref-rule{font-size:11px}.ref-top h3{font-size:15px}.ref-symbol{width:28px;height:28px;font-size:17px}footer{font-size:11px}}
     @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+
+    /* Language switch: visible even on small phones. */
+    .lang-switch{display:flex;flex-shrink:0;gap:3px;align-items:center;padding:4px;background:#172237;border:1px solid #455673;border-radius:12px}
+    .lang-choice{border:0;background:transparent;color:#aebfd7;border-radius:8px;font-weight:800;font-size:12px;min-height:34px;padding:7px 11px;white-space:nowrap;transition:background .18s,color .18s}
+    .lang-choice:hover{color:white;background:#2a3c52}
+    .lang-choice[aria-pressed="true"]{background:var(--lime);color:#14251c;box-shadow:0 2px 10px #0004}
+    html[lang="si"] body{font-family:"Noto Sans Sinhala","Iskoola Pota","Malithi Web",Inter,ui-sans-serif,system-ui,sans-serif;line-height:1.7}
+    html[lang="si"] .hero h1{font-size:clamp(35px,4.5vw,64px);line-height:1.34;letter-spacing:0;max-width:800px}
+    html[lang="si"] .section-head h2,html[lang="si"] .challenge-copy h2{letter-spacing:0;line-height:1.35}
+    html[lang="si"] .hero-desc{line-height:2}
+    html[lang="si"] .quiz-question{letter-spacing:0;line-height:1.6}
+    html[lang="si"] .micro-heading,html[lang="si"] .subtle,html[lang="si"] .eyebrow,html[lang="si"] .section-index,html[lang="si"] .output-label,html[lang="si"] .story-kicker,html[lang="si"] .live-pill{letter-spacing:0;text-transform:none;line-height:1.65}
+    html[lang="si"] .nav-links a,html[lang="si"] .gate-option small,html[lang="si"] .ref-rule{line-height:1.7}
+    html[lang="si"] .story-title{line-height:1.5}
+    html[lang="si"] .float{font-size:11px}
+    @media(max-width:1120px){.nav-links{gap:13px}.nav-inner{gap:15px}.nav-tag{display:none}}
+    @media(max-width:800px){.nav-links{display:none}.lang-switch{margin-left:auto}.nav-tag{display:none}}
+    @media(max-width:590px){.nav-inner{gap:8px}.brand{font-size:17px}.brand-mark{width:34px;height:34px}.lang-choice{font-size:11px;padding:7px 8px}.hero h1{line-height:1.04}html[lang="si"] .hero h1{font-size:clamp(31px,8vw,49px);line-height:1.34;letter-spacing:0}.story-title{font-size:20px}}
   </style>
 </head>
 <body>
@@ -220,6 +238,10 @@
         Logic<span class="accent">Lab.</span>
       </a>
       <nav class="nav-links" aria-label="Main navigation"><a href="#lab">Explore gates</a><a href="#challenge">Quick challenge</a><a href="#reference">Cheat sheet</a></nav>
+      <div class="lang-switch" role="group" aria-label="භාෂාව තෝරන්න / Choose language">
+        <button type="button" class="lang-choice" data-lang="si" aria-pressed="true">සිංහල</button>
+        <button type="button" class="lang-choice" data-lang="en" aria-pressed="false">English</button>
+      </div>
       <div class="nav-tag"><span class="pulse" aria-hidden="true"></span> 7 GATES · 1 PLAYGROUND</div>
     </div>
   </header>
@@ -254,7 +276,7 @@
           <div class="schematic">
             <div class="schematic-top"><span class="live-dot"></span> INTERACTIVE SCHEMATIC</div>
             <svg id="circuit" viewBox="0 0 820 315" role="img" aria-label="Live logic gate circuit with two inputs and one output">
-              <text x="45" y="70" class="svg-small">INPUTS</text><text x="668" y="70" class="svg-small">OUTPUT</text>
+              <text id="svgInputsLabel" x="45" y="70" class="svg-small">INPUTS</text><text id="svgOutputLabel" x="668" y="70" class="svg-small">OUTPUT</text>
               <g id="channelA"><line id="wireA" class="circuit-wire" x1="122" y1="117" x2="340" y2="117"/><circle id="portA" class="port-dot" cx="122" cy="117" r="9"/><text x="40" y="124" class="svg-data-label">A</text><text id="svgValueA" x="74" y="124" class="svg-value">0</text></g>
               <g id="channelB"><line id="wireB" class="circuit-wire" x1="122" y1="215" x2="340" y2="215"/><circle id="portB" class="port-dot" cx="122" cy="215" r="9"/><text x="40" y="222" class="svg-data-label">B</text><text id="svgValueB" x="74" y="222" class="svg-value">0</text></g>
               <path id="gateShape" class="gate-shape" d="M320 88 L414 88 C500 88 554 127 554 166 C554 205 500 244 414 244 L320 244 Z" />
@@ -265,7 +287,7 @@
               <circle cx="712" cy="166" r="27" fill="none" stroke="#506785" stroke-width="3" />
               <circle id="led" cx="712" cy="166" r="18" class="led-glow" />
               <text x="711" y="228" text-anchor="middle" class="svg-small">Y</text>
-              <text x="411" y="290" text-anchor="middle" class="svg-small">SIGNAL FLOW  →</text>
+              <text id="svgSignalFlow" x="411" y="290" text-anchor="middle" class="svg-small">SIGNAL FLOW  →</text>
             </svg>
           </div>
           <div class="output-readout"><div><div class="output-label">BOOLEAN EXPRESSION</div><div class="formula-line" id="gateFormula">Y = A · B</div></div><div style="text-align:right"><div class="output-label">LIVE OUTPUT</div><div class="output-number" id="outputNumber" aria-live="polite">0 <small>OFF</small></div></div></div>
@@ -316,33 +338,122 @@
       {id:'XOR',symbol:'⊕',tagline:'Exactly one',formula:'A ⊕ B',rule:'1 when the inputs are different (01 or 10).',tip:'දෙකම වෙනස් නම් 1!',icon:'🍦',title:'Choose one snack',description:'Your snack voucher works only when you choose EXACTLY ONE: ice cream or chocolate. Not neither, not both.',a:'Choose ice cream',b:'Choose chocolate',yes:'Voucher accepted!',no:'Voucher not accepted',detailYes:'You picked exactly one snack.',detailNo:'You must choose one snack, not zero or two.',evaluate:(a,b)=>a!==b},
       {id:'XNOR',symbol:'⊙',tagline:'Same inputs',formula:'¬(A ⊕ B)',rule:'1 when the inputs match (00 or 11).',tip:'දෙකම එක වගේ නම් 1!',icon:'🤝',title:'The friendship match',description:'The matching badge lights up when you and your friend make the SAME choice — both yes or both no.',a:'You say YES',b:'Your friend says YES',yes:'You both match!',no:'Your choices differ',detailYes:'The two choices are exactly the same.',detailNo:'One person said yes and the other said no.',evaluate:(a,b)=>a===b}
     ];
+    // Hand-authored Sinhala lessons. Technical gate names and Boolean symbols remain universal.
+    const SI_GATES = {
+      AND:{tagline:'දෙකම සත්‍ය වෙන්න ඕනේ',rule:'A = 1 සහ B = 1 නම් විතරයි ප්‍රතිදානය 1.',tip:'දෙකම 1 නම් විතරයි 1!',title:'නිධන් පෙට්ටිය අරිමු',description:'නිධන් පෙට්ටිය අරින්න යතුරත් රහස් අංකයත් දෙකම තියෙන්න ඕනේ.',a:'යතුර තියෙනවා',b:'රහස් අංකය දන්නවා',yes:'නිධන් පෙට්ටිය ඇරෙනවා!',no:'පෙට්ටිය තවම වහලා',detailYes:'යතුරත් රහස් අංකයත් දෙකම තියෙනවා.',detailNo:'පෙට්ටිය අරින්න කොන්දේසි දෙකම සම්පූර්ණ වෙන්න ඕනේ.'},
+      OR:{tagline:'එකක් හරි තිබුණොත් ඇති',rule:'A හෝ B එකක් හරි 1 නම් ප්‍රතිදානය 1. දෙකම 1 වුණත් හරි.',tip:'එකක් හරි 1 නම් 1!',title:'ඉස්කෝලෙට යමු',description:'බස් එකක් හෝ කෝච්චියක් තිබුණොත් ඉස්කෝලෙට යන්න පුළුවන්. දෙකම තිබුණත් ප්‍රශ්නයක් නෑ.',a:'බස් එකක් තියෙනවා',b:'කෝච්චියක් තියෙනවා',yes:'ඉස්කෝලෙට යන්න පුළුවන්!',no:'යන්න වාහනයක් නෑ',detailYes:'බස් එක හෝ කෝච්චිය යන දෙකෙන් එකක් හරි තියෙනවා.',detailNo:'බස් එකත් නෑ, කෝච්චියත් නෑ.'},
+      NOT:{tagline:'ආදානය උඩු යටිකුරු කරනවා',rule:'A = 0 නම් ප්‍රතිදානය 1. A = 1 නම් ප්‍රතිදානය 0.',tip:'0 නම් 1; 1 නම් 0!',title:'ස්වයංක්‍රීය රෑ ලාම්පුව',description:'දවල් එළිය නැති වුණාම රෑ ලාම්පුව ON වෙනවා. මේ Gate එකට තියෙන්නේ එක ආදානයක් විතරයි.',a:'දවල් එළිය තියෙනවා',b:null,yes:'රෑ ලාම්පුව දැල්වෙනවා!',no:'රෑ ලාම්පුව නිවී තියෙනවා',detailYes:'දවල් එළිය නැති නිසා ලාම්පුව ON.',detailNo:'දවල් එළිය තියෙන නිසා ලාම්පුව OFF.'},
+      NAND:{tagline:'AND එකේ විරුද්ධය',rule:'A සහ B දෙකම 1 නම් විතරයි ප්‍රතිදානය 0.',tip:'දෙකම 1 වුණොත් විතරයි 0!',title:'Screen-time නීතිය',description:'Game එකක් ගහන ගමන් Video එකක් බලන එක දෙකම එකවර කළොත් විතරයි මේ නීතිය කැඩෙන්නේ.',a:'Game එකක් ගහනවා',b:'Video එකක් බලනවා',yes:'නීතිය කැඩිලා නෑ!',no:'නීතිය කැඩුණා!',detailYes:'වැඩ දෙකම එකවර කරන්නේ නෑ.',detailNo:'Game එකයි Video එකයි දෙකම එකවර කරනවා.'},
+      NOR:{tagline:'OR එකේ විරුද්ධය',rule:'A = 0 සහ B = 0 නම් විතරයි ප්‍රතිදානය 1.',tip:'දෙකම 0 නම් විතරයි 1!',title:'නිහඬ පාඩම් කාමරය',description:'TV එකත් Music එකත් දෙකම OFF නම් විතරයි “නිහඬයි” කියන ලාම්පුව දැල්වෙන්නේ.',a:'TV එක ON',b:'Music එක ON',yes:'නිහඬව පාඩම් කරන්න පුළුවන්!',no:'කාමරය නිහඬ නෑ',detailYes:'TV එකත් Music එකත් දෙකම OFF.',detailNo:'TV එක හෝ Music එක ON වෙලා තියෙනවා.'},
+      XOR:{tagline:'ආදාන දෙක වෙනස් වෙන්න ඕනේ',rule:'A සහ B වෙනස් නම් (01 හෝ 10) විතරයි ප්‍රතිදානය 1.',tip:'දෙකම වෙනස් නම් 1!',title:'එක Snack එකක් තෝරමු',description:'Voucher එකෙන් Ice Cream එකක් හෝ Chocolate එකක් තෝරන්න පුළුවන්. හැබැයි දෙකම තෝරන්නත් බෑ, එකක්වත් නොතෝරා ඉන්නත් බෑ.',a:'Ice Cream තෝරනවා',b:'Chocolate තෝරනවා',yes:'Voucher එක හරි!',no:'Voucher එක ගැළපෙන්නේ නෑ',detailYes:'ඔයා හරියටම එක Snack එකක් තෝරාගෙන තියෙනවා.',detailNo:'එක Snack එකක් විතරක් තෝරන්න ඕනේ.'},
+      XNOR:{tagline:'ආදාන දෙක සමාන වෙන්න ඕනේ',rule:'A සහ B සමාන නම් (00 හෝ 11) විතරයි ප්‍රතිදානය 1.',tip:'දෙකම එක වගේ නම් 1!',title:'යාළුවෝ දෙන්නගේ තීරණය',description:'ඔයයි යාළුවයි දෙන්නම එකම තීරණය ගත්තොත් Match Badge එක දැල්වෙනවා. දෙන්නම ඔව් කිව්වත් දෙන්නම නෑ කිව්වත් හරි.',a:'ඔයා ඔව් කියනවා',b:'යාළුවා ඔව් කියනවා',yes:'දෙන්නගේ තීරණ එකයි!',no:'තීරණ දෙක වෙනස්',detailYes:'දෙන්නගේ උත්තර දෙකම එක වගේ.',detailNo:'එක්කෙනෙක් ඔව් කියනවා, අනෙකා නෑ කියනවා.'}
+    };
+    const EN_TIPS = {AND:'Both must be 1!',OR:'At least one must be 1!',NOT:'0 becomes 1; 1 becomes 0!',NAND:'Both 1 means output 0!',NOR:'Both 0 means output 1!',XOR:'Different inputs mean 1!',XNOR:'Matching inputs mean 1!'};
+    const STRINGS = {
+      si:{
+        pageTitle:'LogicLab — ලොජික් ගේට්ස් පහසුවෙන් ඉගෙන ගමු',metaDescription:'සිංහලෙන් AND, OR, NOT, NAND, NOR, XOR, XNOR ගේට්ස් අන්තර්ක්‍රියාකාරීව ඉගෙන ගන්න.',
+        home:'LogicLab මුල් පිටුව',nav:'ප්‍රධාන මෙනුව',navLab:'Logic Gates ඉගෙන ගමු',navQuiz:'පුංචි ප්‍රශ්නාවලිය',navReference:'මතක සටහන',navTag:'GATES 7ක් · ඉගෙනීම එකම තැනක',
+        heroEyebrow:'<span class="dash"></span> කරලා බලලා ඩිජිටල් ලොජික් ඉගෙන ගමු',heroTitle:'ලොජික් ගේට්ස් <span class="second">ලේසියෙන් ඉගෙන ගමු!</span>',heroDesc:'ආදාන 0 සහ 1 වෙනස් කරන්න. Circuit එක වැඩ කරන හැටි බලන්න. <strong style="color:#e6effb">AND, OR, NOT, NAND, NOR, XOR සහ XNOR</strong> අපේ ජීවිතේ උදාහරණවලින් තේරුම් ගන්න.',heroLab:'Gate එකක් තෝරා බලමු <span aria-hidden="true">↗</span>',heroQuiz:'දැනුම පරීක්ෂා කරමු <span aria-hidden="true">→</span>',floatInputA:'ආදානය A',floatInputB:'ආදානය B',floatOutput:'ප්‍රතිදානය',
+        sectionLab:'01 / අන්තර්ක්‍රියාකාරී Simulator එක',labTitle:'ඔයාගේ Circuit එක!',quickKeys:'ඉක්මන් යතුරු: <kbd>A</kbd> ආදානය A &nbsp; <kbd>B</kbd> ආදානය B',chooseGate:'Gate එකක් තෝරන්න',menuFooter:'ඕනෑම Gate එකක් තෝරලා වැඩ කරන හැටි බලන්න.',exploring:'දැන් බලන්නේ',gateSuffix:' Gate එක',liveCircuit:'සජීවී CIRCUIT',schematic:'ක්‍රියාකාරී CIRCUIT රූපය',inputs:'ආදාන',output:'ප්‍රතිදාන',signalFlow:'සංඥා ගමන් මඟ →',expression:'BOOLEAN ප්‍රකාශනය',liveOutput:'දැන් ප්‍රතිදානය',inputLabel:'ආදානය',on:'ON',off:'OFF',yes:'ඔව්',no:'නෑ',toggleA:'ආදානය A වෙනස් කරන්න',toggleB:'ආදානය B වෙනස් කරන්න',hint:'✦ Switch එක ඔබලා 0 ↔ 1 වෙනස් කරන්න',cycle:'↻ ඊළඟ සංයෝජනය',truthTitle:'සත්‍යතා වගුව (Truth Table)',truthHint:'පාට කළ පේළිය = දැන් තියෙන ආදාන',truthAria:'සජීවී සත්‍යතා වගුව',simulationAria:'අන්තර්ක්‍රියාකාරී ලොජික් ගේට් සිමියුලේටරය',circuitAria:'ප්‍රතිදානයක් සහ ආදාන {count}ක් ඇති {gate} Gate Circuit එක',selectAria:'Logic Gate එකක් තෝරන්න',storyAria:'එදිනෙදා ජීවිතයේ උදාහරණයක්',storyKicker:'✦ අපේ ජීවිතේ Logic',whatHappens:'දැන් මොකද වෙන්නේ?',memory:'🧠 මතක තියාගන්න ලේසිම ක්‍රමය',
+        sectionQuiz:'02 / දැන් ඔයාගේ වාරය',quizTitle:'හරියට <em>තේරුණාද?</em>',quizIntro:'අහඹු Gate එකකට ආදාන 0 හෝ 1 දුන්නාම ප්‍රතිදානය 0 ද 1 ද කියලා තෝරන්න. උත්තරේ එක්ක හේතුවත් ඉගෙන ගන්න.',quizBenefit1:'Logic Gates 7ම ඇතුළත්',quizBenefit2:'එවෙලේම උත්තර සහ පැහැදිලි කිරීම',quizBenefit3:'ලකුණු සහ අඛණ්ඩ නිවැරදි පිළිතුරු ගණන',quizTag:'⚡ ඉක්මන් ප්‍රශ්නාවලිය',quizQuestion:'{gate} Gate එකේ ප්‍රතිදානය කීයද?',quizSubtitle:'ආදාන අගයන් බලලා හරි ප්‍රතිදානය තෝරන්න.',quizPrompt:'ඔයාගේ පිළිතුර (Y) =',quizWaiting:'උත්තරේ බලන්න 0 හෝ 1 තෝරන්න.',quizGood:'✓ හරිම හරි! නියමයි.',quizBad:'✕ තව ටිකක් බලමු. හරි පිළිතුර {value}.',quizExplain:'මේ අවස්ථාවේ {gate} Gate එකේ ප්‍රතිදානය {value}.',correct:'නිවැරදි',streak:'අඛණ්ඩ හරි',next:'ඊළඟ ප්‍රශ්නය →',answerZero:'පිළිතුර බිංදුව',answerOne:'පිළිතුර එක',
+        sectionRef:'03 / මතක තියාගන්න',referenceTitle:'Logic Gate මතක සටහන',referenceHint:'ඕනෑම Card එකක් ඔබලා Gate එක අත්හදා බලන්න ↑',tryGate:'මේ GATE එක බලන්න <span aria-hidden="true">↗</span>',tryAria:'{gate} Gate එක Simulator එකෙන් බලන්න',footerA:'<strong>LogicLab.</strong> ඩිජිටල් ලොජික් ලේසියෙන් ඉගෙන ගන්න.',footerB:'Logic Gates 7ක් · ජීවිතේ උදාහරණ · හැමෝටම ඉගෙන ගන්න ✦'
+      },
+      en:{
+        pageTitle:'LogicLab — Make Logic Click',metaDescription:'An interactive digital logic playground: explore 7 logic gates, flip inputs, see live circuits, learn real-life examples, and test your knowledge.',
+        home:'LogicLab home',nav:'Main navigation',navLab:'Explore gates',navQuiz:'Quick challenge',navReference:'Cheat sheet',navTag:'7 GATES · 1 PLAYGROUND',
+        heroEyebrow:'<span class="dash"></span> LEARN DIGITAL LOGIC BY DOING',heroTitle:'Make logic <span class="second">click.</span>',heroDesc:'Switch inputs. Watch circuits react. Discover the real-world stories behind <strong style="color:#e6effb">AND, OR, NOT, NAND, NOR, XOR and XNOR</strong> — without the boring bits.',heroLab:'Explore the playground <span aria-hidden="true">↗</span>',heroQuiz:'Test my knowledge <span aria-hidden="true">→</span>',floatInputA:'INPUT A',floatInputB:'INPUT B',floatOutput:'OUTPUT',
+        sectionLab:'01 / The interactive simulator',labTitle:'Your circuit playground.',quickKeys:'Quick keys: <kbd>A</kbd> input A &nbsp;<kbd>B</kbd> input B',chooseGate:'Choose a gate',menuFooter:'Click any gate to see how it works.',exploring:'Currently exploring',gateSuffix:' Gate',liveCircuit:'LIVE CIRCUIT',schematic:'INTERACTIVE SCHEMATIC',inputs:'INPUTS',output:'OUTPUT',signalFlow:'SIGNAL FLOW →',expression:'BOOLEAN EXPRESSION',liveOutput:'LIVE OUTPUT',inputLabel:'INPUT',on:'ON',off:'OFF',yes:'YES',no:'NO',toggleA:'Toggle input A',toggleB:'Toggle input B',hint:'✦ Click a switch to flip 0 ↔ 1',cycle:'↻ Next combination',truthTitle:'Truth table',truthHint:'Highlighted row = your live inputs',truthAria:'Live truth table',simulationAria:'Interactive logic gate simulator',circuitAria:'{gate} gate circuit with {count} inputs and one output',selectAria:'Select a logic gate',storyAria:'Everyday life example',storyKicker:'✦ Logic in real life',whatHappens:'What happens?',memory:'🧠 Memory trick',
+        sectionQuiz:'02 / Time to level up',quizTitle:"Think you've <em>got it?</em>",quizIntro:'Try the quick-fire challenge. See a random logic gate and its input values, then predict whether the output is 0 or 1. Every answer teaches you something.',quizBenefit1:'All 7 logic gates included',quizBenefit2:'Instant answers and explanations',quizBenefit3:'Track your score and streak',quizTag:'⚡ QUICK-FIRE QUIZ',quizQuestion:'What is the output of {gate}?',quizSubtitle:'Read the inputs. Choose the correct output.',quizPrompt:'Your answer (Y) is...',quizWaiting:'Choose 0 or 1 to reveal the answer.',quizGood:'✓ Correct! Great thinking.',quizBad:'✕ Not quite. The answer is {value}.',quizExplain:'{gate} outputs {value} here.',correct:'CORRECT',streak:'Streak',next:'Next question →',answerZero:'Answer zero',answerOne:'Answer one',
+        sectionRef:'03 / Save this in your brain',referenceTitle:'The ultimate cheat sheet.',referenceHint:'Click a card to try the gate above ↑',tryGate:'TRY THIS GATE <span aria-hidden="true">↗</span>',tryAria:'Try the {gate} gate in the simulator',footerA:'<strong>LogicLab.</strong> Built to make digital logic easier to learn.',footerB:'7 gates · Real-life examples · Made for curious minds ✦'
+      }
+    };
     const $ = id => document.getElementById(id);
+    const q = selector => document.querySelector(selector);
+    const qa = selector => document.querySelectorAll(selector);
+    let language='si';
+    try { if(['si','en'].includes(localStorage.getItem('logiclab-language'))) language=localStorage.getItem('logiclab-language'); }catch(_e){}
     let selected = GATES[0], A = false, B = false;
+    let quizGate,quizA,quizB,answered=false,attempts=0,correct=0,streak=0,lastQuestion='',quizChoice=null;
     const getOutput = (gate,a,b) => Number(gate.evaluate(Boolean(a),Boolean(b)));
-    const gateMarkup = (g) => `<span class="gate-glyph" aria-hidden="true">${g.symbol}</span><span><strong>${g.id}</strong><small>${g.tagline}</small></span>`;
-    $('gateList').innerHTML = GATES.map(g=>`<button type="button" class="gate-option" data-gate="${g.id}" aria-pressed="false">${gateMarkup(g)}</button>`).join('');
-    $('referenceGrid').innerHTML = GATES.map(g=>`<article class="ref-card"><div class="ref-top"><h3>${g.id} Gate</h3><span class="ref-symbol" aria-hidden="true">${g.symbol}</span></div><div class="ref-formula">Y = ${g.formula}</div><p class="ref-rule">${g.rule}</p><button class="ref-try" data-try="${g.id}" type="button" aria-label="Try the ${g.id} gate in the simulator">TRY THIS GATE <span aria-hidden="true">↗</span></button></article>`).join('');
-    document.querySelectorAll('[data-gate]').forEach(button => button.addEventListener('click', () => selectGate(button.dataset.gate)));
-    document.querySelectorAll('[data-try]').forEach(button => button.addEventListener('click', () => {selectGate(button.dataset.try);$('lab').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});}));
-
+    const t = key => STRINGS[language][key];
+    const msg = (key, values={}) => t(key).replace(/\{(\w+)\}/g,(_,name)=>String(values[name]??''));
+    const words = gate => language==='si'?SI_GATES[gate.id]:{...gate,tip:EN_TIPS[gate.id]};
+    function applyStaticLanguage(){
+      document.documentElement.lang=language;
+      document.body.dataset.language=language;
+      document.title=t('pageTitle');
+      document.querySelector('meta[name="description"]').content=t('metaDescription');
+      qa('[data-lang]').forEach(b=>{const active=b.dataset.lang===language;b.setAttribute('aria-pressed',String(active));b.classList.toggle('active',active);});
+      const html = (selector,key) => {const e=q(selector);if(e)e.innerHTML=t(key);};
+      const txt = (selector,key) => {const e=q(selector);if(e)e.textContent=t(key);};
+      const groups=[
+        ['.nav-links a[href="#lab"]','navLab'],['.nav-links a[href="#challenge"]','navQuiz'],['.nav-links a[href="#reference"]','navReference'],
+        ['.hero .eyebrow','heroEyebrow'],['#hero-title','heroTitle'],['.hero-desc','heroDesc'],
+        ['.hero-buttons .btn-primary','heroLab'],['.hero-buttons .btn-ghost','heroQuiz'],
+        ['#lab .section-index','sectionLab'],['#lab-title','labTitle'],['#lab .kbd-note','quickKeys'],
+        ['.micro-heading','chooseGate'],['.menu-footer span:last-child','menuFooter'],
+        ['.panel-top .subtle','exploring'],['.live-pill','liveCircuit'],['.schematic-top','schematic'],
+        ['.lab-actions .hint-text','hint'],['#cycleBtn','cycle'],['.truth-heading strong','truthTitle'],['.truth-heading span','truthHint'],
+        ['.story-kicker','storyKicker'],['.story-result .result-top span:first-child','whatHappens'],['.memory strong','memory'],
+        ['.challenge-copy .section-index','sectionQuiz'],['#challenge-title','quizTitle'],['.challenge-copy > p:not(.section-index)','quizIntro'],
+        ['.quiz-head .eyebrow','quizTag'],['.quiz-subtitle','quizSubtitle'],['.quiz-prompt','quizPrompt'],
+        ['.reference-section .section-index','sectionRef'],['#reference-title','referenceTitle'],['.reference-section .kbd-note','referenceHint'],
+        ['footer span:first-child','footerA'],['footer span:last-child','footerB']
+      ];
+      groups.forEach(([selector,key])=>html(selector,key));
+      const tag=q('.nav-tag');tag.innerHTML='<span class="pulse" aria-hidden="true"></span> '+t('navTag');
+      const live=q('.live-pill');live.innerHTML='<span class="pulse"></span> '+t('liveCircuit');
+      const schematic=q('.schematic-top');schematic.innerHTML='<span class="live-dot"></span> '+t('schematic');
+      q('.micro-heading').innerHTML=t('chooseGate')+' <span class="count">07</span>';
+      q('.hero-art .float-a').innerHTML=t('floatInputA')+'&nbsp; <span>1</span>';
+      q('.hero-art .float-b').innerHTML=t('floatInputB')+'&nbsp; <span>0</span>';
+      q('.hero-art .float-out').innerHTML=t('floatOutput')+'&nbsp; 1 ●';
+      txt('#svgInputsLabel','inputs');txt('#svgOutputLabel','output');txt('#svgSignalFlow','signalFlow');
+      const outputLabels=qa('.output-readout .output-label');outputLabels[0].textContent=t('expression');outputLabels[1].textContent=t('liveOutput');
+      qa('.control-label').forEach((e,i)=>{e.childNodes[0].textContent=t('inputLabel')+' '+(i===0?'A':'B')+' · ';});
+      qa('.challenge-benefits .benefit').forEach((e,i)=>e.innerHTML='<i>✓</i> '+t('quizBenefit'+(i+1)));
+      q('.brand').setAttribute('aria-label',t('home'));q('.nav-links').setAttribute('aria-label',t('nav'));
+      q('.gate-menu').setAttribute('aria-label',t('selectAria'));q('.experiment').setAttribute('aria-label',t('simulationAria'));
+      q('.truth-table').setAttribute('aria-label',t('truthAria'));q('.story-panel').setAttribute('aria-label',t('storyAria'));
+      $('inputA').setAttribute('aria-label',t('toggleA'));$('inputB').setAttribute('aria-label',t('toggleB'));
+      qa('.answer-btn').forEach(b=>b.setAttribute('aria-label',t(b.dataset.answer==='0'?'answerZero':'answerOne')));
+      document.querySelector('.lang-switch').setAttribute('aria-label','භාෂාව තෝරන්න / Choose language');
+      $('nextQuestion').textContent=t('next');
+    }
+    function renderGateMenu(){
+      $('gateList').innerHTML=GATES.map(g=>`<button type="button" class="gate-option${selected.id===g.id?' active':''}" data-gate="${g.id}" aria-pressed="${selected.id===g.id}"><span class="gate-glyph" aria-hidden="true">${g.symbol}</span><span><strong>${g.id}</strong><small>${words(g).tagline}</small></span></button>`).join('');
+    }
+    function renderReferences(){
+      $('referenceGrid').innerHTML=GATES.map(g=>`<article class="ref-card"><div class="ref-top"><h3>${g.id}${t('gateSuffix')}</h3><span class="ref-symbol" aria-hidden="true">${g.symbol}</span></div><div class="ref-formula">Y = ${g.formula}</div><p class="ref-rule">${words(g).rule}</p><button class="ref-try" data-try="${g.id}" type="button" aria-label="${msg('tryAria',{gate:g.id})}">${t('tryGate')}</button></article>`).join('');
+    }
+    // Event delegation survives rerendering when the language is changed.
+    $('gateList').addEventListener('click',event=>{const btn=event.target.closest('[data-gate]');if(btn)selectGate(btn.dataset.gate);});
+    $('referenceGrid').addEventListener('click',event=>{const btn=event.target.closest('[data-try]');if(btn){selectGate(btn.dataset.try);$('lab').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});}});
+    qa('[data-lang]').forEach(btn=>btn.addEventListener('click',()=>setLanguage(btn.dataset.lang)));
+    function setLanguage(lang){
+      if(!['si','en'].includes(lang))return;
+      language=lang;
+      try{localStorage.setItem('logiclab-language',lang);}catch(_e){}
+      applyStaticLanguage();renderGateMenu();renderReferences();renderGateText();update();renderQuiz();
+    }
     function selectGate(id){
-      selected = GATES.find(g => g.id === id) || GATES[0];
-      A = false; B = false;
-      document.querySelectorAll('[data-gate]').forEach(btn=>{const active=btn.dataset.gate===selected.id;btn.classList.toggle('active',active);btn.setAttribute('aria-pressed',String(active));});
-      $('currentGateName').textContent = selected.id+' Gate';
-      $('gateFormula').textContent = 'Y = '+selected.formula;
-      $('storyIcon').textContent = selected.icon;
-      $('storyTitle').textContent = selected.title;
-      $('storyDesc').textContent = selected.description;
-      $('memoryTip').textContent = selected.tip;
-      $('controlAHint').textContent = selected.a;
-      $('controlBHint').textContent = selected.b||'';
-      const isNot=selected.id==='NOT';
+      selected=GATES.find(g=>g.id===id)||GATES[0];A=false;B=false;
+      renderGateMenu();renderGateText();buildShape();buildTruthTable();update();
+    }
+    function renderGateText(){
+      const g=words(selected), isNot=selected.id==='NOT';
+      $('currentGateName').textContent=selected.id+t('gateSuffix');
+      $('gateFormula').textContent='Y = '+selected.formula;
+      $('storyIcon').textContent=selected.icon;
+      $('storyTitle').textContent=g.title;
+      $('storyDesc').textContent=g.description;
+      $('memoryTip').textContent=g.tip;
+      $('controlAHint').textContent=g.a;
+      $('controlBHint').textContent=g.b||'';
       $('inputB').classList.toggle('hide',isNot);
       $('channelB').classList.toggle('hide',isNot);
-      $('inputA').style.gridColumn = isNot?'1 / -1':'';
-      $('circuit').setAttribute('aria-label',selected.id+' gate circuit with '+(isNot?'one input':'two inputs')+' and one output');
-      buildShape();buildTruthTable();update();
+      $('inputA').style.gridColumn=isNot?'1 / -1':'';
+      $('circuit').setAttribute('aria-label',msg('circuitAria',{gate:selected.id,count:isNot?1:2}));
     }
     function buildShape(){
       const id=selected.id, isNot=id==='NOT', isOr=['OR','NOR','XOR','XNOR'].includes(id), invert=['NAND','NOR','XNOR','NOT'].includes(id), xor=['XOR','XNOR'].includes(id);
@@ -366,26 +477,26 @@
       $('truthBody').innerHTML=rows.map(([a,b])=>{const output=getOutput(selected,a,b);return `<tr data-a="${a}" data-b="${b}"><td>${a}</td>${isNot?'':`<td>${b}</td>`}<td class="${output?'out-high':'out-low'}">${output}</td></tr>`}).join('');
     }
     function update(){
-      const output=getOutput(selected,A,B),isNot=selected.id==='NOT';
+      const output=getOutput(selected,A,B),isNot=selected.id==='NOT',g=words(selected);
       $('inputA').setAttribute('aria-pressed',String(A));$('inputB').setAttribute('aria-pressed',String(B));
-      $('inputA').setAttribute('aria-label','Toggle input A, currently '+(A?'1':'0')+'. '+selected.a);
-      $('inputB').setAttribute('aria-label','Toggle input B, currently '+(B?'1':'0')+'. '+(selected.b||''));
-      $('controlAValue').textContent=A?'ON (1)':'OFF (0)';$('controlBValue').textContent=B?'ON (1)':'OFF (0)';
+      $('inputA').setAttribute('aria-label',t('toggleA')+', '+Number(A)+'. '+g.a);
+      $('inputB').setAttribute('aria-label',t('toggleB')+', '+Number(B)+'. '+(g.b||''));
+      $('controlAValue').textContent=(A?t('on'):t('off'))+' ('+Number(A)+')';
+      $('controlBValue').textContent=(B?t('on'):t('off'))+' ('+Number(B)+')';
       $('svgValueA').textContent=Number(A);$('svgValueB').textContent=Number(B);
       ['wireA','portA','svgValueA'].forEach(id=>$(id).classList.toggle('active',A));
       ['wireB','portB','svgValueB'].forEach(id=>$(id).classList.toggle('active',B));
       ['wireOutput','led'].forEach(id=>$(id).classList.toggle('active',!!output));
       ['gateShape','invertBubble'].forEach(id=>$(id).classList.toggle('powered',!!output));
-      $('outputNumber').innerHTML=output+' <small>'+(output?'ON':'OFF')+'</small>';
+      $('outputNumber').innerHTML=output+' <small>'+(output?t('on'):t('off'))+'</small>';
       $('outputNumber').classList.toggle('on',!!output);
-      const conditions=[[selected.a,A],...(isNot?[]:[[selected.b,B]])];
-      $('storyConditions').innerHTML=conditions.map(([label,val],i)=>`<div class="condition"><span class="condition-mark ${val?'on':''}">${val?'1':'0'}</span><span>${label}: <strong>${val?'YES':'NO'}</strong></span></div>`).join('');
+      const conditions=[[g.a,A],...(isNot?[]:[[g.b,B]])];
+      $('storyConditions').innerHTML=conditions.map(([label,val])=>`<div class="condition"><span class="condition-mark ${val?'on':''}">${val?'1':'0'}</span><span>${label}: <strong>${val?t('yes'):t('no')}</strong></span></div>`).join('');
       $('storyResult').classList.toggle('positive',!!output);
       $('storyResultIcon').textContent=output?'✓':'—';
-      $('storyStatus').textContent=output?selected.yes:selected.no;
-      $('storyCaption').textContent=output?selected.detailYes:selected.detailNo;
-      const rows=$('truthBody').querySelectorAll('tr');
-      rows.forEach(row=>row.classList.toggle('current',Number(row.dataset.a)===Number(A)&&(isNot||Number(row.dataset.b)===Number(B))));
+      $('storyStatus').textContent=output?g.yes:g.no;
+      $('storyCaption').textContent=output?g.detailYes:g.detailNo;
+      $('truthBody').querySelectorAll('tr').forEach(row=>row.classList.toggle('current',Number(row.dataset.a)===Number(A)&&(isNot||Number(row.dataset.b)===Number(B))));
     }
     $('inputA').addEventListener('click',()=>{A=!A;update();});
     $('inputB').addEventListener('click',()=>{if(selected.id!=='NOT'){B=!B;update();}});
@@ -394,45 +505,48 @@
       if(selected.id==='NOT'){A=!A;}else{const next=(state+1)%4;A=Boolean(next&2);B=Boolean(next&1);}
       update();
     });
-    window.addEventListener('keydown',(event)=>{
-      if(event.altKey||event.ctrlKey||event.metaKey||event.repeat||['INPUT','TEXTAREA','SELECT'].includes(document.activeElement?.tagName))return;
+    window.addEventListener('keydown',event=>{
+      if(event.altKey||event.ctrlKey||event.metaKey||event.repeat||['INPUT','TEXTAREA','SELECT','BUTTON'].includes(document.activeElement?.tagName))return;
       if(event.key.toLowerCase()==='a'){A=!A;update();}
       if(event.key.toLowerCase()==='b'&&selected.id!=='NOT'){B=!B;update();}
     });
-
-    let quizGate,quizA,quizB,answered=false,attempts=0,correct=0,streak=0,lastQuestion='';
     const random = n => Math.floor(Math.random()*n);
     function newQuestion(){
-      let key, tries=0;
-      do {quizGate=GATES[random(GATES.length)];quizA=random(2);quizB=quizGate.id==='NOT'?0:random(2);key=quizGate.id+'-'+quizA+'-'+quizB;tries++;} while(key===lastQuestion&&tries<16);
-      lastQuestion=key;answered=false;
-      $('quizQuestion').textContent='What is the output of '+quizGate.id+'?';
+      let key,tries=0;
+      do{quizGate=GATES[random(GATES.length)];quizA=random(2);quizB=quizGate.id==='NOT'?0:random(2);key=quizGate.id+'-'+quizA+'-'+quizB;tries++;}while(key===lastQuestion&&tries<16);
+      lastQuestion=key;answered=false;quizChoice=null;
+      qa('.answer-btn').forEach(btn=>{btn.disabled=false;btn.classList.remove('correct','wrong');btn.setAttribute('aria-pressed','false');});
+      renderQuiz();
+    }
+    function renderQuiz(){
+      if(!quizGate)return;
+      $('quizQuestion').textContent=msg('quizQuestion',{gate:quizGate.id});
       $('quizValues').innerHTML=`<div class="quiz-val">A = <b>${quizA}</b></div>`+(quizGate.id==='NOT'?'':`<div class="quiz-val">B = <b>${quizB}</b></div>`);
-      document.querySelectorAll('.answer-btn').forEach(btn=>{btn.disabled=false;btn.classList.remove('correct','wrong');btn.setAttribute('aria-pressed','false');});
-      $('quizFeedback').textContent='Choose 0 or 1 to reveal the answer.';
-      $('nextQuestion').disabled=true;
+      $('scoreDisplay').textContent=correct+' / '+attempts+' '+t('correct');
+      $('streakDisplay').textContent='🔥 '+t('streak')+': '+streak;
+      $('nextQuestion').disabled=!answered;
+      if(!answered){$('quizFeedback').textContent=t('quizWaiting');return;}
+      const output=getOutput(quizGate,quizA,quizB),isCorrect=quizChoice===output;
+      const intro=isCorrect?t('quizGood'):msg('quizBad',{value:output});
+      $('quizFeedback').innerHTML='<strong>'+intro+'</strong> '+msg('quizExplain',{gate:quizGate.id,value:output})+' '+words(quizGate).rule;
     }
     function answerQuiz(value){
       if(answered)return;
-      answered=true;attempts++;
-      const output=getOutput(quizGate,quizA,quizB);
-      const isCorrect=Number(value)===output;
+      answered=true;attempts++;quizChoice=Number(value);
+      const output=getOutput(quizGate,quizA,quizB),isCorrect=quizChoice===output;
       if(isCorrect){correct++;streak++;}else{streak=0;}
-      document.querySelectorAll('.answer-btn').forEach(btn=>{
-        btn.disabled=true;
-        const btnValue=Number(btn.dataset.answer);
-        if(btnValue===output)btn.classList.add('correct');
-        else if(btnValue===Number(value))btn.classList.add('wrong');
-        if(btnValue===Number(value))btn.setAttribute('aria-pressed','true');
+      qa('.answer-btn').forEach(btn=>{
+        btn.disabled=true;const buttonValue=Number(btn.dataset.answer);
+        if(buttonValue===output)btn.classList.add('correct');
+        else if(buttonValue===quizChoice)btn.classList.add('wrong');
+        if(buttonValue===quizChoice)btn.setAttribute('aria-pressed','true');
       });
-      $('quizFeedback').innerHTML=`<strong>${isCorrect?'✓ Correct! Great thinking.':'✕ Not quite. The answer is '+output+'.'}</strong> ${quizGate.id} outputs ${output} here. ${quizGate.rule}`;
-      $('scoreDisplay').textContent=correct+' / '+attempts+' CORRECT';
-      $('streakDisplay').textContent='🔥 Streak: '+streak;
-      $('nextQuestion').disabled=false;
+      renderQuiz();
     }
-    document.querySelectorAll('.answer-btn').forEach(btn=>btn.addEventListener('click',()=>answerQuiz(btn.dataset.answer)));
+    qa('.answer-btn').forEach(btn=>btn.addEventListener('click',()=>answerQuiz(btn.dataset.answer)));
     $('nextQuestion').addEventListener('click',newQuestion);
-    selectGate('AND');newQuestion();
+    // Initial language defaults to Sinhala; choice is remembered on this device.
+    applyStaticLanguage();selectGate('AND');renderReferences();newQuestion();
   </script>
 </body>
 </html>
