@@ -5,6 +5,8 @@ import {resolve,dirname,join} from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {projects,profile} from '../src/projects.mjs';
 import {datasetPath} from '../src/dataset.mjs';
+import {photosPath} from '../src/photos.mjs';
+import {photos} from '../src/photo-data.mjs';
 const root=fileURLToPath(new URL('../dist/',import.meta.url));
 async function walk(path){let files=[];for(const f of await readdir(path,{withFileTypes:true})){const target=join(path,f.name);files.push(...(f.isDirectory()?await walk(target):[target]));}return files;}
 test('Every generated destination and local resource resolves, including fragment links',async()=>{
@@ -23,7 +25,7 @@ test('Every generated destination and local resource resolves, including fragmen
 });
 test('All project pages have meaningful static content, metadata and one H1',async()=>{
  const canonicals=new Set();
- for(const path of ['index.html',datasetPath+'index.html',...projects.map(p=>`projects/${p.id}/index.html`)]){
+ for(const path of ['index.html',datasetPath+'index.html',photosPath+'index.html',...projects.map(p=>`projects/${p.id}/index.html`)]){
   const html=await readFile(join(root,path),'utf8');
   assert.equal((html.match(/<h1\b/g)||[]).length,1,path);
   for(const token of ['<main','name="description"','property="og:image"','name="twitter:card"','application/ld+json','class="skip-link"'])assert.ok(html.includes(token),path+': '+token);
@@ -31,6 +33,18 @@ test('All project pages have meaningful static content, metadata and one H1',asy
   const canonical=html.match(/rel="canonical" href="([^"]+)"/)[1];assert.ok(!canonicals.has(canonical));canonicals.add(canonical);
   for(const img of html.matchAll(/<img\b[^>]*>/g)){assert.match(img[0],/alt="[^"]+"/);assert.match(img[0],/width="\d+"/);assert.match(img[0],/height="\d+"/);}
   for(const a of html.matchAll(/<a\b[^>]*target="_blank"[^>]*>/g))assert.match(a[0],/rel="noopener noreferrer"/);
+ }
+});
+
+test('Event photographs are discoverable through visible content, structured data and sitemap',async()=>{
+ const html=await readFile(join(root,photosPath,'index.html'),'utf8');
+ const data=JSON.parse(html.match(/<script type="application\/ld\+json">(.*?)<\/script>/s)[1]);
+ assert.equal(data['@type'],'ImageGallery');
+ const sitemap=await readFile(join(root,'sitemap.xml'),'utf8');
+ for(const photo of photos){
+  assert.ok(html.includes(photo.file));
+  assert.ok(sitemap.includes(profile.site+'assets/photos/'+photo.file));
+  assert.ok(data.image.some(image=>image.contentUrl.endsWith(photo.file)&&image.about.name===profile.name));
  }
 });
 test('Production payload is bounded and curated content has evidence',async()=>{

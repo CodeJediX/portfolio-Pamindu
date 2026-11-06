@@ -44,7 +44,7 @@ export function home() {
         <p>I’m interested in applied AI, robotics, embedded systems, and research that connects an idea to a useful working prototype.</p>
         <p>I’m also Co-founder and CEO of ${external(profile.business+'#about-us','OULU Academy')} in Sri Lanka.</p>
         <p>I compiled and published the <a class="text-link" href="datasets/sign-language-recognition/">Sign Language Recognition Dataset – 2,000 Words</a>, a Kaggle resource for sign language recognition research.</p>
-        <div class="about-links">${external(profile.linkedin,'More about me on LinkedIn')}${external(profile.linktree,'Around the web')}</div>
+        <div class="about-links"><a class="text-link" href="photos/">Photos &amp; events ↗</a>${external(profile.linkedin,'More about me on LinkedIn')}${external(profile.linktree,'Around the web')}</div>
       </div>
     </div></section>
 

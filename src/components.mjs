@@ -1,4 +1,5 @@
 import { profile } from './projects.mjs';
+import { photos } from './photo-data.mjs';
 
 export const escape = (value) => String(value).replace(/[&<>"']/g, (char) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
 export const arrow = '<span aria-hidden="true">↗</span>';
@@ -14,7 +15,7 @@ export function header(base = './', home = true) {
 }
 
 export function footer(base = './') {
-  return `<footer class="site-footer connected-footer"><div class="wrap"><div class="footer-heading"><a class="footer-signature" href="${base}">Pamindu<span class="accent">.</span></a><p>Engineering ideas.<br>Connecting possibilities.</p><a class="footer-top" href="${base}#top" aria-label="Back to top">↑</a></div><div class="footer-columns"><div><p class="eyebrow">EXPLORE</p><a href="${base}#work">Selected projects</a><a href="${base}#about">About me</a><a href="${base}datasets/sign-language-recognition/">Published dataset</a><a href="${base}#skills">Skills & tools</a><a href="${base}#certifications">Certifications</a><a href="${base}#volunteering">Volunteering</a></div><div><p class="eyebrow">AROUND THE WEB</p>${external(profile.github,'GitHub')}${external(profile.linkedin,'LinkedIn')}${external(profile.instagram,'Instagram')}${external(profile.kaggle,'Kaggle')}${external(profile.linktree,'All my links · Linktree')}</div><div><p class="eyebrow">LET’S BUILD SOMETHING</p><a class="footer-email" href="mailto:${profile.email}">${profile.email} ↗</a><p>Based in Sri Lanka.<br>Open to thoughtful conversations.</p></div></div><div class="footer-bottom mono"><span>© ${new Date().getUTCFullYear()} Pamindu Karunadasa</span><span>HARDWARE × INTELLIGENCE × INTERFACE</span></div></div></footer>`;
+  return `<footer class="site-footer connected-footer"><div class="wrap"><div class="footer-heading"><a class="footer-signature" href="${base}">Pamindu<span class="accent">.</span></a><p>Engineering ideas.<br>Connecting possibilities.</p><a class="footer-top" href="${base}#top" aria-label="Back to top">↑</a></div><div class="footer-columns"><div><p class="eyebrow">EXPLORE</p><a href="${base}#work">Selected projects</a><a href="${base}#about">About me</a><a href="${base}photos/">Photos &amp; events</a><a href="${base}datasets/sign-language-recognition/">Published dataset</a><a href="${base}#skills">Skills & tools</a><a href="${base}#certifications">Certifications</a><a href="${base}#volunteering">Volunteering</a></div><div><p class="eyebrow">AROUND THE WEB</p>${external(profile.github,'GitHub')}${external(profile.linkedin,'LinkedIn')}${external(profile.instagram,'Instagram')}${external(profile.kaggle,'Kaggle')}${external(profile.linktree,'All my links · Linktree')}</div><div><p class="eyebrow">LET’S BUILD SOMETHING</p><a class="footer-email" href="mailto:${profile.email}">${profile.email} ↗</a><p>Based in Sri Lanka.<br>Open to thoughtful conversations.</p></div></div><div class="footer-bottom mono"><span>© ${new Date().getUTCFullYear()} Pamindu Karunadasa</span><span>HARDWARE × INTELLIGENCE × INTERFACE</span></div></div></footer>`;
 }
 
 export function page({title, description, body, base='./', path='', image='assets/social-preview.png', structuredData=null}) {
@@ -22,7 +23,7 @@ export function page({title, description, body, base='./', path='', image='asset
   const person = {
     '@type':'Person', '@id':profile.site+'#person', name:profile.name,
     alternateName:'Pamindu Pasandul Karunadasa', url:profile.site,
-    image:profile.site+'assets/images/pamindu.webp',
+    image:[profile.site+'assets/images/pamindu.webp',...photos.map(p=>profile.site+'assets/photos/'+p.file)],
     sameAs:[profile.github,profile.linkedin,profile.instagram,profile.kaggle,profile.linktree],
     affiliation:{'@type':'CollegeOrUniversity',name:'General Sir John Kotelawala Defence University'},
     worksFor:{'@type':'EducationalOrganization','@id':profile.business+'#academy',name:'OULU Academy',url:profile.business},
