@@ -5,6 +5,7 @@ import {home} from '../src/home.mjs';
 import {detail} from '../src/detail.mjs';
 import {projects,profile} from '../src/projects.mjs';
 import {page,header,footer} from '../src/components.mjs';
+import {datasetPage,datasetPath} from '../src/dataset.mjs';
 
 const root = fileURLToPath(new URL('../',import.meta.url));
 const output = resolve(root,'dist');
@@ -12,11 +13,12 @@ if (output !== join(root,'dist')) throw new Error('Unexpected output path');
 await rm(output,{recursive:true,force:true});
 await mkdir(output,{recursive:true});
 const files = new Map([['index.html',home()]]);
+files.set(datasetPath+'index.html',datasetPage());
 projects.forEach((project,index) => files.set(`projects/${project.id}/index.html`,detail(project,index)));
 files.set('404.html',page({title:'Page not found — Pamindu Karunadasa',description:'Return to Pamindu Karunadasa’s selected engineering work.',base:profile.site,path:'404.html',body:`${header(profile.site,false)}<main id="main" class="wrap not-found"><p class="eyebrow">404 / PAGE NOT FOUND</p><h1>A small detour.</h1><p>This page is not here. Let’s get you back to the work.</p><a class="button primary" href="${profile.site}#work">View selected projects <span aria-hidden="true">↗</span></a></main>${footer(profile.site)}`}));
 files.set('robots.txt',`User-agent: *\nAllow: /\nSitemap: ${profile.site}sitemap.xml\n`);
-const sitemapPages = [{path:'',image:'pamindu.webp'},...projects.map(p=>({path:`projects/${p.id}/`,image:p.image}))];
-files.set('sitemap.xml',`<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">${sitemapPages.map(({path,image})=>`<url><loc>${profile.site}${path}</loc><image:image><image:loc>${profile.site}assets/images/${image}</image:loc></image:image></url>`).join('')}</urlset>\n`);
+const sitemapPages = [{path:'',image:'pamindu.webp'},...projects.map(p=>({path:`projects/${p.id}/`,image:p.image})),{path:datasetPath}];
+files.set('sitemap.xml',`<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">${sitemapPages.map(({path,image})=>`<url><loc>${profile.site}${path}</loc>${image?`<image:image><image:loc>${profile.site}assets/images/${image}</image:loc></image:image>`:''}</url>`).join('')}</urlset>\n`);
 files.set('.nojekyll','');
 for(const [path,content] of files) {
   for(const base of [root,output]) {
@@ -26,4 +28,4 @@ for(const [path,content] of files) {
   }
 }
 await cp(join(root,'assets'),join(output,'assets'),{recursive:true});
-console.log(`Built ${projects.length+2} HTML pages. Root output supports existing GitHub Pages; dist/ is the standalone release.`);
+console.log(`Built ${projects.length+3} HTML pages. Root output supports existing GitHub Pages; dist/ is the standalone release.`);

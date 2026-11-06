@@ -15,7 +15,7 @@ jobs:
           node-version: '22'
       - run: npm run check
       - name: Ensure committed Pages output is current
-        run: git diff --exit-code -- index.html projects 404.html robots.txt sitemap.xml
+        run: git diff --exit-code -- index.html projects datasets 404.html robots.txt sitemap.xml
       - uses: actions/upload-artifact@v4
         with:
           name: portfolio-production

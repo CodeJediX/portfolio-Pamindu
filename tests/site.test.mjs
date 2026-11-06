@@ -4,6 +4,7 @@ import {readFile,readdir,stat} from 'node:fs/promises';
 import {resolve,dirname,join} from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {projects,profile} from '../src/projects.mjs';
+import {datasetPath} from '../src/dataset.mjs';
 const root=fileURLToPath(new URL('../dist/',import.meta.url));
 async function walk(path){let files=[];for(const f of await readdir(path,{withFileTypes:true})){const target=join(path,f.name);files.push(...(f.isDirectory()?await walk(target):[target]));}return files;}
 test('Every generated destination and local resource resolves, including fragment links',async()=>{
@@ -22,7 +23,7 @@ test('Every generated destination and local resource resolves, including fragmen
 });
 test('All project pages have meaningful static content, metadata and one H1',async()=>{
  const canonicals=new Set();
- for(const path of ['index.html',...projects.map(p=>`projects/${p.id}/index.html`)]){
+ for(const path of ['index.html',datasetPath+'index.html',...projects.map(p=>`projects/${p.id}/index.html`)]){
   const html=await readFile(join(root,path),'utf8');
   assert.equal((html.match(/<h1\b/g)||[]).length,1,path);
   for(const token of ['<main','name="description"','property="og:image"','name="twitter:card"','application/ld+json','class="skip-link"'])assert.ok(html.includes(token),path+': '+token);
