@@ -5,7 +5,8 @@ export const profile = {
   github: 'https://github.com/CodeJediX',
   linkedin: 'https://www.linkedin.com/in/pamindu-karunadasa',
   linktree: 'https://linktr.ee/PaminduKarunadasa',
-  site: 'https://codejedix.github.io/portfolio-Pamindu/',
+  site: 'https://stalwart-fenglisu-eb2115.netlify.app/',
+  business: 'https://ouluacademy.lk/',
 };
 
 // Editorially curated; provenance and omitted claims are recorded in docs/RESEARCH.md.

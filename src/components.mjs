@@ -19,14 +19,23 @@ export function footer(base = './') {
 
 export function page({title, description, body, base='./', path='', image='assets/social-preview.png'}) {
   const canonical = profile.site + path;
-  const structured = path ? { '@context':'https://schema.org', '@type':'WebPage', name:title, url:canonical, description, author:{'@type':'Person',name:profile.name,url:profile.site} } : {
+  const person = {
+    '@type':'Person', '@id':profile.site+'#person', name:profile.name,
+    alternateName:'Pamindu Pasandul Karunadasa', url:profile.site,
+    image:profile.site+'assets/images/pamindu.webp',
+    sameAs:[profile.github,profile.linkedin,profile.linktree],
+    affiliation:{'@type':'CollegeOrUniversity',name:'General Sir John Kotelawala Defence University'},
+    worksFor:{'@type':'EducationalOrganization','@id':profile.business+'#academy',name:'OULU Academy',url:profile.business},
+  };
+  const structured = path ? { '@context':'https://schema.org', '@type':'WebPage', name:title, url:canonical, description, author:person } : {
     '@context':'https://schema.org','@type':'ProfilePage',url:canonical,
-    mainEntity:{'@type':'Person', name:profile.name, url:canonical, description, sameAs:[profile.github,profile.linkedin,profile.linktree],affiliation:{'@type':'CollegeOrUniversity',name:'General Sir John Kotelawala Defence University'}},
+    mainEntity:{...person,description},
   };
   return `<!doctype html>
 <html lang="en"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>${escape(title)}</title><meta name="description" content="${escape(description)}">
+<meta name="robots" content="${path==='404.html'?'noindex, follow':'index, follow, max-image-preview:large'}">
 <link rel="canonical" href="${canonical}"><meta name="theme-color" content="#f5f4ef">
 <script src="${base}assets/appearance-init.js"></script>
 <meta property="og:type" content="website"><meta property="og:title" content="${escape(title)}"><meta property="og:description" content="${escape(description)}"><meta property="og:url" content="${canonical}"><meta property="og:image" content="${profile.site}${image}"><meta property="og:image:alt" content="Pamindu Karunadasa — Computer Engineering, Applied AI, Software and Design">

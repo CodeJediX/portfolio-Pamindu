@@ -15,7 +15,8 @@ const files = new Map([['index.html',home()]]);
 projects.forEach((project,index) => files.set(`projects/${project.id}/index.html`,detail(project,index)));
 files.set('404.html',page({title:'Page not found — Pamindu Karunadasa',description:'Return to Pamindu Karunadasa’s selected engineering work.',base:profile.site,path:'404.html',body:`${header(profile.site,false)}<main id="main" class="wrap not-found"><p class="eyebrow">404 / PAGE NOT FOUND</p><h1>A small detour.</h1><p>This page is not here. Let’s get you back to the work.</p><a class="button primary" href="${profile.site}#work">View selected projects <span aria-hidden="true">↗</span></a></main>${footer(profile.site)}`}));
 files.set('robots.txt',`User-agent: *\nAllow: /\nSitemap: ${profile.site}sitemap.xml\n`);
-files.set('sitemap.xml',`<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${['',...projects.map(p=>`projects/${p.id}/`)].map(path=>`<url><loc>${profile.site}${path}</loc></url>`).join('')}</urlset>\n`);
+const sitemapPages = [{path:'',image:'pamindu.webp'},...projects.map(p=>({path:`projects/${p.id}/`,image:p.image}))];
+files.set('sitemap.xml',`<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">${sitemapPages.map(({path,image})=>`<url><loc>${profile.site}${path}</loc><image:image><image:loc>${profile.site}assets/images/${image}</image:loc></image:image></url>`).join('')}</urlset>\n`);
 files.set('.nojekyll','');
 for(const [path,content] of files) {
   for(const base of [root,output]) {

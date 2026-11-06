@@ -42,6 +42,7 @@ export function home() {
         <p class="about-lead">I’m a Computer Engineering undergraduate at General Sir John Kotelawala Defence University, exploring the space where software meets the physical world.</p>
         <p>My work spans gesture recognition, desktop automation, application development, and visual communication. I enjoy understanding a problem from the system underneath to the interface someone actually uses.</p>
         <p>I’m interested in applied AI, robotics, embedded systems, and research that connects an idea to a useful working prototype.</p>
+        <p>I’m also Co-founder and CEO of ${external(profile.business+'#about-us','OULU Academy')} in Sri Lanka.</p>
         <div class="about-links">${external(profile.linkedin,'More about me on LinkedIn')}${external(profile.linktree,'Around the web')}</div>
       </div>
     </div></section>

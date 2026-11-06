@@ -1,6 +1,6 @@
 # Pamindu Karunadasa — Engineering portfolio
 
-[Live portfolio](https://codejedix.github.io/portfolio-Pamindu/) · [GitHub profile](https://github.com/CodeJediX) · [LinkedIn](https://www.linkedin.com/in/pamindu-karunadasa)
+[Live portfolio](https://stalwart-fenglisu-eb2115.netlify.app/) · [GitHub profile](https://github.com/CodeJediX) · [LinkedIn](https://www.linkedin.com/in/pamindu-karunadasa)
 
 A curated portfolio covering software, applied AI, hardware, and visual design. Eight static project pages explain the problem, implementation, contribution, and scope of each featured project. Light and dark themes follow the system preference and remember a manual choice. A brief introduction on each page load respects reduced motion. Volunteering roles use accessible expandable details, with restrained scroll and hover motion.
 
