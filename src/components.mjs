@@ -35,6 +35,7 @@ export function page({title, description, body, base='./', path='', image='asset
 <html lang="en"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>${escape(title)}</title><meta name="description" content="${escape(description)}">
+${!path && profile.googleSiteVerification ? `<meta name="google-site-verification" content="${escape(profile.googleSiteVerification)}">` : ''}
 <meta name="robots" content="${path==='404.html'?'noindex, follow':'index, follow, max-image-preview:large'}">
 <link rel="canonical" href="${canonical}"><meta name="theme-color" content="#f5f4ef">
 <script src="${base}assets/appearance-init.js"></script>

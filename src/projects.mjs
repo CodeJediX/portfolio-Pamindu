@@ -7,6 +7,7 @@ export const profile = {
   linktree: 'https://linktr.ee/PaminduKarunadasa',
   site: 'https://stalwart-fenglisu-eb2115.netlify.app/',
   business: 'https://ouluacademy.lk/',
+  googleSiteVerification: 'FvWjG46ttStTni2E2xHF90BFY5N3ED12-hE00S2z_Rg',
 };
 
 // Editorially curated; provenance and omitted claims are recorded in docs/RESEARCH.md.
