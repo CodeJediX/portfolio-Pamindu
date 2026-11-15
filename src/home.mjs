@@ -3,6 +3,7 @@ import { achievements, toolsGrid, learningSection, roadmap } from './interactive
 import { datasetSpotlight, datasetStats, writingSection, githubSection } from './evidence.mjs';
 import { profile, projects } from './projects.mjs';
 import { page, header, footer, circuit, escape as e, external, arrow } from './components.mjs';
+import { collections, workPath } from './work-catalog.mjs';
 
 function projectCard(p) {
   return `<article class="project" data-categories="${p.filters.join(' ')}">
@@ -19,20 +20,20 @@ ${p.video?`<details class="card-preview"><summary>Watch a short preview</summary
 const stats = [[projects.length,'Project case studies'],[achievements.filter(a=>a.result.toLowerCase().includes('finalist')).length,'Finalist placements'],[datasetStats.populated,'Word folders with video'],[3,'Campus leadership roles']];
 
 function projectFlight() {
-  const featured = projects.slice(0, 4);
   return `<section id="project-flight" class="project-flight" aria-labelledby="flight-heading" hidden>
     <div class="flight-stage">
       <div class="flight-visual" aria-hidden="true">
         <canvas></canvas>
-        ${featured.map(p=>`<figure class="flight-tile"><img src="assets/images/${p.image}" width="1200" height="750" alt="${e(p.alt)}" decoding="async"><figcaption>${e(p.name)}</figcaption></figure>`).join('')}
+        ${projects.map(p=>`<figure class="flight-tile${p.id==='signspeak-junior'?' portrait':''}"><img src="assets/images/${p.image}" width="1200" height="750" alt="${e(p.alt)}"><figcaption>${e(p.name)}</figcaption></figure>`).join('')}
       </div>
       <div class="wrap flight-top">
-        <div><p class="eyebrow">Four featured projects</p><h2 id="flight-heading">Project flight<span class="accent">.</span></h2><p class="flight-instruction">Scroll to fly through the work.</p></div>
+        <div><p class="eyebrow">${projects.length} project case studies</p><h2 id="flight-heading">Project flight<span class="accent">.</span></h2><p class="flight-instruction">Scroll to start the flight.</p></div>
         <a class="text-link flight-skip" href="#work">All projects <span aria-hidden="true">↓</span></a>
+        <div class="flight-collections"><label><span>Collection</span><select><option value="cases">Case studies</option>${collections.map(c=>`<option value="${c.id}">${e(c.label)}</option>`).join('')}</select></label><a class="text-link" href="${workPath}">Work index ↗</a><p role="status" hidden></p></div>
       </div>
-      <nav class="wrap flight-index" aria-label="Featured case studies">
+      <nav class="wrap flight-index" aria-label="Project case studies">
         <div class="flight-meter" aria-hidden="true"><span></span></div>
-        <ul>${featured.map((p,i)=>`<li><a href="projects/${p.id}/"><span aria-hidden="true">0${i+1}</span>${e(p.name)}</a></li>`).join('')}</ul>
+        <ul>${projects.map((p,i)=>`<li><a href="projects/${p.id}/"><span>${String(i+1).padStart(2,'0')}</span><span>${e(p.name)}</span></a></li>`).join('')}</ul>
       </nav>
     </div>
   </section>`;
@@ -75,6 +76,7 @@ export function home() {
       <div class="section-heading"><div><p class="eyebrow">Selected work</p><h2 id="work-heading">Projects<span class="accent">.</span></h2></div><p class="section-intro">Computer vision, travel tools, hardware and web applications.</p></div>
       <div class="work-controls" hidden><div class="filters" role="group" aria-label="Filter projects"><button aria-pressed="true" data-filter="all">All projects</button><button aria-pressed="false" data-filter="ai">Applied AI</button><button aria-pressed="false" data-filter="software">Software &amp; systems</button><button aria-pressed="false" data-filter="web">Web &amp; design</button></div><span class="filter-count mono" role="status" aria-live="polite">${projects.length} projects</span></div>
       <div class="project-grid">${projects.map(projectCard).join('')}</div>
+      <a class="text-link catalog-link" href="${workPath}">Browse all work ↗</a>
     </section>
 
     ${learningSection()}

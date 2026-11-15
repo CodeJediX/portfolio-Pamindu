@@ -8,8 +8,19 @@
   const context = canvas.getContext('2d');
   if (!context) return;
 
-  const tiles = [...visual.querySelectorAll('.flight-tile')];
-  const links = [...flight.querySelectorAll('.flight-index a')];
+  const index = flight.querySelector('.flight-index ul');
+  const selector = flight.querySelector('.flight-collections select');
+  const status = flight.querySelector('.flight-collections [role="status"]');
+  const collectionURL = new URL('flight-collections.json', document.currentScript.src);
+  const originalTiles = [...visual.querySelectorAll('.flight-tile')];
+  const originalItems = [...index.children];
+  let tiles = originalTiles;
+  let links = [...index.querySelectorAll('a')];
+  let stops = tiles.length + 1;
+  let collection = 'cases';
+  let collectionRequest;
+  const projectStep = .2;
+  flight.style.setProperty('--flight-stops', stops);
   const meter = flight.querySelector('.flight-meter span');
   const launch = document.querySelector('.flight-launch');
   const header = document.querySelector('.header-shell');
@@ -55,11 +66,12 @@
   const tracks = [-.15, .13, -.11, .13];
   const lanes = [-.07, .08, .06, -.05];
 
-  function drawField(progress) {
+  function drawField(travel) {
     context.clearRect(0, 0, width, height);
     const unit = Math.min(width / 265, height / 166, 2.5);
-    const separation = smooth(.01, .46, progress);
-    const fieldAlpha = 1 - smooth(.86, 1, progress);
+    const separation = smooth(.01, .46, travel);
+    const lastProject = tiles.length * projectStep;
+    const fieldAlpha = 1 - smooth(lastProject + .06, lastProject + projectStep, travel);
     const middleX = width / 2;
     const middleY = height / 2;
     context.fillStyle = '#31e2ff';
@@ -75,19 +87,18 @@
     context.globalAlpha = 1;
   }
 
-  function placeTiles(progress) {
+  function placeTiles(travel) {
     let closest = -1;
     let closestDistance = .105;
     tiles.forEach((tile, i) => {
-      const center = (i + 1) / (tiles.length + 1);
-      const distance = center - progress;
+      const distance = (i + 1) * projectStep - travel;
       const forward = clamp(-distance / .16);
       const depth = clamp(distance / .42);
       const scale = distance > 0 ? 1 / (1 + distance * 6.4) : 1 + forward * .68;
-      const wake = i ? smooth(.045, .13, progress) : smooth(.025, .13, progress);
+      const wake = i ? smooth(.045, .13, travel) : smooth(.025, .13, travel);
       const opacity = wake * (1 - smooth(.01, .42, distance)) * (1 - smooth(.035, .135, -distance));
-      const x = width * tracks[i] * (.80 + depth * 1.65 + forward * 1.3);
-      const y = height * lanes[i] * (.70 + depth + forward);
+      const x = width * tracks[i % tracks.length] * (.80 + depth * 1.65 + forward * 1.3);
+      const y = height * lanes[i % lanes.length] * (.70 + depth + forward);
       tile.style.transform = `translate(-50%, -50%) translate(${x.toFixed(1)}px, ${y.toFixed(1)}px) scale(${scale.toFixed(3)})`;
       tile.style.opacity = opacity.toFixed(3);
       tile.style.zIndex = String(Math.round((1 - distance) * 100));
@@ -134,8 +145,9 @@
     inView = true;
     lastFrame = now;
     meter.style.transform = `scaleX(${position})`;
-    drawField(position);
-    placeTiles(position);
+    const travel = position * stops * projectStep;
+    drawField(travel);
+    placeTiles(travel);
     if (position !== target) schedule();
   }
 
@@ -154,6 +166,88 @@
     resize();
   }
 
+  function collectionTile(item) {
+    const tile = document.createElement('figure');
+    tile.className = 'flight-tile';
+    if (item.image) {
+      const image = document.createElement('img');
+      image.src = 'assets/images/' + item.image;
+      image.alt = item.name;
+      const caption = document.createElement('figcaption');
+      caption.textContent = item.name;
+      tile.append(image, caption);
+    } else {
+      const art = document.createElement('div');
+      art.className = 'flight-title-card';
+      const type = document.createElement('p');
+      type.textContent = item.type;
+      const name = document.createElement('strong');
+      name.textContent = item.name;
+      art.append(type, name);
+      tile.append(art);
+    }
+    return tile;
+  }
+
+  function collectionItem(item, i) {
+    const row = document.createElement('li');
+    const link = document.createElement('a');
+    link.href = 'work/#' + item.id;
+    const number = document.createElement('span');
+    number.textContent = String(i + 1).padStart(2, '0');
+    const name = document.createElement('span');
+    name.textContent = item.name;
+    link.append(number, name);
+    row.append(link);
+    return row;
+  }
+
+  async function switchCollection() {
+    const requested = selector.value;
+    status.hidden = true;
+    try {
+      if (requested === 'cases') {
+        visual.replaceChildren(canvas, ...originalTiles);
+        index.replaceChildren(...originalItems);
+        tiles = originalTiles;
+      } else {
+        status.textContent = 'Loading collection…';
+        status.hidden = false;
+        collectionRequest ??= fetch(collectionURL).then(response => {
+          if (!response.ok) throw new Error('Collection unavailable');
+          return response.json();
+        });
+        const data = await collectionRequest;
+        if (selector.value !== requested) return;
+        const items = data[requested];
+        if (!Array.isArray(items) || !items.length) throw new Error('Collection unavailable');
+        tiles = items.map(collectionTile);
+        visual.replaceChildren(canvas, ...tiles);
+        index.replaceChildren(...items.map(collectionItem));
+      }
+      collection = requested;
+      links = [...index.querySelectorAll('a')];
+      links.forEach(link => link.removeAttribute('data-in-view'));
+      stops = tiles.length + 1;
+      flight.style.setProperty('--flight-stops', stops);
+      flight.style.setProperty('--flight-columns', Math.ceil(tiles.length / 2));
+      flight.querySelector('.flight-top .eyebrow').textContent = `${tiles.length} ${requested === 'cases' ? 'project case studies' : 'entries in this collection'}`;
+      flight.scrollIntoView({behavior: 'instant', block: 'start'});
+      active = -1;
+      inView = false;
+      resize();
+      status.hidden = true;
+    } catch {
+      collectionRequest = undefined;
+      if (selector.value !== requested) return;
+      selector.value = collection;
+      status.textContent = 'Couldn’t load the collection. The work index has the full list.';
+      status.hidden = false;
+    }
+  }
+
+  selector.value = collection;
+  selector.addEventListener('change', switchCollection);
   if (header && 'ResizeObserver' in window) new ResizeObserver(resize).observe(header);
   addEventListener('scroll', schedule, { passive: true });
   addEventListener('resize', resize);
