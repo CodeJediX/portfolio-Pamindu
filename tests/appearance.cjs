@@ -7,7 +7,7 @@ const fs = require('node:fs');
 (async () => {
   const browser = await chromium.launch({channel:'chrome',headless:true});
   const base = (process.env.TEST_URL || 'http://127.0.0.1:4174').replace(/\/$/,'');
-  const context = await browser.newContext({colorScheme:'dark'});
+  const context = await browser.newContext({colorScheme:'light'});
   const page = await context.newPage();
   const report = {checks:[],accessibility:[]};
   await page.goto(base,{waitUntil:'domcontentloaded'});
@@ -16,16 +16,18 @@ const fs = require('node:fs');
   assert.equal(await page.locator('html').getAttribute('data-theme'),'dark');
   await page.waitForFunction(() => getComputedStyle(document.querySelector('.preloader')).visibility === 'hidden');
 
-  await page.emulateMedia({colorScheme:'light'});
-  await page.waitForFunction(() => document.documentElement.dataset.theme === 'light');
-  assert.equal(await page.locator('html').getAttribute('data-theme'),'light');
+  assert.equal(await page.locator('meta[name="theme-color"]').getAttribute('content'),'#09152f');
+  assert.equal(await page.locator('body').evaluate(el=>getComputedStyle(el).backgroundColor),'rgb(9, 21, 47)');
   await page.locator('.theme-toggle').click();
+  assert.equal(await page.locator('html').getAttribute('data-theme'),'light');
   await page.reload({waitUntil:'domcontentloaded'});
-  assert.equal(await page.locator('html').getAttribute('data-theme'),'dark');
+  assert.equal(await page.locator('html').getAttribute('data-theme'),'light');
+  assert.equal(await page.locator('meta[name="theme-color"]').getAttribute('content'),'#f0f7ff');
   assert.equal(await page.locator('.preloader').isVisible(),true);
   await page.waitForFunction(() => getComputedStyle(document.querySelector('.preloader')).visibility === 'hidden');
-  report.checks.push('System preference, manual override, reload persistence, repeat-visit visibility and dismissal');
-  for (const route of ['/', '/projects/sancharakaya/', '/projects/smart-face-door-lock/', '/projects/signspeak/']) {
+  await page.locator('.theme-toggle').click();
+  report.checks.push('Midnight default, manual override, reload persistence, repeat-visit visibility and dismissal');
+  for (const route of ['/', '/projects/sancharakaya/', '/projects/smart-face-door-lock/', '/projects/signspeak/', '/photos/', '/datasets/sign-language-recognition/']) {
     await page.goto(base+route,{waitUntil:'networkidle'});
     assert.equal(await page.locator('html').getAttribute('data-theme'),'dark');
     for (const width of [320,390,820,1024,1440]) {
@@ -59,7 +61,7 @@ const fs = require('node:fs');
   const reduced = await browser.newContext({reducedMotion:'reduce'});
   const rp = await reduced.newPage(); await rp.goto(base);
   assert.equal(await rp.locator('html').getAttribute('data-loading'),null);
-  const nojs = await browser.newContext({javaScriptEnabled:false,colorScheme:'dark'});
+  const nojs = await browser.newContext({javaScriptEnabled:false,colorScheme:'light'});
   const np = await nojs.newPage(); await np.goto(base);
   assert.equal(await np.locator('html').evaluate(el=>getComputedStyle(el).colorScheme),'dark');
   assert.equal(await np.locator('.preloader').isVisible(),false);

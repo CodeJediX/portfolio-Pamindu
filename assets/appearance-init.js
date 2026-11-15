@@ -1,12 +1,32 @@
 // Run before styles paint: preserve a visitor's choice without a theme flash.
 (() => {
+  const meta = document.querySelector('meta[name="theme-color"]');
+  const midnightColor = meta.content;
+  const applyTheme = (theme) => {
+    document.documentElement.dataset.theme = theme;
+    meta.content = theme === 'light' ? meta.dataset.lightColor : midnightColor;
+  };
+
   let choice;
   try { choice = localStorage.getItem('portfolio-theme'); } catch {}
-  const theme = choice === 'light' || choice === 'dark'
-    ? choice : matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-  document.documentElement.dataset.theme = theme;
-  const meta = document.querySelector('meta[name="theme-color"]');
-  if (meta) meta.content = theme === 'dark' ? '#111813' : '#f5f4ef';
+  applyTheme(choice === 'light' ? 'light' : 'dark');
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const toggle = document.querySelector('.theme-toggle');
+    if (!toggle) return;
+    const updateToggle = () => {
+      toggle.setAttribute('aria-pressed', String(document.documentElement.dataset.theme === 'dark'));
+    };
+    updateToggle();
+    toggle.hidden = false;
+    toggle.addEventListener('click', () => {
+      const theme = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+      try { localStorage.setItem('portfolio-theme', theme); } catch {}
+      applyTheme(theme);
+      updateToggle();
+    });
+  }, { once: true });
+
   const dismiss = () => document.documentElement.removeAttribute('data-loading');
   if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
     // Start the visible interval after markup is ready, including on repeat visits.

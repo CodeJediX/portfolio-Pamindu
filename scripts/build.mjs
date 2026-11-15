@@ -32,4 +32,5 @@ for(const [path,content] of files) {
   }
 }
 await cp(join(root,'assets'),join(output,'assets'),{recursive:true});
+await cp(join(root,'logic-lab'),join(output,'logic-lab'),{recursive:true});
 console.log(`Built ${projects.length+4} HTML pages. Root output supports existing GitHub Pages; dist/ is the standalone release.`);
