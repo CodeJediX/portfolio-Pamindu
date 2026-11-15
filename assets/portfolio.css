@@ -36,6 +36,95 @@ h1, h2, h3, h4 { letter-spacing: -.018em; }
 .hero-actions { gap: 13px; flex-wrap: wrap; margin-top: 18px; }
 .hero-actions .primary span { transform: translate(var(--magnet-x,0),var(--magnet-y,0)); }
 .hero .circuit { margin: 0; min-width: 0; }
+.flight-launch { color: var(--accent); margin-top: 10px; font-size: 14px; }
+.project-flight {
+  background: #081222;
+  color: #eef7ff;
+  --accent: #24ddff;
+  --flight-line: #30506a;
+  --flight-muted: #adbed3;
+  --flight-viewport: calc(100svh - var(--flight-header, 80px));
+  --flight-runway: 178svh;
+  height: calc(var(--flight-viewport) + var(--flight-runway));
+  scroll-margin-top: max(0px, calc(var(--flight-header, 80px) - 34px));
+}
+.flight-stage {
+  position: sticky;
+  top: var(--flight-header, 80px);
+  isolation: isolate;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  height: var(--flight-viewport);
+  overflow: clip;
+  background:
+    radial-gradient(ellipse at 50% 51%, #12354d 0%, #0a1c30 43%, transparent 75%),
+    #081222;
+}
+.flight-top, .flight-index { position: relative; z-index: 1; }
+.flight-top {
+  grid-row: 1;
+  padding-top: clamp(16px, 3.2vh, 34px);
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+}
+.flight-top h2 { font-size: clamp(32px, 5vw, 68px); margin-block: 4px; }
+.flight-top .eyebrow { color: var(--accent); font-size: 13px; }
+.flight-instruction { color: var(--flight-muted); font-size: 15px; }
+.flight-skip { white-space: nowrap; color: var(--flight-muted); font-size: 14px; }
+.flight-visual {
+  grid-row: 2;
+  position: relative;
+  min-height: 0;
+  overflow: hidden;
+  mask-image: linear-gradient(transparent, #000 13%, #000 88%, transparent);
+}
+.flight-visual canvas { display: block; width: 100%; height: 100%; }
+.flight-tile {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: min(49vw, 580px, 110vh);
+  margin: 0;
+  border: 1px solid #32bfd7;
+  box-shadow: 0 12px 48px #030b19a6, 0 0 28px #23dfff30;
+  background: #0b2034;
+  opacity: 0;
+}
+.flight-tile img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; object-position: center; }
+.flight-tile figcaption {
+  padding: 5px 12px;
+  font: 500 13px / 1.5 var(--mono);
+  color: #e8f5fc;
+}
+.flight-index { grid-row: 3; padding-bottom: clamp(10px, 2.2vh, 24px); }
+.flight-meter { height: 2px; background: var(--flight-line); }
+.flight-meter span { display: block; height: 100%; background: var(--accent); transform: scaleX(0); transform-origin: left; }
+.flight-index ul { margin: 6px 0 0; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 4px; }
+.flight-index a {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  min-height: 44px;
+  padding-inline: 9px;
+  border-inline-start: 1px solid var(--flight-line);
+  color: var(--flight-muted);
+  font-size: 15px;
+  line-height: 1.2;
+}
+.flight-index a span { color: var(--accent); font: 12px var(--mono); }
+.flight-index a:hover, .flight-index a[data-in-view] { color: #fff; border-color: var(--accent); background: #13354a; }
+.flight-index a:focus-visible, .flight-skip:focus-visible { outline-offset: -2px; }
+@media (max-width: 690px) {
+  .project-flight { --flight-runway: 155svh; }
+  .flight-tile { width: min(72vw, 430px, 116vh); }
+  .flight-index ul { grid-template-columns: 1fr 1fr; }
+  .flight-index a { font-size: 14px; }
+}
+@media (prefers-reduced-motion: reduce), (max-height: 420px), print {
+  .project-flight, .flight-launch { display: none; }
+}
 .hero .figure-top, .hero .figure-bottom { font-size: 14px; }
 .hero .figure-bottom .mono, .core-hint, .layer-toggle { font-size: 14px; }
 .circuit .diagram-labels text { font-size: 12px; }

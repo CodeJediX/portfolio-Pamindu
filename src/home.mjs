@@ -18,6 +18,26 @@ ${p.video?`<details class="card-preview"><summary>Watch a short preview</summary
 
 const stats = [[projects.length,'Project case studies'],[achievements.filter(a=>a.result.toLowerCase().includes('finalist')).length,'Finalist placements'],[datasetStats.populated,'Word folders with video'],[3,'Campus leadership roles']];
 
+function projectFlight() {
+  const featured = projects.slice(0, 4);
+  return `<section id="project-flight" class="project-flight" aria-labelledby="flight-heading" hidden>
+    <div class="flight-stage">
+      <div class="flight-visual" aria-hidden="true">
+        <canvas></canvas>
+        ${featured.map(p=>`<figure class="flight-tile"><img src="assets/images/${p.image}" width="1200" height="750" alt="${e(p.alt)}" decoding="async"><figcaption>${e(p.name)}</figcaption></figure>`).join('')}
+      </div>
+      <div class="wrap flight-top">
+        <div><p class="eyebrow">Four featured projects</p><h2 id="flight-heading">Project flight<span class="accent">.</span></h2><p class="flight-instruction">Scroll to fly through the work.</p></div>
+        <a class="text-link flight-skip" href="#work">All projects <span aria-hidden="true">↓</span></a>
+      </div>
+      <nav class="wrap flight-index" aria-label="Featured case studies">
+        <div class="flight-meter" aria-hidden="true"><span></span></div>
+        <ul>${featured.map((p,i)=>`<li><a href="projects/${p.id}/"><span aria-hidden="true">0${i+1}</span>${e(p.name)}</a></li>`).join('')}</ul>
+      </nav>
+    </div>
+  </section>`;
+}
+
 function contact() {
   return `<section id="contact" class="contact-section" aria-labelledby="contact-heading"><div class="wrap contact-grid">
     <div><p class="eyebrow">Get in touch</p><h2 id="contact-heading">Let’s talk<span>.</span></h2><p>For internships, research collaborations, and engineering projects.</p>
@@ -42,11 +62,14 @@ export function home() {
         <p class="hero-description">Finalist at AI Challenge Sri Lanka, Data Odyssey and CHYPER 4.0 in 2026.</p>
         <p class="availability"><span class="status-dot" aria-hidden="true"></span> Open to internships · 2026/27</p>
         <div class="hero-actions"><a class="button primary" href="#work">View projects <span aria-hidden="true">↘</span></a><a class="button outline" href="resume/pamindu-karunadasa-resume.pdf" download>Download résumé <span aria-hidden="true">↓</span></a></div>
+        <a class="text-link flight-launch" href="#project-flight" hidden>Take the project flight <span aria-hidden="true">↓</span></a>
       </div>
       ${circuit()}
     </section>
 
     <div class="stats-band"><dl class="wrap stats-strip">${stats.map(([count,label])=>`<div><dt>${label}</dt><dd><span aria-hidden="true" data-count="${count}">${count.toLocaleString('en')}</span><span class="sr-only">${count.toLocaleString('en')}</span></dd></div>`).join('')}</dl></div>
+
+    ${projectFlight()}
 
     <section id="work" class="section wrap" aria-labelledby="work-heading">
       <div class="section-heading"><div><p class="eyebrow">Selected work</p><h2 id="work-heading">Projects<span class="accent">.</span></h2></div><p class="section-intro">Computer vision, travel tools, hardware and web applications.</p></div>
@@ -75,6 +98,6 @@ export function home() {
     ${writingSection()}
     ${githubSection()}
     ${contact()}
-  </main>${footer()}`;
+  </main>${footer()}<script src="assets/flight.js" defer></script>`;
   return page({title:'Pamindu Karunadasa — Computer Engineering, Applied AI & Design',description:'Computer Engineering undergraduate at KDU, Sri Lanka. Explore Pamindu Karunadasa’s selected engineering projects, competition results, and research.',body});
 }
