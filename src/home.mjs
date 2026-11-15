@@ -28,7 +28,7 @@ function projectFlight() {
       </div>
       <div class="wrap flight-top">
         <div><p class="eyebrow">${projects.length} project case studies</p><h2 id="flight-heading">Project flight<span class="accent">.</span></h2><p class="flight-instruction">Scroll to start the flight.</p></div>
-        <a class="text-link flight-skip" href="#work">All projects <span aria-hidden="true">↓</span></a>
+        <a class="text-link flight-skip" href="#work">Project grid <span aria-hidden="true">↓</span></a>
         <div class="flight-collections"><label><span>Collection</span><select><option value="cases">Case studies</option>${collections.map(c=>`<option value="${c.id}">${e(c.label)}</option>`).join('')}</select></label><a class="text-link" href="${workPath}">Work index ↗</a><p role="status" hidden></p></div>
       </div>
       <nav class="wrap flight-index" aria-label="Project case studies">
