@@ -1,60 +1,80 @@
-import { skillsDeck, learningSection, roadmap } from './interactive.mjs';
-import {profile, projects} from './projects.mjs';
-import {page, header, footer, circuit, escape as e, external, arrow} from './components.mjs';
 
-function projectCard(p,i) {
+import { achievements, toolsGrid, learningSection, roadmap } from './interactive.mjs';
+import { datasetSpotlight, datasetStats, writingSection, githubSection } from './evidence.mjs';
+import { profile, projects } from './projects.mjs';
+import { page, header, footer, circuit, escape as e, external, arrow } from './components.mjs';
+
+function projectCard(p) {
   return `<article class="project" data-categories="${p.filters.join(' ')}">
-    <a class="project-visual ${p.color} ${p.id}" href="projects/${p.id}/"><span class="sr-only">Explore ${e(p.name)} — </span>
-      <div class="visual-label mono"><span>${String(i+1).padStart(2,'0')} / ${e(p.category)}</span>${arrow}</div>
-      <div class="image-frame"><img src="assets/images/${p.image}" alt="${e(p.alt)}" width="1200" height="800" loading="lazy" decoding="async"></div>
-      <span class="visual-bottom mono">${e(p.stack.slice(0,3).join(' / '))}</span>
+    <a class="project-visual ${p.color} ${p.id}" href="projects/${p.id}/" aria-label="${e(p.category)} · View ${e(p.name)} case study">
+      <div class="visual-label mono"><span>${e(p.category)}</span>${arrow}</div>
+      <div class="image-frame"><img src="assets/images/${p.image}" alt="${e(p.alt)}" width="1200" height="800" loading="eager" decoding="sync"></div>
     </a>
-    <div class="project-heading"><h3><a href="projects/${p.id}/">${e(p.name)} ${arrow}</a></h3><span class="mono">${e(p.category)}</span></div>
-    <p>${e(p.summary)}</p>
+    <div class="project-heading"><h3><a href="projects/${p.id}/">${e(p.name)}</a></h3></div>
+    <p>${e(p.summary)}</p><p class="project-result">${e(p.result)}</p>
+${p.video?`<details class="card-preview"><summary>Watch a short preview</summary><video controls loop playsinline preload="none" poster="assets/images/${p.image}" aria-label="${e(p.name)} preview"><source src="assets/demos/${p.video}" type="video/mp4"></video>${p.id==='sancharakaya'?'<p class="caption">Sample trip editing, schedule checks and an offline export.</p>':''}</details>`:''}
   </article>`;
 }
 
+const stats = [[projects.length,'Project case studies'],[achievements.filter(a=>a.result.toLowerCase().includes('finalist')).length,'Finalist placements'],[datasetStats.populated,'Word folders with video'],[3,'Campus leadership roles']];
+
+function contact() {
+  return `<section id="contact" class="contact-section" aria-labelledby="contact-heading"><div class="wrap contact-grid">
+    <div><p class="eyebrow">Get in touch</p><h2 id="contact-heading">Let’s talk<span>.</span></h2><p>For internships, research collaborations, and engineering projects.</p>
+    <a class="button contact-button" href="mailto:${profile.email}">${profile.email} ${arrow}</a></div>
+    <form class="contact-form" data-draft-address="${profile.email}" name="portfolio-contact" method="POST" data-netlify="true" netlify-honeypot="website" aria-label="Send a message">
+      <p hidden><label>Leave this blank <input name="website" tabindex="-1" autocomplete="off"></label></p>
+      <label>Name<input name="name" autocomplete="name" maxlength="120" required></label>
+      <label>Email<input name="email" type="email" autocomplete="email" maxlength="254" required></label>
+      <label>Message<textarea name="message" rows="4" maxlength="3000" required></textarea></label>
+      <button class="button primary" type="submit">Send message ${arrow}</button><p class="caption" data-draft-note hidden>Your email app will open with your message ready to review.</p>
+    </form>
+  </div></section>`;
+}
+
 export function home() {
- const body = `${header()}
+  const body = `${header()}
   <main id="main">
     <section class="hero wrap" aria-labelledby="hero-heading">
-      <div class="hero-copy"><p class="eyebrow"><span class="status-dot" aria-hidden="true"></span> COMPUTER ENGINEERING UNDERGRADUATE</p>
+      <div class="hero-copy"><p class="eyebrow">Computer Engineering undergraduate · KDU</p>
         <h1 id="hero-heading">Pamindu<br>Karunadasa<span class="accent">.</span></h1>
-        <p class="hero-statement">Curious about how things work.<br>Driven to build what comes next.</p>
-        <p class="hero-description">I connect software, applied AI, and thoughtful design to turn engineering ideas into things people can use.</p>
-        <div class="hero-actions"><a class="button primary" href="#work">Explore my work <span aria-hidden="true">↘</span></a>${external(profile.github,'GitHub')}</div>
-        <div class="hero-location mono"><span>BASED IN SRI LANKA</span><span>STUDYING AT KDU</span></div>
+        <p class="hero-statement">Building software and applied AI prototypes in Sri Lanka.</p>
+        <p class="hero-description">Finalist at AI Challenge Sri Lanka, Data Odyssey and CHYPER 4.0 in 2026.</p>
+        <p class="availability"><span class="status-dot" aria-hidden="true"></span> Open to internships · 2026/27</p>
+        <div class="hero-actions"><a class="button primary" href="#work">View projects <span aria-hidden="true">↘</span></a><a class="button outline" href="resume/pamindu-karunadasa-resume.pdf" download>Download résumé <span aria-hidden="true">↓</span></a></div>
       </div>
       ${circuit()}
     </section>
-    <div class="discipline-strip wrap" aria-label="Areas of interest"><span>Software development</span><i aria-hidden="true">✳</i><span>Applied intelligence</span><i aria-hidden="true">✳</i><span>Hardware & systems</span><i aria-hidden="true">✳</i><span>Digital experiences</span></div>
+
+    <div class="stats-band"><dl class="wrap stats-strip">${stats.map(([count,label])=>`<div><dt>${label}</dt><dd><span aria-hidden="true" data-count="${count}">${count.toLocaleString('en')}</span><span class="sr-only">${count.toLocaleString('en')}</span></dd></div>`).join('')}</dl></div>
 
     <section id="work" class="section wrap" aria-labelledby="work-heading">
-      <div class="section-heading"><div><p class="eyebrow">01 / SELECTED WORK</p><h2 id="work-heading">Ideas, put to work<span class="accent">.</span></h2></div><p class="section-intro">A closer look at the systems I build,<br>the problems they address, and the thinking behind them.</p></div>
-      <div class="work-controls" hidden><div class="filters" role="group" aria-label="Filter projects"><button aria-pressed="true" data-filter="all">All work <span>${String(projects.length).padStart(2,'0')}</span></button><button aria-pressed="false" data-filter="ai">Applied AI</button><button aria-pressed="false" data-filter="software">Software & systems</button><button aria-pressed="false" data-filter="web">Web & design</button></div><span class="filter-count mono" role="status" aria-live="polite">${projects.length} projects</span></div>
+      <div class="section-heading"><div><p class="eyebrow">Selected work</p><h2 id="work-heading">Projects<span class="accent">.</span></h2></div><p class="section-intro">Computer vision, travel tools, hardware and web applications.</p></div>
+      <div class="work-controls" hidden><div class="filters" role="group" aria-label="Filter projects"><button aria-pressed="true" data-filter="all">All projects</button><button aria-pressed="false" data-filter="ai">Applied AI</button><button aria-pressed="false" data-filter="software">Software &amp; systems</button><button aria-pressed="false" data-filter="web">Web &amp; design</button></div><span class="filter-count mono" role="status" aria-live="polite">${projects.length} projects</span></div>
       <div class="project-grid">${projects.map(projectCard).join('')}</div>
-      <div class="work-end"><span class="mono">A CURATED SELECTION, WITH SOURCE CODE.</span>${external(profile.github+'?tab=repositories','Explore GitHub')}</div>
     </section>
+
+    ${learningSection()}
 
     <section id="about" class="about-section" aria-labelledby="about-heading"><div class="wrap about-grid">
-      <div class="about-portrait"><img src="assets/images/pamindu.webp" width="640" height="800" alt="Pamindu Karunadasa" loading="lazy" decoding="async"><div class="portrait-caption mono"><span>PAMINDU KARUNADASA</span><span>SRI LANKA ↗</span></div></div>
-      <div class="about-copy"><p class="eyebrow">02 / THE PERSON BEHIND THE PROJECTS</p><h2 id="about-heading">An engineering mind.<br>A designer’s eye.</h2>
-        <p class="about-lead">I’m a Computer Engineering undergraduate at General Sir John Kotelawala Defence University, exploring the space where software meets the physical world.</p>
-        <p>My work spans gesture recognition, desktop automation, application development, and visual communication. I enjoy understanding a problem from the system underneath to the interface someone actually uses.</p>
-        <p>I’m interested in applied AI, robotics, embedded systems, and research that connects an idea to a useful working prototype.</p>
-        <p>I’m also Co-founder and CEO of ${external(profile.business+'#about-us','OULU Academy')} in Sri Lanka.</p>
-        <p>I compiled and published the <a class="text-link" href="datasets/sign-language-recognition/">Sign Language Recognition Dataset – 2,000 Words</a>, a Kaggle resource for sign language recognition research.</p>
-        <div class="about-links"><a class="text-link" href="photos/">Photos &amp; events ↗</a>${external(profile.linkedin,'More about me on LinkedIn')}${external(profile.linktree,'Around the web')}</div>
+      <figure class="about-portrait"><img src="assets/images/pamindu-karunadasa-bcs-kdu-portrait-2026.webp" width="3701" height="5551" alt="Pamindu Karunadasa at the BCS Student Chapter AGM" loading="lazy" decoding="async"><figcaption class="portrait-caption">BCS Student Chapter AGM · View credits in <a href="photos/">Photos &amp; events</a></figcaption></figure>
+      <div class="about-copy"><p class="eyebrow">About</p><h2 id="about-heading">From prototype to usable tool<span class="accent">.</span></h2>
+        <p class="about-lead">I’m a Computer Engineering undergraduate at General Sir John Kotelawala Defence University. I build projects in gesture recognition, desktop automation and embedded systems.</p>
+        <p>I co-founded OULU Academy and lead student initiatives with BCS, IEEE Computer Society and the Electronic Robotics &amp; Innovation Club at KDU.</p>
+        <ul class="about-facts"><li>Sri Lanka</li><li>KDU · 2024–2028</li><li>OULU Academy co-founder</li></ul>
+        <div class="about-links"><a class="text-link" href="photos/">Photos &amp; events ${arrow}</a>${external(profile.business+'pamindu-karunadasa/','OULU Academy profile')}</div>
       </div>
     </div></section>
+    ${datasetSpotlight()}
 
-    <section id="skills" class="section wrap" aria-labelledby="skills-heading"><div class="section-heading"><div><p class="eyebrow">03 / TOOLS & APPROACH</p><h2 id="skills-heading">The right tool.<br>For a real problem.</h2></div><p class="section-intro">Technologies used across my projects.<br>A practical toolkit, shaped by the work.</p></div>
-      ${skillsDeck()}
-    </section>
-    ${learningSection()}
+    <section id="skills" class="section wrap" aria-labelledby="skills-heading"><div class="section-heading"><div><p class="eyebrow">Skills</p><h2 id="skills-heading">Tools<span class="accent">.</span></h2></div></div>${toolsGrid()}</section>
+
+    <figure class="community-photo"><img src="assets/images/pamindu-karunadasa-cre8x-3-lamp-lighting-2026.webp" width="7008" height="4672" alt="Pamindu Karunadasa and guests at the CRE8X 3.0 lamp-lighting ceremony" loading="lazy" decoding="async"><figcaption class="wrap">CRE8X 3.0 opening ceremony · <a href="photos/">View event photos and credits ${arrow}</a></figcaption></figure>
+
     ${roadmap()}
-
-    <section id="contact" class="contact-section" aria-labelledby="contact-heading"><div class="wrap"><p class="eyebrow">06 / LET’S CONNECT</p><div class="contact-main"><h2 id="contact-heading">Have something<br>in mind<span>?</span></h2><div><p>For internship opportunities, research conversations, or a project worth building together.</p><a class="button contact-button" href="mailto:${profile.email}">Say hello ${arrow}</a></div></div><div class="contact-bottom"><a class="email-link" href="mailto:${profile.email}">${profile.email}</a><div>${external(profile.linkedin,'LinkedIn')}${external(profile.github,'GitHub')}${external(profile.linktree,'Linktree')}</div></div></div></section>
+    ${writingSection()}
+    ${githubSection()}
+    ${contact()}
   </main>${footer()}`;
- return page({title:'Pamindu Karunadasa — Computer Engineering, Applied AI & Design', description:'Computer Engineering undergraduate at KDU, Sri Lanka. Explore Pamindu Karunadasa’s selected work in applied AI, software, hardware, and digital design.',body});
+  return page({title:'Pamindu Karunadasa — Computer Engineering, Applied AI & Design',description:'Computer Engineering undergraduate at KDU, Sri Lanka. Explore Pamindu Karunadasa’s selected engineering projects, competition results, and research.',body});
 }

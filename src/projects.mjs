@@ -20,7 +20,7 @@ export const projects = [
     label: 'Computer vision · Accessible learning', color: 'blue',
     summary: 'Bringing sign recognition, speech, and an articulated 3D hand into one learning experience.',
     image: 'signspeak.webp', alt: 'SignSpeak browser recognition interface with model and camera controls',
-    repo: 'https://github.com/CodeJediX/signspeak', demo: 'https://codejedix.github.io/signspeak/sign_viewer.html',
+    repo: 'https://github.com/CodeJediX/signspeak', demo: 'https://codejedix.github.io/signspeak/sign_viewer.html', demoLabel: 'Try the webcam demo',
     stack: ['Python', 'TensorFlow', 'MediaPipe', 'JavaScript', 'Three.js'],
     status: 'Competition prototype', context: 'Team Quantum-X · Data Odyssey finalist',
     role: 'Team contributor: sign recognition, model training and testing, vocabulary expansion, web development, 3D visualization, and deployment.',
@@ -74,7 +74,7 @@ export const projects = [
     id: 'createx', name: 'CreateX 3.0', category: 'Web & design', filters: ['web','software'],
     label: 'Competition platform · Interactive design', color: 'sand',
     summary: 'A cinematic competition website backed by participant registration and organizer workflows.',
-    image: 'createx.webp', alt: 'Original mythology-inspired artwork from the CreateX 3.0 project',
+    image: 'createx-cover.webp', alt: 'Live CRE8X 3.0 competition homepage with the Imagine 2100 introduction',
     repo: 'https://github.com/CodeJediX/cre8x-3-scrollytelling', demo: 'https://cre8x-3-scrollytelling.vercel.app',
     stack: ['Next.js', 'React', 'TypeScript', 'Supabase', 'PostgreSQL'],
     status: 'Public website · Platform implementation', context: 'UI/UX competition experience',
@@ -85,7 +85,7 @@ export const projects = [
     features: ['A public experience organized around a future-focused design journey.', 'Solo and team registration flows and participant dashboards.', 'Organizer tooling for rounds, eligibility, announcements, and submissions.', 'SQL migrations for row-level security and database constraints.'],
     challenge: 'Visual storytelling and operational workflows have different needs. The code separates the public experience from registration and administration, with access rules represented in database migrations.',
     limits: 'The public presentation is live. Repository features describe the implementation, not independently tested end-to-end operation of every organizer workflow or evidence of event adoption.',
-    gallery: [],
+    gallery: [{src:'createx.webp',alt:'Original mythology-inspired artwork from the CreateX 3.0 project'}],
     sources: [['Implementation and architecture', 'https://github.com/CodeJediX/cre8x-3-scrollytelling'], ['Public experience', 'https://cre8x-3-scrollytelling.vercel.app']],
   },
   {
@@ -110,7 +110,7 @@ export const projects = [
     id: 'hotel-management', name: 'Hotel Management', category: 'Software & systems', filters: ['software'],
     label: 'Desktop application · Relational data', color: 'stone',
     summary: 'A Windows application bringing customer records, rooms, and reservations into a single workflow.',
-    image: 'hotel.webp', alt: 'Hotel management Windows Forms application sign-in screen',
+    image: 'hotel-detail.webp', alt: 'Hotel Management Windows Forms room and reservation screen',
     repo: 'https://github.com/CodeJediX/HotelManagementSystem',
     stack: ['C#', '.NET Framework', 'Windows Forms', 'SQLite'],
     status: 'Desktop project', context: 'Hotel operations',
@@ -121,10 +121,57 @@ export const projects = [
     features: ['Customer and room management screens.', 'Reservation creation with client and room checks.', 'Local relational persistence using SQLite.', 'A desktop interface designed around front-desk workflows.'],
     challenge: 'The core engineering concern is connecting interface actions to persistent state: a reservation must refer to an existing customer and reflect room availability.',
     limits: 'Shown as a learning and application-development project. Multi-user concurrency, production security, and use by an operating hotel have not been independently established.',
-    gallery: [{src:'hotel-detail.webp',alt:'Hotel management application room and reservation screen'}],
+    gallery: [{src:'hotel.webp',alt:'Hotel Management Windows Forms sign-in screen'}],
     sources: [['C# source and database integration', 'https://github.com/CodeJediX/HotelManagementSystem']],
   },
 ];
 
-// Place recently documented work near the start, keeping the existing case studies.
-projects.splice(1, 0, ...additionalProjects);
+
+const evidence = {
+  signspeak: {
+    result: 'Selected for the Data Odyssey 2026 final round with Team Quantum-X.',
+    contribution: ['Trained and tested the two-layer LSTM classifier on MediaPipe landmark sequences.', 'Expanded the sign vocabulary and connected recognition to browser speech and the Three.js hand viewer.', 'Worked on the web interface, accessibility and GitHub Pages deployment.'],
+    next: 'Evaluate on signer-separated test sets and compare the browser matcher with the converted LSTM on the same clips.',
+  },
+  sancharakaya: {
+    result: '35 local tests passed. A browser walkthrough verified itinerary generation, reopening a saved trip and exporting an offline trip pack.',
+    contribution: ['Built the day and activity editor with transfer times and opening-hour notices.', 'Used IndexedDB for local trips and Supabase for accounts and cloud trips.', 'Connected Gemini to the assistant and built a local-guide fallback.'],
+    next: 'Run a two-account collaboration pilot and validate travel times and opening hours against live sources.',
+    video: 'sancharakaya-demo.mp4',
+  },
+  'smart-face-door-lock': {
+    result: 'The prototype combines ArcFace identity matching and a separate blink check in one local workflow.',
+    contribution: ['Connected MediaPipe face landmarks to alignment and ArcFace embedding comparison.', 'Added multi-frame blink checks and a Flask interface for enrollment and monitoring.'],
+    next: 'Measure false accepts and rejects with consented participants under different lighting and angles.',
+  },
+  leaflens: {
+    result: 'One Streamlit app demonstrates two workflows: paddy disease classification and tea quality assessment.',
+    contribution: ['Worked on the transfer-learning image classification pipeline and the Streamlit assessment interface.', 'Packaged the prototype for local use with Docker and a standalone executable.'],
+    next: 'Validate both classifiers on independent field images and report per-class results.',
+    video: 'leaflens-demo.mp4',
+  },
+  magen: {
+    result: 'The Flask dashboard shows camera and system telemetry alongside voice-controlled Windows actions.',
+    contribution: ['Integrated voice and camera inputs with Gemini and local Windows commands.', 'Added Flask camera streaming, system telemetry and volume and brightness controls.'],
+    next: 'Add repeatable tests for voice-command routing and device-control fallbacks on different Windows setups.',
+  },
+  createx: {
+    result: 'A public event site pairs interactive storytelling with participant and organizer workflows.',
+    contribution: ['Built the Next.js competition experience and participant-facing registration and dashboard routes.', 'Connected organizer workflows to Supabase authentication, storage and PostgreSQL rules.'],
+    next: 'Test full registration and submission flows with representative participant and organizer accounts.',
+  },
+  'signspeak-junior': {
+    result: 'Released a v2.0 prototype APK with on-device suggestions and Android text-to-speech.',
+    contribution: ['Built the mobile sentence builder, favorites and customizable vocabulary.', 'Combined a local intent model and transition model for context-based next-word suggestions.'],
+    next: 'Evaluate vocabulary, navigation and suggestions with educators and families before expanding the vocabulary.',
+  },
+  'hotel-management': {
+    result: 'The booking flow validates the client and availability, saves the reservation and updates the room state.',
+    contribution: ['Built WinForms screens for clients, rooms and reservations.', 'Connected the booking flow to SQLite and added client and room checks.'],
+    next: 'Make the booking update transactional and test competing reservations before adapting it for multiple staff.',
+  },
+};
+
+const displayOrder = ['signspeak', 'sancharakaya', 'smart-face-door-lock', 'leaflens', 'magen', 'createx', 'signspeak-junior', 'hotel-management'];
+const byId = new Map([...projects, ...additionalProjects].map(p=>[p.id, p]));
+projects.splice(0, projects.length, ...displayOrder.map(id=>({...byId.get(id), ...evidence[id]})));

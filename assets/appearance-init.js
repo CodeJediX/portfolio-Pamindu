@@ -15,7 +15,7 @@
     const toggle = document.querySelector('.theme-toggle');
     if (!toggle) return;
     const updateToggle = () => {
-      toggle.setAttribute('aria-pressed', String(document.documentElement.dataset.theme === 'dark'));
+      toggle.setAttribute('aria-label', document.documentElement.dataset.theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme');
     };
     updateToggle();
     toggle.hidden = false;

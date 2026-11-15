@@ -33,5 +33,5 @@ export function datasetPage() {
       </div>
     </div>
   </main>${footer('../../')}`;
-  return page({title:`${name} | Pamindu Karunadasa`,description,body,base:'../../',path:datasetPath,structuredData});
+  return page({title:`${name} | Pamindu Karunadasa`,description,body,base:'../../',path:datasetPath,image:'assets/share/dataset.png',structuredData});
 }
