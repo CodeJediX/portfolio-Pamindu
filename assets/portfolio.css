@@ -1,6 +1,6 @@
 
 /* Shared typography and navigation */
-html { scroll-padding-top: 96px; }
+html { --page-scroll-padding: 96px; scroll-padding-top: var(--page-scroll-padding); }
 body { font-size: 16px; }
 h1, h2, h3, h4 { letter-spacing: -.018em; }
 .eyebrow, .mono { font-size: 14px; letter-spacing: .05em; }
@@ -46,7 +46,7 @@ h1, h2, h3, h4 { letter-spacing: -.018em; }
   --flight-viewport: calc(100svh - var(--flight-header, 80px));
   --flight-runway: 178svh;
   height: calc(var(--flight-viewport) + var(--flight-runway));
-  scroll-margin-top: max(0px, calc(var(--flight-header, 80px) - 34px));
+  scroll-margin-top: calc(var(--flight-header, 80px) - var(--page-scroll-padding));
 }
 .flight-stage {
   position: sticky;
@@ -321,7 +321,7 @@ dialog::backdrop { background: #020817d9; }
   .case-layout { grid-template-columns: minmax(130px,.35fr) minmax(0,1.65fr); }
 }
 @media (max-width: 760px) {
-  html { scroll-padding-top: 79px; }
+  html { --page-scroll-padding: 79px; }
   .site-header { min-height: 64px; }
   .header-controls { gap: 6px; }
   .site-header nav { gap: 2px; }
