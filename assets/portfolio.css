@@ -332,6 +332,8 @@ h1, h2, h3, h4 { letter-spacing: -.018em; }
 .detail-cover img { width: 100%; max-height: none; aspect-ratio: auto; border-radius: 0; background: transparent; object-fit: contain; box-shadow: none; }
 .detail-cover.signspeak-junior img { margin-inline: auto; width: min(100%, 540px); max-width: none; max-height: 900px; }
 .detail-cover figcaption { font-size: 14px; padding: 0 12px 14px; }
+.detail-cover > a, .case-image > a { display: block; }
+#screenshots { scroll-margin-top: 16px; }
 .project-facts dt { font-size: 14px; }
 .project-facts dd { font-size: 16px; }
 .case-layout { grid-template-columns: minmax(150px, .29fr) minmax(0,1.71fr); gap: 5%; align-items: start; }

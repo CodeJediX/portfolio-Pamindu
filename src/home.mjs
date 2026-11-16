@@ -9,7 +9,7 @@ function projectCard(p) {
   return `<article class="project" data-categories="${p.filters.join(' ')}">
     <a class="project-visual ${p.color} ${p.id}" href="projects/${p.id}/" aria-label="${e(p.category)} · View ${e(p.name)} case study">
       <div class="visual-label mono"><span>${e(p.category)}</span>${arrow}</div>
-      <div class="image-frame"><img src="assets/images/${p.image}" alt="${e(p.alt)}" width="1200" height="800" loading="eager" decoding="sync"></div>
+      <div class="image-frame"><img src="assets/images/${p.image}" alt="${e(p.alt)}" width="${p.imageWidth ?? 1200}" height="${p.imageHeight ?? 800}" loading="eager" decoding="sync"></div>
     </a>
     <div class="project-heading"><h3><a href="projects/${p.id}/">${e(p.name)}</a></h3></div>
     <p>${e(p.summary)}</p><p class="project-result">${e(p.result)}</p>
@@ -24,7 +24,7 @@ function projectFlight() {
     <div class="flight-stage">
       <div class="flight-visual" aria-hidden="true">
         <canvas></canvas>
-        ${projects.map(p=>`<figure class="flight-tile${p.id==='signspeak-junior'?' portrait':''}"><img src="assets/images/${p.image}" width="1200" height="750" alt="${e(p.alt)}"><figcaption>${e(p.name)}</figcaption></figure>`).join('')}
+        ${projects.map(p=>`<figure class="flight-tile${p.id==='signspeak-junior'?' portrait':''}"><img src="assets/images/${p.image}" width="${p.imageWidth ?? 1200}" height="${p.imageHeight ?? 750}" alt="${e(p.alt)}"><figcaption>${e(p.name)}</figcaption></figure>`).join('')}
       </div>
       <div class="wrap flight-top">
         <div><p class="eyebrow">${projects.length} project case studies</p><h2 id="flight-heading">Project flight<span class="accent">.</span></h2><p class="flight-instruction">Scroll to start the flight.</p></div>

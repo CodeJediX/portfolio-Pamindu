@@ -15,7 +15,7 @@ const base = (process.env.TEST_URL || 'http://127.0.0.1:4174').replace(/\/$/, ''
     const page = await context.newPage();
     page.on('pageerror', error => errors.push(error.message));
     const report = [];
-    for (const route of ['/', '/projects/sancharakaya/', '/projects/signspeak-junior/', '/photos/', '/resume/']) {
+    for (const route of ['/', '/projects/aegis/', '/projects/sancharakaya/', '/projects/signspeak-junior/', '/photos/', '/resume/']) {
       await page.goto(base + route);
       for (const width of [320, 390, 768, 1440]) {
         await page.setViewportSize({width,height:900});
@@ -35,14 +35,14 @@ const base = (process.env.TEST_URL || 'http://127.0.0.1:4174').replace(/\/$/, ''
       await Promise.all(images.map(image => image.decode()));
       return images.map(image => [image.loading, image.naturalWidth]);
     });
-    assert.equal(imageState.length, 8);
+    assert.equal(imageState.length, 9);
     assert.ok(imageState.every(([loading,width]) => loading === 'eager' && width > 0));
     const titles = await page.locator('.project-heading h3').allTextContents();
-    assert.deepEqual(titles.slice(0,4), ['SignSpeak','Sancharakaya','Smart Face Door Lock','LeafLens']);
+    assert.deepEqual(titles.slice(0,5), ['SignSpeak','QuantumX AEGIS','Sancharakaya','Smart Face Door Lock','LeafLens']);
     assert.equal(titles.at(-1), 'Hotel Management');
     assert.equal(await page.locator('.tools-grid .tool-card:visible').count(),4);
-    assert.equal(await page.locator('.award:visible').count(),5);
-    assert.equal(await page.locator('.credential-list li:visible').count(),7);
+    assert.equal(await page.locator('.award:visible').count(),6);
+    assert.equal(await page.locator('.credential-list li:visible').count(),8);
     assert.equal(await page.locator('.roadmap-stop:visible').count(),3);
     assert.equal(await page.locator('.role-step:visible').count(),6);
     await page.locator('.core-trigger').click();
@@ -80,13 +80,13 @@ const base = (process.env.TEST_URL || 'http://127.0.0.1:4174').replace(/\/$/, ''
     const staticPage = await noJS.newPage();
     await staticPage.goto(base);
     assert.equal(await staticPage.locator('.tool-card:visible').count(),4);
-    assert.equal(await staticPage.locator('.project:visible').count(),8);
+    assert.equal(await staticPage.locator('.project:visible').count(),9);
     assert.deepEqual(errors,[]);
     fs.mkdirSync('test-results',{recursive:true});
     fs.writeFileSync('test-results/refresh-axe.json', JSON.stringify(report,null,2));
     const issues = report.filter(r => r.violations.length);
     assert.deepEqual(issues,[]);
-    console.log('PASS: five routes, four widths, both themes, eight thumbnails, keyboard interactions, video, résumé download, and static fallbacks.');
+    console.log('PASS: six routes, four widths, both themes, nine thumbnails, keyboard interactions, video, résumé download, and static fallbacks.');
   } finally {
     await browser.close();
   }

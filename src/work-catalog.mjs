@@ -11,7 +11,7 @@ export const collections = [
   {
     id: 'systems', label: 'Research & prototypes', items: [
       ['catatriage', 'CataTriage AI', 'Research prototype', 'Cataract research models with auditable review stages and a doctor-reviewed scheduling workflow.', github('CataTriage-AI'), ['Project website', 'https://catatriage-ai.vercel.app/']],
-      ['aegis', 'Quantum-X AEGIS', 'Team research project', 'An analysis dashboard for comparing portfolio risk models, replaying market crises, and exporting results.', github('aegis-quantedge'), demo('https://quantumx-aegis.streamlit.app/')],
+      ['aegis', 'QuantumX AEGIS', 'Team research project', 'An analysis dashboard for comparing portfolio risk models, replaying market crises, and exporting results.', ['Case study and screenshots', '../projects/aegis/'], github('aegis-quantedge'), demo('https://quantumx-aegis.streamlit.app/')],
       ['deadline-atlas', 'Deadline Atlas', 'Competition tracker', 'A calendar and planning tool for tracking competition deadlines and importing event details from documents.', github('pouch-studio/tree/main/deadline-atlas'), ['Project website', 'https://codejedix.github.io/pouch-studio/deadline-atlas/']],
       ['pouch-studio', 'Pouch Studio', '3D design preview', 'A rotatable 3D model of a laptop pouch with alternate camera views and a reproducible model build.', github('pouch-studio'), demo('https://codejedix.github.io/pouch-studio/')],
       ['cre8x-desk', 'CRE8X Registration Desk', 'Event operations demo', 'A check-in and attendance demo with a finalist directory and reporting tools.', github('cre8x-registration-desk'), demo('https://codejedix.github.io/cre8x-registration-desk/')],
@@ -75,6 +75,7 @@ export const collections = [
 }));
 
 const previews = {
+  aegis: 'aegis-decision-dashboard.jpg',
   'waste-wiz': 'wastewiz.webp',
   'ieee-cs-web': 'ieee-cs-kdu-preview.webp',
   'cre8x-leadership': 'pamindu-karunadasa-cre8x-3-lamp-lighting-2026.webp',

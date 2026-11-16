@@ -66,6 +66,35 @@ export const projects = [
     sources: [['Source and packaging', 'https://github.com/CodeJediX/LeafLens_Project'], ['Project demonstration', 'https://youtu.be/FJXr0ydCo-0']],
   },
   {
+    id: 'aegis', name: 'QuantumX AEGIS', category: 'Software & systems', filters: ['software'],
+    label: 'Quantitative finance · Portfolio risk', color: 'green',
+    summary: 'An interactive platform for comparing ETF portfolios, stress-testing losses, and deciding whether an allocation meets its risk limits.',
+    image: 'aegis-decision-dashboard.jpg', imageWidth: 1440, imageHeight: 960,
+    shareImage: 'assets/images/aegis-decision-dashboard.jpg', imageLabel: 'Investment decision dashboard',
+    alt: 'AEGIS dashboard showing the REVISE recommendation, historical performance, and three breached policy limits',
+    repo: 'https://github.com/CodeJediX/aegis-quantedge',
+    demo: 'https://quantumx-aegis.streamlit.app/', demoLabel: 'Open the Streamlit app',
+    stack: ['Python', 'Streamlit', 'NumPy', 'pandas', 'SciPy', 'Plotly', 'SQLite'],
+    status: 'Interactive research application', context: 'Team QuantumX · Simulated USD 10 million endowment',
+    role: 'Co-developed with Team QuantumX.',
+    problem: 'An investment committee needs to see whether a proposed allocation meets its risk limits, including when historical returns appear strong.',
+    solution: 'AEGIS lets users compare candidate allocations or enter custom weights across SPY, EFA, EEM, AGG, GLD, XLE, and XLK. It combines one-day risk forecasts, rolling validation, historical crisis replays, and custom equity, rate, and gold shocks. The dashboard identifies policy breaches and exports portfolio-specific PDF and CSV reports.',
+    architecture: ['Frozen ETF data', 'Train and compare allocations', 'Estimate and backtest risk', 'Check limits and export'],
+    contribution: ['Co-developed AEGIS with Sandun Wickramanayake, Samadhi Gamagedara, Kawmini Attygalle, and Kasun Dissanayake.', 'Worked with the team on portfolio construction, the Streamlit risk views, and the research workflow that connects validation and stress tests to a funding recommendation.'],
+    challenge: 'A one-day loss forecast and a drawdown during a market crisis answer different questions. AEGIS compares historical, parametric, Monte Carlo, extreme-value, and volatility-state estimates on a common footing, then reports crisis losses and policy checks separately.',
+    result: 'The reference minimum-variance portfolio returned 9.99% annualized after modeled costs in the held-out historical test. Three loss measures exceeded their proposed 15% limits, so AEGIS recommended revising the allocation before funding.',
+    next: 'Validate a revised allocation on fresh data and incorporate spending needs, liabilities, and more detailed trading costs.',
+    limits: 'The portfolio and its funding decision are simulated. The research uses frozen historical data, and human approval remains independent of the model results.',
+    galleryTitle: 'App screenshots',
+    gallery: [
+      {src:'aegis-portfolio-builder.jpg', width:1440, height:960, caption:'Build a portfolio', alt:'Portfolio builder with editable weights for seven ETFs and an allocation comparison table'},
+      {src:'aegis-risk-comparison.jpg', width:1440, height:960, caption:'Compare one-day downside risk', alt:'Table and bar chart comparing Value at Risk and Expected Shortfall across five models'},
+      {src:'aegis-model-validation.jpg', width:1440, height:960, caption:'Backtest the forecasts', alt:'Model validation dashboard reporting eight full-window VaR breaches against 9.39 expected'},
+      {src:'aegis-crisis-replay.png', width:1470, height:930, caption:'Replay the 2008 crisis', alt:'Historical paths for AEGIS and the 60/40 benchmark with a table of ETF contributions'},
+    ],
+    sources: [['GitHub repository', 'https://github.com/CodeJediX/aegis-quantedge'], ['Technical report (PDF)', 'https://github.com/CodeJediX/aegis-quantedge/blob/main/reports/Current_Technical_Report.pdf'], ['Investment tear sheet (PDF)', 'https://github.com/CodeJediX/aegis-quantedge/blob/main/reports/Current_Investment_Tear_Sheet.pdf']],
+  },
+  {
     id: 'magen', name: 'MAGEN', category: 'Software & systems', filters: ['software','ai'],
     label: 'Desktop automation · Computer vision', color: 'dark',
     summary: 'A voice-driven Windows assistant connecting conversation, camera input, and practical desktop controls.',
@@ -185,6 +214,6 @@ const evidence = {
   },
 };
 
-const displayOrder = ['signspeak', 'sancharakaya', 'smart-face-door-lock', 'leaflens', 'magen', 'createx', 'signspeak-junior', 'hotel-management'];
+const displayOrder = ['signspeak', 'aegis', 'sancharakaya', 'smart-face-door-lock', 'leaflens', 'magen', 'createx', 'signspeak-junior', 'hotel-management'];
 const byId = new Map([...projects, ...additionalProjects].map(p=>[p.id, p]));
 projects.splice(0, projects.length, ...displayOrder.map(id=>({...byId.get(id), ...evidence[id]})));
