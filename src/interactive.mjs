@@ -2,11 +2,17 @@ import { certifications } from './profile-updates.mjs';
 import { external, escape as e } from './components.mjs';
 import { profile } from './projects.mjs';
 
+const quantEdge = {
+  name:'QuantEdge 1.0', result:'Finalist', issuer:'University of Colombo · ICCMM 2026',
+  date:'Nov 2026', datetime:'2026-11', certificate:'assets/certificates/quantedge-1-0-finalist.png',
+};
+
 export const achievements = [
   {name:'TensorForge AI Buildathon', result:'2nd runner-up', issuer:'IEEE Computer Society of KDU', date:'Oct 2025'},
   {name:'AI Challenge Sri Lanka 2026', result:'Grand finale finalist', issuer:'Team The Kernel Krew', date:'Sep 2026', url:'https://credsverse.com/credentials/67c0c556-018f-408c-9a42-2d10045f6765'},
   {name:'Data Odyssey 2026', result:'Finalist', issuer:'Team Quantum-X · SignSpeak', date:'Aug 2026', url:'projects/signspeak/'},
   {name:'CHYPER 4.0', result:'Finalist', issuer:'IEEE WIE Student Branch of KDU', date:'Sep 2026', url:'https://www.linkedin.com/in/pamindu-karunadasa/overlay/Certifications/894481700/treasury/'},
+  quantEdge,
   {name:'PixelWave 2025', result:'Top 20 finalist', issuer:'IEEE Computer Society of KDU', date:'Sep 2025'},
 ];
 
@@ -27,11 +33,15 @@ export function toolsGrid() {
 }
 
 export function learningSection() {
-  const courses = [...certifications, {name:'IEEEXtreme 19.0',issuer:'IEEE · Participation',date:'Oct 2025',datetime:'2025-10'}];
+  const certificates = [
+    {...quantEdge, name:'QuantEdge 1.0 Finalist — Certificate of Achievement'},
+    ...certifications,
+    {name:'IEEEXtreme 19.0',issuer:'IEEE · Participation',date:'Oct 2025',datetime:'2025-10'},
+  ];
   return `<section id="achievements" class="section achievement-section" aria-labelledby="achievements-heading"><div class="wrap">
     <div class="section-heading"><div><p class="eyebrow">Competition results</p><h2 id="achievements-heading">Achievements<span class="accent">.</span></h2></div></div>
-    <div class="award-grid">${achievements.map((a,i)=>`<article class="award${i===0?' award-lead':''}"><p class="award-result">${e(a.result)}</p><h3>${e(a.name)}</h3><p>${e(a.issuer)} · ${e(a.date)}</p>${a.url?(a.url.startsWith('https:')?external(a.url,'View evidence'):`<a class="text-link" href="${a.url}">View project ↗</a>`):''}</article>`).join('')}</div>
-    <section id="certifications" class="credentials" aria-labelledby="certifications-heading"><h3 id="certifications-heading">Certificates</h3><ul class="credential-list">${courses.map(c=>`<li><div><h4>${e(c.name)}</h4><p>${e(c.issuer)}</p></div>${c.date?`<time datetime="${c.datetime}">${e(c.date)}</time>`:''}${c.url?external(c.url,`Verify ${c.name}`):''}</li>`).join('')}</ul></section>
+    <div class="award-grid">${achievements.map((a,i)=>`<article class="award${i===0?' award-lead':''}"><p class="award-result">${e(a.result)}</p><h3>${e(a.name)}</h3><p>${e(a.issuer)} · ${e(a.date)}</p>${a.certificate?external(a.certificate,'View certificate'):a.url?(a.url.startsWith('https:')?external(a.url,'View evidence'):`<a class="text-link" href="${a.url}">View project ↗</a>`):''}</article>`).join('')}</div>
+    <section id="certifications" class="credentials" aria-labelledby="certifications-heading"><h3 id="certifications-heading">Certificates</h3><ul class="credential-list">${certificates.map(c=>`<li><div><h4>${e(c.name)}</h4><p>${e(c.issuer)}</p></div>${c.date?`<time datetime="${c.datetime}">${e(c.date)}</time>`:''}${c.certificate?external(c.certificate,'View certificate'):c.url?external(c.url,`Verify ${c.name}`):''}</li>`).join('')}</ul></section>
   </div></section>
   <section id="experience" class="section wrap" aria-labelledby="experience-heading"><div class="section-heading"><div><p class="eyebrow">Professional work</p><h2 id="experience-heading">Experience<span class="accent">.</span></h2></div></div>
     <div class="experience-grid experience-entries"><article><p class="eyebrow">${internship.dates}</p><h3>${internship.title}</h3><p class="experience-company">${internship.company}</p><p>${internship.work}</p></article><article><p class="eyebrow">Education venture</p><h3>Co-founder and CEO</h3><p class="experience-company">OULU Academy · Sri Lanka</p><p>I co-founded an education academy and built its public-facing website.</p>${external(profile.business+'pamindu-karunadasa/','View academy profile')}</article></div>
