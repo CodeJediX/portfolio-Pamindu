@@ -342,6 +342,7 @@ h1, h2, h3, h4 { letter-spacing: -.018em; }
 .case-content h2:first-child { margin-top: 0; }
 .case-content p, .case-content .feature-list li { font-size: 17px; line-height: 1.75; }
 .case-content .caption, .case-content .small-note, .case-image figcaption, .architecture-figure figcaption { font-size: 14px; }
+#companion .case-image { max-width: 320px; }
 .case-content .source-links .text-link { font-size: 15px; }
 .case-content .case-result { border-left: 3px solid var(--accent); padding-left: 16px; color: var(--ink); margin-bottom: 22px; }
 .architecture { grid-template-columns: repeat(4,minmax(0,1fr)); gap: 24px; }
